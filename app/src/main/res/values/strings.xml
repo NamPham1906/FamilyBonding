@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">USmile</string>
+    <string name="tips">Mẹo nhỏ</string>
+    <string name="settings">Cài đặt</string>
+    <string name="clinic">Phòng khám</string>
+    <string name="take_pic">Chụp ảnh</string>
+    <string name="documents">Hồ sơ</string>
 </resources>

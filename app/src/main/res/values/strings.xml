@@ -16,4 +16,5 @@
     <string name="security">Chính sách về bảo mật</string>
     <string name="privacy">Chính sách về quyền riêng tư</string>
     <string name="terms">Điều khoản sử dụng</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</string>
 </resources>

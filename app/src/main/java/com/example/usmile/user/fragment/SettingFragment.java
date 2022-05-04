@@ -58,6 +58,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         int id = view.getId();
 
+        Fragment nextFragment = null;
+
         switch (id) {
             case R.id.accInfoTextView:
                 showToast("Account Info");
@@ -67,23 +69,31 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.instructionTextView:
                 showToast("Instruction");
+                nextFragment = new SettingIntructionsFragment();
                 break;
             case R.id.appInfoTextView:
                 showToast("Application Info");
-                SettingApplicationInfoFragment nextFrag= new SettingApplicationInfoFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.mainFragmentHolder, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+                nextFragment = new SettingApplicationInfoFragment();
+
                 break;
             case R.id.logOutBtn:
                 showToast("Log Out");
                 break;
         }
+
+        if (nextFragment != null)
+            openNewFragment(nextFragment);
     }
 
     private void showToast(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
 
+    }
+
+    private void openNewFragment(Fragment nextFragment) {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), nextFragment, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 }

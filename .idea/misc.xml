@@ -3,9 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/all_rounded_button_shape.xml" value="0.290625" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/bottom_rounded_button_shape.xml" value="0.290625" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/gradient_background.xml" value="0.22407407407407406" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/no.xml" value="0.28615384615384615" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/no_rounded_shape_button.xml" value="0.28615384615384615" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/top_rounded_button_shape.xml" value="0.290625" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/activity_main.xml" value="0.108348134991119" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting.xml" value="0.27447916666666666" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_application_info.xml" value="0.27447916666666666" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_change_password.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25277777777777777" />
       </map>
     </option>

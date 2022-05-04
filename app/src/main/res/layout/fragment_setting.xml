@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,32 +15,155 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="10dp">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/header"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_person_outline_24"
-                android:layout_marginRight="5dp"/>
 
             <TextView
+                android:id="@+id/titleTextView"
+                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
                 android:text="@string/settings"
+                android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:textStyle="bold"
-                android:textAllCaps="false"/>
+                app:drawableStartCompat="@drawable/ic_baseline_person_outline_24" />
 
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/firstGroup"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_below="@id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/accInfoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="@string/accountInfo"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/primary_blue"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/account"
+                android:drawablePadding="10dp"
+                android:paddingLeft="5dp"
+                android:drawableRight="@drawable/right_arrow"
+                android:paddingEnd="5dp"
+                android:drawableTint="@color/primary_blue"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/top_rounded_button_shape"
+                />
+
+
+            <TextView
+                android:id="@+id/generalSettingTextView"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="@string/generalSetting"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/primary_blue"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/outline_settings"
+                android:drawablePadding="10dp"
+                android:paddingLeft="5dp"
+                android:drawableRight="@drawable/right_arrow"
+                android:paddingEnd="5dp"
+                android:drawableTint="@color/primary_blue"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/bottom_rounded_button_shape"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/secondGroup"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="50dp"
+            android:layout_below="@id/firstGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/instructionTextView"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="@string/instruction"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/primary_blue"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/question"
+                android:drawablePadding="10dp"
+                android:paddingLeft="5dp"
+                android:drawableRight="@drawable/right_arrow"
+                android:paddingEnd="5dp"
+                android:drawableTint="@color/primary_blue"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/top_rounded_button_shape"
+                />
+
+            <TextView
+                android:id="@+id/appInfoTextView"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:text="@string/appInfo"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:textColor="@color/primary_blue"
+                android:textAllCaps="false"
+                android:drawableLeft="@drawable/info"
+                android:drawablePadding="10dp"
+                android:paddingLeft="5dp"
+                android:drawableRight="@drawable/right_arrow"
+                android:paddingEnd="5dp"
+                android:drawableTint="@color/primary_blue"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/bottom_rounded_button_shape"
+                />
         </LinearLayout>
 
 
 
-
+        <Button
+            android:id="@+id/logOutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_below="@id/secondGroup"
+            android:layout_marginBottom="30dp"
+            app:backgroundTint="@null"
+            android:background="@drawable/all_rounded_button_shape"
+            android:text="@string/logout"
+            android:textSize="20sp"
+            android:textColor="@color/primary_pink"
+            android:textAllCaps="false"
+            app:icon="@drawable/logout"
+            app:iconTint="@color/primary_pink"
+            app:iconGravity="textStart"
+            app:strokeColor="@color/primary_pink" />
 
     </RelativeLayout>
 

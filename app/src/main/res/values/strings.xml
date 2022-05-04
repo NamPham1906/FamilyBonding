@@ -7,4 +7,13 @@
     <string name="documents">Hồ sơ</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="accountInfo">Thông tin tài khoản</string>
+    <string name="instruction">Hướng dẫn sử dụng</string>
+    <string name="appInfo">Thông tin ứng dụng</string>
+    <string name="generalSetting">Cài đặt chung</string>
+    <string name="law">Pháp lý</string>
+    <string name="security">Chính sách về bảo mật</string>
+    <string name="privacy">Chính sách về quyền riêng tư</string>
+    <string name="terms">Điều khoản sử dụng</string>
 </resources>

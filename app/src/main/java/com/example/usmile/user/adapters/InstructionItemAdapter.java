@@ -1,5 +1,7 @@
 package com.example.usmile.user.adapters;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import java.util.List;
 public class InstructionItemAdapter extends RecyclerView.Adapter<InstructionItemAdapter.InstructionItemViewHolder> {
 
     List<InstructionItem> instructionItems;
+    Context context;
 
     public InstructionItemAdapter(List<InstructionItem> instructionItems) {
         this.instructionItems = instructionItems;
@@ -27,6 +30,8 @@ public class InstructionItemAdapter extends RecyclerView.Adapter<InstructionItem
     @Override
     public InstructionItemAdapter.InstructionItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.settings_instruction_item_layout, parent, false);
+
+        context = parent.getContext();
 
         return new InstructionItemViewHolder(view);
     }
@@ -41,6 +46,16 @@ public class InstructionItemAdapter extends RecyclerView.Adapter<InstructionItem
 
         boolean isExpandable = item.isExpandable();
         holder.expandableLayout.setVisibility(isExpandable ? View.VISIBLE : View.GONE);
+
+        // expandable = down arrow
+        if (isExpandable)
+            holder.questionTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_down, 0);
+        // can not expand anymore = up arrow
+        else
+            holder.questionTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_up, 0);
+
+
+
     }
 
     @Override

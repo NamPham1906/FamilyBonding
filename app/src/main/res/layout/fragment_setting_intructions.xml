@@ -15,9 +15,21 @@
         android:layout_marginEnd="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/instructionSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:queryHint="Nhập nội dung cần tìm"
+            app:queryBackground="@android:color/transparent"
+            app:iconifiedByDefault="false"
+            android:background="@drawable/all_rounded_search_view_shape"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="10dp"
             android:id="@+id/instructionItemRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

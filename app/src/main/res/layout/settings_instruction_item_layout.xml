@@ -19,6 +19,8 @@
             android:layout_height="wrap_content"
             android:text="Giới thiệu về ứng dụng Usmile"
             android:textColor="@color/primary_blue"
+            android:drawableRight="@drawable/arrow_down"
+            android:drawableTint="@color/primary_blue"
             android:textSize="18sp"
             android:padding="16dp"
             android:textStyle="bold"/>

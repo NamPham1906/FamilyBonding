@@ -1,15 +1,18 @@
 package com.example.usmile.user;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.user.fragment.CollectPictureFragment;
 import com.example.usmile.user.fragment.SettingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
             else if (R.id.action_take_picture == id) {
                 Toast.makeText(MainActivity.this, "Cam", Toast.LENGTH_SHORT).show();
-                //fragment = new NotificationsFragment();
+                fragment = new CollectPictureFragment();
             }
 
             else if (R.id.action_find_clinic == id) {
@@ -58,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         });
-
-
     }
+
 }

@@ -7,14 +7,21 @@
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/all_rounded_search_view_shape.xml" value="0.1175925925925926" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/arrow_down.xml" value="0.28615384615384615" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/arrow_up.xml" value="0.28615384615384615" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/blue_border_rounded_shape.xml" value="0.290625" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/bottom_rounded_button_shape.xml" value="0.290625" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/camera_icon.xml" value="0.290625" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/dark_mode.xml" value="0.290625" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/gradient_background.xml" value="0.22407407407407406" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/no.xml" value="0.28615384615384615" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/no_rounded_shape_button.xml" value="0.28615384615384615" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/small_blue_button_shape.xml" value="0.290625" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/top_rounded_backgroud.xml" value="0.290625" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/top_rounded_button_shape.xml" value="0.290625" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/activity_main.xml" value="0.108348134991119" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_account_info.xml" value="0.27447916666666666" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_collect_picture.xml" value="0.264" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting.xml" value="0.27447916666666666" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_account_info.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_application_info.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_change_password.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_general.xml" value="0.27447916666666666" />

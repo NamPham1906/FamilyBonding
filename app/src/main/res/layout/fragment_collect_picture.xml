@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".user.fragment.CollectPictureFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableStart="@drawable/camera_icon"
+                android:drawablePadding="8dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="Chụp ảnh nha khoa"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/top_rounded_background">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/titleTextView"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:id="@+id/firstLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp">
+
+                    <ImageView
+                        android:id="@+id/firstImageView"
+                        android:layout_width="130dp"
+                        android:layout_height="180dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/blue_border_rounded_shape"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/add_pic" />
+
+                    <ImageView
+                        android:id="@+id/secondImageView"
+                        android:layout_width="130dp"
+                        android:layout_height="180dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/blue_border_rounded_shape"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/add_pic" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/secondLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/descriptionLayout"
+                    android:layout_below="@id/firstLine"
+                    android:layout_margin="20dp">
+
+                    <ImageView
+                        android:id="@+id/thirdImageView"
+                        android:layout_width="130dp"
+                        android:layout_height="180dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/blue_border_rounded_shape"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/add_pic" />
+
+                    <ImageView
+                        android:id="@+id/fourthImageView"
+                        android:layout_width="130dp"
+                        android:layout_height="180dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/blue_border_rounded_shape"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/add_pic" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/descriptionLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/sendBtn"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="25dp"
+                    android:background="@drawable/all_rounded_button_shape">
+
+                    <TextView
+                        android:id="@+id/descriptionTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:drawableEnd="@drawable/edit_pen"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/primary_blue"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:text="Mô tả"
+                        android:textColor="@color/primary_blue"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/descriptionEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@color/primary_blue"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:textColor="@color/primary_blue"
+                        android:textSize="15sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="25dp">
+
+                    <TextView
+                        android:id="@+id/sendBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/small_blue_button_shape"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp"
+                        android:text="Gửi hồ sơ"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>
+
+

@@ -63,9 +63,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         switch (id) {
             case R.id.accInfoTextView:
                 showToast("Account Info");
+                nextFragment = new SettingAccountInfoFragment();
                 break;
             case R.id.generalSettingTextView:
                 showToast("General Settings");
+                nextFragment = new SettingGeneralFragment();
                 break;
             case R.id.instructionTextView:
                 showToast("Instruction");

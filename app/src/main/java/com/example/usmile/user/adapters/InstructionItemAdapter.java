@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.usmile.R;
 import com.example.usmile.user.models.InstructionItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InstructionItemAdapter extends RecyclerView.Adapter<InstructionItemAdapter.InstructionItemViewHolder> {
@@ -24,6 +25,12 @@ public class InstructionItemAdapter extends RecyclerView.Adapter<InstructionItem
 
     public InstructionItemAdapter(List<InstructionItem> instructionItems) {
         this.instructionItems = instructionItems;
+    }
+
+    public void filterList(List<InstructionItem> filterllist) {
+
+        instructionItems = filterllist;
+        notifyDataSetChanged();
     }
 
     @NonNull

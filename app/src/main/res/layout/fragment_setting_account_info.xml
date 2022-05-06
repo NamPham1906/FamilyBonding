@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".user.fragment.SettingAccountInfoFragment">
+
+
+    <RelativeLayout
+
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/accountInfoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/all_rounded_button_shape">
+
+            <ImageView
+                android:id="@+id/avatarImageView"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/example_avatar"
+                android:padding="10dp"/>
+
+            <EditText
+                android:id="@+id/userNameEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/avatarImageView"
+                android:layout_centerHorizontal="true"
+                android:background="@null"
+                android:drawableRight="@drawable/edit_pen"
+                android:drawablePadding="8dp"
+                android:text="Nam 7749"
+                android:textSize="15sp"
+                android:textColor="@color/primary_blue"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"/>
+
+
+            <RelativeLayout
+                android:id="@+id/fullNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userNameEditText"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:id="@+id/fullNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Họ và Tên:"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
+                    android:textColor="@color/primary_blue"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/fullNameEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Pham Son Nam"
+                    android:textSize="15sp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/primary_blue"
+                    android:background="@null"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/edit_pen"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/dobLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fullNameLayout"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:id="@+id/dobTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày sinh:"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
+                    android:textColor="@color/primary_blue"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/dobEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="19/06/2001"
+                    android:textSize="15sp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/primary_blue"
+                    android:background="@null"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/edit_pen"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/genderLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dobLayout"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:id="@+id/genderTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giới tính:"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
+                    android:textColor="@color/primary_blue"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/genderEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Nam"
+                    android:textSize="15sp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/primary_blue"
+                    android:background="@null"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/edit_pen"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/emailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/genderLayout"
+
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="30dp">
+
+                <TextView
+                    android:id="@+id/emailTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email:"
+                    android:layout_centerVertical="true"
+                    android:textSize="15sp"
+                    android:textColor="@color/primary_blue"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/emailEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="nampham0126"
+                    android:textSize="15sp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/primary_blue"
+                    android:background="@null"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/edit_pen"/>
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/changePasswordTextView"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/all_rounded_button_shape"
+            android:clickable="true"
+            android:drawableRight="@drawable/right_arrow"
+            android:drawableTint="@color/primary_blue"
+            android:focusable="true"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingEnd="5dp"
+            android:text="@string/changePasswordText"
+            android:textAllCaps="false"
+            android:textColor="@color/primary_blue"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</FrameLayout>

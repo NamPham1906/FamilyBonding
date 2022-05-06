@@ -17,4 +17,7 @@
     <string name="privacy">Chính sách về quyền riêng tư</string>
     <string name="terms">Điều khoản sử dụng</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</string>
+    <string name="passwordText">Mật khẩu</string>
+    <string name="rule_for_password">Mật khẩu phải có ít nhất 8 kí tự. Tránh sử dụng các mật khẩu quá phổ biến</string>
+    <string name="changePasswordText">Thay đổi mật khẩu</string>
 </resources>

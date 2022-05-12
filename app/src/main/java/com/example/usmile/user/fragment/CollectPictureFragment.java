@@ -131,7 +131,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                             .decodeFile(imgDecodableString));
                     secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
-                case CAPTURE_THIRD_IMAGE:
+                case LOAD_THIRD_IMAGE:
                     thirdImageView.setImageBitmap(BitmapFactory
                             .decodeFile(imgDecodableString));
                     thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);

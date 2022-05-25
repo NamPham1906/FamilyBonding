@@ -1,6 +1,8 @@
 package com.example.usmile.Account;
 
-public interface Account {
+import java.io.Serializable;
+
+public interface Account extends Serializable {
     String type();
     String username();
     String password ();

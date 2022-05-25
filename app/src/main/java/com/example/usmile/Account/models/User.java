@@ -1,11 +1,12 @@
 package com.example.usmile.Account.models;
 
 import com.example.usmile.Account.Account;
+import com.example.usmile.Account.AccountFactory;
 
 public class User implements Account {
     @Override
     public String type() {
-        return "User";
+        return AccountFactory.USERSTRING;
     }
 
     @Override

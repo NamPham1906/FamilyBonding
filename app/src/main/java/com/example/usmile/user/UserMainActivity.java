@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.usmile.Account.AccountFactory;
+import com.example.usmile.Account.models.User;
 import com.example.usmile.R;
 import com.example.usmile.user.fragment.CollectPictureFragment;
 import com.example.usmile.user.fragment.SettingFragment;
@@ -18,9 +20,12 @@ public class UserMainActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     Fragment fragment = null;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        user = (User) getIntent().getSerializableExtra(AccountFactory.USERSTRING);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
         fragmentManager = getSupportFragmentManager();

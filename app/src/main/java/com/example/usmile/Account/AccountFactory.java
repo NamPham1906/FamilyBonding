@@ -5,14 +5,17 @@ import com.example.usmile.Account.models.Doctor;
 import com.example.usmile.Account.models.User;
 
 public class AccountFactory {
-    public Account getAccount(String accountType) {
+    final static public String USERSTRING = "User";
+    final static public String DOCTORSTRING = "Doctor";
+    final static public String ADMINSTRING = "Admin";
+    public static Account createAccount(String accountType) {
 
         switch(accountType) {
-            case "User":
+            case USERSTRING:
                 return new User();
-            case "Doctor":
+            case DOCTORSTRING:
                 return new Doctor();
-            case "Admin":
+            case ADMINSTRING:
                 return new Admin();
             default:
                 return null;

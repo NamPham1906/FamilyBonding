@@ -25,8 +25,8 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/example_avatar"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:src="@drawable/example_avatar" />
 
             <EditText
                 android:id="@+id/userNameEditText"
@@ -34,14 +34,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/avatarImageView"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
                 android:background="@null"
                 android:drawableRight="@drawable/edit_pen"
                 android:drawablePadding="8dp"
                 android:text="Nam 7749"
-                android:textSize="15sp"
                 android:textColor="@color/primary_blue"
-                android:textStyle="bold"
-                android:layout_marginTop="5dp"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
 
             <RelativeLayout
@@ -55,28 +55,28 @@
                     android:id="@+id/fullNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Họ và Tên:"
                     android:layout_centerVertical="true"
-                    android:textSize="15sp"
+                    android:text="Họ và Tên:"
                     android:textColor="@color/primary_blue"
-                    android:textStyle="bold"/>
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/fullNameEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Pham Son Nam"
-                    android:textSize="15sp"
                     android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:text="Pham Son Nam"
                     android:textColor="@color/primary_blue"
-                    android:background="@null"/>
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/edit_pen"/>
+                    android:src="@drawable/edit_pen" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -90,28 +90,28 @@
                     android:id="@+id/dobTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ngày sinh:"
                     android:layout_centerVertical="true"
-                    android:textSize="15sp"
+                    android:text="Ngày sinh:"
                     android:textColor="@color/primary_blue"
-                    android:textStyle="bold"/>
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/dobEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="19/06/2001"
-                    android:textSize="15sp"
                     android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:text="19/06/2001"
                     android:textColor="@color/primary_blue"
-                    android:background="@null"/>
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/edit_pen"/>
+                    android:src="@drawable/edit_pen" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -125,28 +125,28 @@
                     android:id="@+id/genderTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Giới tính:"
                     android:layout_centerVertical="true"
-                    android:textSize="15sp"
+                    android:text="Giới tính:"
                     android:textColor="@color/primary_blue"
-                    android:textStyle="bold"/>
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/genderEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Nam"
-                    android:textSize="15sp"
                     android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:text="Nam"
                     android:textColor="@color/primary_blue"
-                    android:background="@null"/>
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/edit_pen"/>
+                    android:src="@drawable/edit_pen" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -155,8 +155,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/genderLayout"
 
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="30dp">
 
@@ -164,29 +164,30 @@
                     android:id="@+id/emailTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email:"
                     android:layout_centerVertical="true"
-                    android:textSize="15sp"
+                    android:text="Email:"
                     android:textColor="@color/primary_blue"
-                    android:textStyle="bold"/>
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/emailEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="nampham0126"
-                    android:textSize="15sp"
                     android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:text="nampham0126"
                     android:textColor="@color/primary_blue"
-                    android:background="@null"/>
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/edit_pen"/>
+                    android:src="@drawable/edit_pen" />
             </RelativeLayout>
+
 
 
 

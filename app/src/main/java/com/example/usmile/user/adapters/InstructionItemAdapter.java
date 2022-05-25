@@ -61,8 +61,6 @@ public class InstructionItemAdapter extends RecyclerView.Adapter<InstructionItem
         else
             holder.questionTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_up, 0);
 
-
-
     }
 
     @Override

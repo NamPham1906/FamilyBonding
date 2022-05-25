@@ -22,6 +22,7 @@
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.31145833333333334" />
         <entry key="app/src/main/res/drawable/account.xml" value="0.1814814814814815" />
         <entry key="app/src/main/res/drawable/all_rounded_button_shape.xml" value="0.221875" />
+        <entry key="app/src/main/res/drawable/all_rounded_button_shape_blue.xml" value="0.26666666666666666" />
         <entry key="app/src/main/res/drawable/all_rounded_search_view_shape.xml" value="0.221875" />
         <entry key="app/src/main/res/drawable/blue_border_rounded_shape.xml" value="0.31145833333333334" />
         <entry key="app/src/main/res/drawable/bottom_rounded_button_shape.xml" value="0.31145833333333334" />
@@ -35,7 +36,7 @@
         <entry key="app/src/main/res/drawable/top_rounded_background.xml" value="0.31145833333333334" />
         <entry key="app/src/main/res/drawable/top_rounded_button_shape.xml" value="0.31145833333333334" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.20572916666666666" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1609375" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.20173626673243597" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24728260869565216" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/activity_user_main.xml" value="0.1578125" />

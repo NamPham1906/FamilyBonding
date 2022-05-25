@@ -30,6 +30,9 @@ public class UserMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
         fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, new TipsFragment()).commit();
+
         BottomNavigationView navigationView = findViewById(R.id.bottom_nav);
         navigationView.setOnItemSelectedListener(item -> {
 

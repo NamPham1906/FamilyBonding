@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.usmile.R;
 import com.example.usmile.user.fragment.CollectPictureFragment;
 import com.example.usmile.user.fragment.SettingFragment;
+import com.example.usmile.user.fragment.TipsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (R.id.action_tips == id) {
                 Toast.makeText(MainActivity.this, "Tips", Toast.LENGTH_SHORT).show();
-                //fragment = new HomepageFragment(this);
+                fragment = new TipsFragment();
             }
             else if (R.id.action_document == id) {
                 Toast.makeText(MainActivity.this, "Docs", Toast.LENGTH_SHORT).show();

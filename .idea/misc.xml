@@ -38,15 +38,19 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1609375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24728260869565216" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1578125" />
+        <entry key="app/src/main/res/layout/activity_user_main.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/choose_source_of_picture_layout.xml" value="0.24728260869565216" />
         <entry key="app/src/main/res/layout/fragment_collect_picture.xml" value="0.24728260869565216" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.24728260869565216" />
         <entry key="app/src/main/res/layout/fragment_setting_account_info.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_setting_application_info.xml" value="0.14361702127659576" />
+        <entry key="app/src/main/res/layout/fragment_setting_change_password.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/fragment_setting_general.xml" value="0.24728260869565216" />
         <entry key="app/src/main/res/layout/fragment_setting_intructions.xml" value="0.24728260869565216" />
         <entry key="app/src/main/res/layout/fragment_tips.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/fragment_welcome.xml" value="0.14919806273316552" />
+        <entry key="app/src/main/res/layout/settings_instruction_item_layout.xml" value="0.1578125" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.221875" />
       </map>

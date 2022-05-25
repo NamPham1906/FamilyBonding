@@ -5,7 +5,11 @@
     <string name="clinic">Phòng khám</string>
     <string name="take_pic">Chụp ảnh</string>
     <string name="documents">Hồ sơ</string>
+    <!-- login -->
+    <string name="welcome">Chào mừng trở lại,</string>
+    <string name="login">Đăng nhập</string>
     <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="logout">Đăng xuất</string>
     <string name="accountInfo">Thông tin tài khoản</string>

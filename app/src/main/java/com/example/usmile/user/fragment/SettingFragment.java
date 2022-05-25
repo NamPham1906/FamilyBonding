@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
-import com.example.usmile.user.MainActivity;
 
 
 public class SettingFragment extends Fragment implements View.OnClickListener {

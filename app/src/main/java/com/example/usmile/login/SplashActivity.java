@@ -1,4 +1,4 @@
-package com.example.usmile.user;
+package com.example.usmile.login;
 
 import static java.lang.Thread.sleep;
 
@@ -7,8 +7,6 @@ import androidx.core.splashscreen.SplashScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.example.usmile.R;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,9 +17,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_splash);
 
+        // call login activity
         try {
             sleep(2000);
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             SplashActivity.this.startActivity(intent);
             SplashActivity.this.finish();
         } catch (InterruptedException e) {

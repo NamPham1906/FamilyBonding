@@ -16,7 +16,7 @@ public class LoginActivity extends AppCompatActivity {
 
     FragmentManager fragmentManager;
     Fragment fragment = null;
-    String login = "";
+    String accountType = "";
     Account account;
 
 
@@ -25,28 +25,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         fragmentManager = getSupportFragmentManager();
+        // fragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, fragment).commit();
 
-        login = AccountFactory.USERSTRING;
 
-        switch (login){
-            case (AccountFactory.USERSTRING):
-                Intent intent = new Intent(getApplicationContext(), UserMainActivity.class);
-                account = AccountFactory.createAccount(AccountFactory.USERSTRING);
-                intent.putExtra(account.type(), account);
-                startActivity(intent);
-                this.finish();
-                break;
-            case(AccountFactory.DOCTORSTRING):
-                account = AccountFactory.createAccount(AccountFactory.DOCTORSTRING);
-                break;
-            case(AccountFactory.ADMINSTRING):
-                account = AccountFactory.createAccount(AccountFactory.ADMINSTRING);
-                break;
-            default:
-                break;
-        }
+        accountType = AccountFactory.USERSTRING;
 
-       // fragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, fragment).commit();
+        Intent intent = new Intent(getApplicationContext(), AccountFactory.createAccountClass(accountType));
+        account = AccountFactory.createAccount(accountType);
+        intent.putExtra(account.type(), account);
+        startActivity(intent);
+        this.finish();
+
+
+
 
     }
 

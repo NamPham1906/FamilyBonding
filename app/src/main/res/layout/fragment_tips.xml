@@ -131,6 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/arrow_up"
+        app:elevation="10dp"
         app:backgroundTint="@color/primary_blue"
         app:tint="@android:color/white"
        />

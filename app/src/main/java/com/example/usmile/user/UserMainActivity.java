@@ -13,6 +13,7 @@ import com.example.usmile.Account.AccountFactory;
 import com.example.usmile.Account.models.User;
 import com.example.usmile.R;
 import com.example.usmile.user.fragment.CollectPictureFragment;
+import com.example.usmile.user.fragment.HealthRecordFragment;
 import com.example.usmile.user.fragment.SettingFragment;
 import com.example.usmile.user.fragment.TipsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -44,7 +45,7 @@ public class UserMainActivity extends AppCompatActivity {
                     }
                     else if (R.id.action_document == id) {
                         Toast.makeText(UserMainActivity.this, "Docs", Toast.LENGTH_SHORT).show();
-                        //fragment = new CategoriesFragment();
+                        fragment = new HealthRecordFragment();
                     }
 
                     else if (R.id.action_take_picture == id) {

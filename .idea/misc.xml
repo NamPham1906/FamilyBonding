@@ -22,10 +22,12 @@
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/top_rounded_backgroud.xml" value="0.290625" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/top_rounded_button_shape.xml" value="0.290625" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/drawable/white_arrow_up.xml" value="0.2875" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/activity_login.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/activity_main.xml" value="0.108348134991119" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/choose_source_of_picture_layout.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_account_info.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_collect_picture.xml" value="0.264" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_health_record.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_account_info.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_application_info.xml" value="0.27447916666666666" />
@@ -33,6 +35,9 @@
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_general.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_intructions.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_tips.xml" value="0.375" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/health_record_accepted_item_layout.xml" value="0.27447916666666666" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/health_record_item_layout.xml" value="0.27447916666666666" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/health_record_waiting_item_layout.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/new_tip_item_layout.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/settings_instruction_item_layout.xml" value="0.2222222222222222" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/tip_item_layout.xml" value="0.27447916666666666" />

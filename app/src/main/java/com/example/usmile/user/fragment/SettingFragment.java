@@ -1,5 +1,6 @@
 package com.example.usmile.user.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.login.LoginActivity;
 
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
@@ -79,6 +81,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.logOutBtn:
                 showToast("Log Out");
+                logOut();
                 break;
         }
 
@@ -96,5 +99,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 .replace(((ViewGroup)getView().getParent()).getId(), nextFragment, "findThisFragment")
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void logOut() {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
     }
 }

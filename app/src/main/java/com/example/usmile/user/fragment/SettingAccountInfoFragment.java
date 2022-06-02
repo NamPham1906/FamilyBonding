@@ -10,19 +10,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.usmile.R;
+
+import org.w3c.dom.Text;
 
 
 public class SettingAccountInfoFragment extends Fragment implements View.OnClickListener {
 
     TextView changePasswordTextView;
+    TextView confirmButton;
+    TextView cancelButton;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         changePasswordTextView = (TextView) view.findViewById(R.id.changePasswordTextView);
+        confirmButton = (TextView) view.findViewById(R.id.confirmButton);
+        cancelButton = (TextView) view.findViewById(R.id.cancelButton);
 
         changePasswordTextView.setOnClickListener(this);
     }
@@ -44,10 +51,19 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
             case R.id.changePasswordTextView:
                 nextFragment = new SettingChangePasswordFragment();
                 break;
+            case R.id.cancelButton:
+                showToast("Cancel");
+                break;
+            case R.id.confirmButton:
+                showToast("Confirm");
+                break;
         }
 
-        if (nextFragment != null)
-            openNewFragment(nextFragment);
+        if (id == R.id.changePasswordTextView) {
+            if (nextFragment != null)
+                openNewFragment(nextFragment);
+        }
+
     }
 
     private void openNewFragment(Fragment nextFragment) {
@@ -55,5 +71,9 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
                 .replace(((ViewGroup)getView().getParent()).getId(), nextFragment, "findThisFragment")
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 }

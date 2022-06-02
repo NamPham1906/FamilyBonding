@@ -10,6 +10,7 @@ public class HealthRecord {
     private String advices;
     private boolean deleted;
     private String sentDate;
+    private boolean accepted;
 
     public HealthRecord(int ID, List<String> healthPictures, String advices, boolean deleted, String sentDate) {
         this.ID = ID;
@@ -19,8 +20,25 @@ public class HealthRecord {
         this.sentDate = sentDate;
     }
 
+    public HealthRecord(int ID, List<String> healthPictures, String advices, boolean accepted, boolean deleted, String sentDate) {
+        this.ID = ID;
+        this.healthPictures = healthPictures;
+        this.advices = advices;
+        this.deleted = deleted;
+        this.sentDate = sentDate;
+        this.accepted = accepted;
+    }
+
     public HealthRecord() {
 
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 
     public String getSentDate() {

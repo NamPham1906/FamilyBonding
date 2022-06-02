@@ -29,7 +29,7 @@
                 />
 
             <TextView
-                android:id="@+id/dateTimeTextView"
+                android:id="@+id/sentDateTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ngày 25/05/2022"
@@ -73,7 +73,7 @@
             android:layout_below="@id/statusLayout">
 
             <TextView
-                android:id="@+id/confirmButton"
+                android:id="@+id/editButton"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -89,7 +89,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/detailButton"
+                android:id="@+id/cancelButton"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

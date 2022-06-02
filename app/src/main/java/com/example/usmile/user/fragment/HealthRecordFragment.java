@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.usmile.R;
 import com.example.usmile.user.adapters.HealthRecordAdapter;
+import com.example.usmile.user.adapters.MultiHealthRecordAdapter;
 import com.example.usmile.user.adapters.TipsAdapter;
 import com.example.usmile.user.models.HealthRecord;
 import com.example.usmile.user.models.Tips;
@@ -22,11 +23,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HealthRecordFragment extends Fragment {
+public class HealthRecordFragment extends Fragment implements View.OnClickListener {
 
     RecyclerView recordRecyclerView;
     List<HealthRecord> healthRecords;
     HealthRecordAdapter adapter;
+    MultiHealthRecordAdapter multiAdapter;
 
     FloatingActionButton newHealthRecordButton;
 
@@ -44,8 +46,13 @@ public class HealthRecordFragment extends Fragment {
         recordRecyclerView = (RecyclerView) view.findViewById(R.id.recordRecyclerView);
         newHealthRecordButton = (FloatingActionButton) view.findViewById(R.id.newHealthRecordButton);
 
-        initData();
-        initRecordRecyclerView();
+        newHealthRecordButton.setOnClickListener(this);
+
+        //initData();
+        //initRecordRecyclerView();
+
+        initDataForMultiAdapter();
+        initRecordRecyclerViewMulti();
     }
 
     private void initRecordRecyclerView() {
@@ -62,5 +69,42 @@ public class HealthRecordFragment extends Fragment {
         healthRecords.add(new HealthRecord(1,null,"",false,"Ngày 02/06/2022"));
         healthRecords.add(new HealthRecord(1,null,"",false,"Ngày 04/05/2022"));
         healthRecords.add(new HealthRecord(1,null,"",false,"Ngày 12/04/2022"));
+    }
+
+    private void initRecordRecyclerViewMulti() {
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+        recordRecyclerView.setLayoutManager(layoutManager);
+        multiAdapter = new MultiHealthRecordAdapter(healthRecords);
+        recordRecyclerView.setAdapter(multiAdapter);
+        recordRecyclerView.setHasFixedSize(true);
+    }
+
+    private void initDataForMultiAdapter() {
+        healthRecords = new ArrayList<>();
+        healthRecords.add(new HealthRecord(1,null,"",false,false,"Ngày 02/06/2022"));
+        healthRecords.add(new HealthRecord(1,null,"",true,false,"Ngày 04/05/2022"));
+        healthRecords.add(new HealthRecord(1,null,"",true,false,"Ngày 12/04/2022"));
+        healthRecords.add(new HealthRecord(1,null,"",false,false,"Ngày 03/04/2022"));
+        healthRecords.add(new HealthRecord(1,null,"",true,false,"Ngày 02/02/2022"));
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+
+        switch (id) {
+            case R.id.newHealthRecordButton:
+                Fragment newHealthRecordFragment = new CollectPictureFragment();
+                openNewFragment(newHealthRecordFragment);
+                break;
+        }
+    }
+
+    private void openNewFragment(Fragment nextFragment) {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), nextFragment, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 }

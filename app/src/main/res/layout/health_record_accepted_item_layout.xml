@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="175dp"
     android:layout_margin="15dp"
     app:cardCornerRadius="10dp">
 
@@ -32,12 +32,12 @@
                 android:id="@+id/dateTimeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ngày 25/05/2022"
-                android:layout_alignParentEnd="true"
                 android:layout_alignBottom="@id/titleTextView"
+                android:layout_alignParentEnd="true"
+                android:text="Ngày 25/05/2022"
                 android:textColor="@color/primary_blue"
-                android:textStyle="bold"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -54,9 +54,10 @@
                 android:text="Tình trạng: "
                 android:textColor="@color/primary_blue"
                 android:textSize="14sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/statusDetailTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/statusTextView"
@@ -73,14 +74,14 @@
             android:layout_below="@id/statusLayout">
 
             <TextView
-                android:id="@+id/confirmButton"
+                android:id="@+id/leftButton"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/small_green_button_shape"
                 android:gravity="center"
-                android:paddingStart="10dp"
+                android:paddingStart="0dp"
                 android:paddingTop="5dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="5dp"
@@ -89,7 +90,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/detailButton"
+                android:id="@+id/rightButton"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

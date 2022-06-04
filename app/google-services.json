@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "242261053311",
+    "project_id": "usmile-16864",
+    "storage_bucket": "usmile-16864.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242261053311:android:d84444ed0aa3a2df81944a",
+        "android_client_info": {
+          "package_name": "com.example.usmile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242261053311-11c8lojbg9n3oi6idhqobus57l3gjgv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkmvGu_7RmcVks0s-UhtLdW4cpsfi0F3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242261053311-11c8lojbg9n3oi6idhqobus57l3gjgv4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

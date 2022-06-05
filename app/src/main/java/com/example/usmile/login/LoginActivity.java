@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         loginButton =  this.findViewById(R.id.loginBtn);
         loginButton.setOnClickListener(this);
         registerButton = this.findViewById(R.id.registerBtn);

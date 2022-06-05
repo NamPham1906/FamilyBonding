@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".user.fragment.DetailAcceptedHealthRecordFragment">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/top_rounded_background">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:id="@+id/recordTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Hồ sơ ngày 08/04/2022"
+                android:textColor="@color/primary_blue"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/statusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/recordTimeTextView"
+                android:layout_centerHorizontal="true"
+                android:text="Đã tư vấn"
+                android:textColor="@color/primary_green"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/doctorInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/statusTextView"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/doctorImage"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:src="@drawable/example_avatar"
+                    app:civ_border_color="#808080"
+                    app:civ_border_width="1dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toEndOf="@id/doctorImage"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/doctorFullNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/verified_icon"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/primary_green"
+                        android:text="Bác sĩ Đàm Vĩnh Hưng"
+                        android:textColor="@color/primary_blue"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phòng khám nha khoa Hoàn Mỹ"
+                        android:textColor="@color/primary_blue"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/patientMessageLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/doctorInfoLayout"
+                android:layout_margin="20dp"
+                android:background="@drawable/all_rounded_button_shape"
+                android:backgroundTint="#DEF2FE">
+
+                <TextView
+                    android:id="@+id/patientMessageTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:drawableEnd="@drawable/edit_pen"
+                    android:drawablePadding="8dp"
+                    android:drawableTint="@color/primary_blue"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="Mô tả"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/patientMessageEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:backgroundTint="@color/primary_blue"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="Cháu đang mọc răng khôn đúng không ạ ? Mong bác sĩ tư vấn cho cháu"
+                    android:textColor="#808080"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/detailAdvicesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/patientMessageLayout"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:id="@+id/firstLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/firstPicture"
+                        android:layout_width="100dp"
+                        android:layout_height="120dp"
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/blue_border_rounded_shape"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/example_avatar" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toLeftOf="@id/firstPicture"
+                        android:layout_toEndOf="@id/firstPicture"
+                        android:background="@drawable/all_rounded_button_shape"
+                        android:backgroundTint="#DEF2FE">
+
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            android:text="Tư vấn"
+                            android:textColor="@color/primary_blue"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/firstDetailAdvice"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/title"
+                            android:backgroundTint="@color/primary_blue"
+                            android:padding="5dp"
+                            android:paddingStart="15dp"
+                            android:paddingEnd="15dp"
+                            android:text="Răng khôn có dấu hiệu mọc xiên vào răng kế bên"
+                            android:textColor="#808080"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/secondLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/firstLayout"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/secondPicture"
+                        android:layout_width="100dp"
+                        android:layout_height="120dp"
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/blue_border_rounded_shape"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/example_avatar" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toLeftOf="@id/secondPicture"
+                        android:layout_toEndOf="@id/secondPicture"
+                        android:background="@drawable/all_rounded_button_shape"
+                        android:backgroundTint="#DEF2FE">
+
+                        <TextView
+                            android:id="@+id/titleSecond"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            android:text="Tư vấn"
+                            android:textColor="@color/primary_blue"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/secondDetailAdvice"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/titleSecond"
+                            android:backgroundTint="@color/primary_blue"
+                            android:padding="5dp"
+                            android:paddingStart="15dp"
+                            android:paddingEnd="15dp"
+                            android:text="Răng khôn có dấu hiệu mọc xiên vào răng kế bên"
+                            android:textColor="#808080"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/thirdLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/secondLayout"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/thirdPicture"
+                        android:layout_width="100dp"
+                        android:layout_height="120dp"
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/blue_border_rounded_shape"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/example_avatar" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toLeftOf="@id/thirdPicture"
+                        android:layout_toEndOf="@id/thirdPicture"
+                        android:background="@drawable/all_rounded_button_shape"
+                        android:backgroundTint="#DEF2FE">
+
+                        <TextView
+                            android:id="@+id/titleThird"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            android:text="Tư vấn"
+                            android:textColor="@color/primary_blue"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/thirdDetailAdvice"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/titleThird"
+                            android:backgroundTint="@color/primary_blue"
+                            android:padding="5dp"
+                            android:paddingStart="15dp"
+                            android:paddingEnd="15dp"
+                            android:text="Răng khôn có dấu hiệu mọc xiên vào răng kế bên"
+                            android:textColor="#808080"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/fourthLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/thirdLayout"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/fourthPicture"
+                        android:layout_width="100dp"
+                        android:layout_height="120dp"
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/blue_border_rounded_shape"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/example_avatar" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toLeftOf="@id/fourthPicture"
+                        android:layout_toEndOf="@id/fourthPicture"
+                        android:background="@drawable/all_rounded_button_shape"
+                        android:backgroundTint="#DEF2FE">
+
+                        <TextView
+                            android:id="@+id/titleFourth"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:padding="5dp"
+                            android:text="Tư vấn"
+                            android:textColor="@color/primary_blue"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/fourthDetailAdvice"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/titleFourth"
+                            android:backgroundTint="@color/primary_blue"
+                            android:padding="5dp"
+                            android:paddingStart="15dp"
+                            android:paddingEnd="15dp"
+                            android:text="Răng khôn có dấu hiệu mọc xiên vào răng kế bên"
+                            android:textColor="#808080"
+                            android:textSize="13sp" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/summaryAdviceLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detailAdvicesLayout"
+                android:layout_margin="20dp"
+                android:background="@drawable/all_rounded_button_shape"
+                android:backgroundTint="#DEF2FE">
+
+                <TextView
+                    android:id="@+id/summaryAdviceTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="Yêu cầu của nha sĩ"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/summaryAdviceTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_below="@id/summaryAdviceTitle"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:backgroundTint="@color/primary_blue"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="Em đang mọc răng khôn, cần tới phòng khám gấp để nha sĩ xử lí, tránh tình trạng răng mọc lệch. "
+                    android:textColor="#808080"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/rateButton"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/small_green_button_shape"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="Đánh giá"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_below="@id/summaryAdviceLayout"
+                android:layout_marginBottom="20dp"/>
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+
+</FrameLayout>

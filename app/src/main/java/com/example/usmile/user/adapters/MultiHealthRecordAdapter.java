@@ -7,9 +7,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.usmile.R;
+import com.example.usmile.user.fragment.DetailAcceptedHealthRecordFragment;
+import com.example.usmile.user.fragment.DetailWaitingHealthRecordFragment;
 import com.example.usmile.user.models.HealthRecord;
 
 import java.util.ArrayList;
@@ -22,6 +26,8 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
 
     private List<HealthRecord> healthRecords;
     private Context context;
+
+
 
     public MultiHealthRecordAdapter(List<HealthRecord> healthRecords) {
         this.healthRecords = healthRecords;
@@ -97,7 +103,7 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
             return WAITING_HEALTH_RECORD;
     }
 
-    public class AcceptedHealthRecordViewHolder extends RecyclerView.ViewHolder {
+    public class AcceptedHealthRecordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView dateTimeTextView;
         TextView statusDetailTextView;
@@ -109,12 +115,46 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
 
             dateTimeTextView = (TextView) itemView.findViewById(R.id.dateTimeTextView);
             statusDetailTextView = (TextView) itemView.findViewById(R.id.statusDetailTextView);
-            checkPictureButton = (TextView) itemView.findViewById(R.id.leftButton);
-            checkAdviceButton = (TextView) itemView.findViewById(R.id.rightButton);
+            checkPictureButton = (TextView) itemView.findViewById(R.id.checkPicturesButton);
+            checkAdviceButton = (TextView) itemView.findViewById(R.id.checkAdvicesButton);
+
+            checkAdviceButton.setOnClickListener(this);
+            checkPictureButton.setOnClickListener(this);
+        }
+
+
+
+        @Override
+        public void onClick(View view) {
+
+            int id = view.getId();
+            int position = getLayoutPosition();
+            HealthRecord item = healthRecords.get(position);
+
+            // pass object from fragment to fragment
+
+            switch (id) {
+                case R.id.checkAdvicesButton:
+                    // this one first
+
+                    Fragment accepted = new DetailAcceptedHealthRecordFragment();
+                    openNewFragment(view, accepted);
+
+                    break;
+                case R.id.checkPicturesButton:
+                    break;
+            }
+        }
+
+
+        private void openNewFragment(View view, Fragment nextFragment) {
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainFragmentHolder, nextFragment).addToBackStack(null).commit();
         }
     }
 
-    public class WaitingHealthRecordViewHolder extends RecyclerView.ViewHolder {
+    public class WaitingHealthRecordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView sentDateTextView;
         TextView editButton;
@@ -123,9 +163,38 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
         public WaitingHealthRecordViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            // binding view
             sentDateTextView = (TextView) itemView.findViewById(R.id.sentDateTextView);
             editButton = (TextView) itemView.findViewById(R.id.editButton);
             cancelButton = (TextView) itemView.findViewById(R.id.cancelButton);
+
+            // click listener
+            editButton.setOnClickListener(this);
+            cancelButton.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+
+            switch (id) {
+                case R.id.editButton:
+
+                    Fragment fragment = new DetailWaitingHealthRecordFragment();
+                    openNewFragment(view, fragment);
+
+                    break;
+                case R.id.cancelButton:
+                    break;
+            }
+        }
+
+        private void openNewFragment(View view, Fragment nextFragment) {
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainFragmentHolder, nextFragment).addToBackStack(null).commit();
+        }
+
+
     }
 }

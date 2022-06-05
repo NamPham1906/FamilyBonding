@@ -1,7 +1,6 @@
 package com.example.usmile.user.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.usmile.R;
 import com.example.usmile.user.models.HealthRecord;
 
-import org.w3c.dom.Text;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,8 +81,8 @@ public class HealthRecordAdapter extends RecyclerView.Adapter<HealthRecordAdapte
 
             dateTimeTextView = (TextView) itemView.findViewById(R.id.dateTimeTextView);
             statusDetailTextView = (TextView) itemView.findViewById(R.id.statusDetailTextView);
-            leftButton = (TextView) itemView.findViewById(R.id.leftButton);
-            rightButton = (TextView) itemView.findViewById(R.id.rightButton);
+            leftButton = (TextView) itemView.findViewById(R.id.checkPicturesButton);
+            rightButton = (TextView) itemView.findViewById(R.id.checkAdvicesButton);
         }
     }
 }

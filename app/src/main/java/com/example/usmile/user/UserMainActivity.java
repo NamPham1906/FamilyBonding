@@ -9,8 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.usmile.Account.AccountFactory;
-import com.example.usmile.Account.models.User;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.User;
 import com.example.usmile.R;
 import com.example.usmile.user.fragment.CollectPictureFragment;
 import com.example.usmile.user.fragment.HealthRecordFragment;

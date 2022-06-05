@@ -9,9 +9,11 @@
     <string name="welcome">Chào mừng trở lại,</string>
     <string name="login">Đăng nhập</string>
     <string name="or">Hoặc</string>
-    <string name="register">Đăng kí</string>
-    <string name="account">Tài khoản:</string>
+    <string name="register">Đăng ký</string>
+    <string name="account">Email:</string>
     <string name="password">Mật khẩu:</string>
+    <string name="confirmPassword">Xác nhận mật khẩu:</string>
+    <string name="fogotPassword">Quên mật khẩu?</string>
     <!-- TODO: Remove or change this placeholder text -->
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

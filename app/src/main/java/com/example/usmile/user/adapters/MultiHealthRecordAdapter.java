@@ -27,6 +27,8 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
     private List<HealthRecord> healthRecords;
     private Context context;
 
+
+
     public MultiHealthRecordAdapter(List<HealthRecord> healthRecords) {
         this.healthRecords = healthRecords;
     }
@@ -120,20 +122,30 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
             checkPictureButton.setOnClickListener(this);
         }
 
+
+
         @Override
         public void onClick(View view) {
 
             int id = view.getId();
+            int position = getLayoutPosition();
+            HealthRecord item = healthRecords.get(position);
+
+            // pass object from fragment to fragment
 
             switch (id) {
                 case R.id.checkAdvicesButton:
+                    // this one first
+
                     Fragment accepted = new DetailAcceptedHealthRecordFragment();
                     openNewFragment(view, accepted);
+
                     break;
                 case R.id.checkPicturesButton:
                     break;
             }
         }
+
 
         private void openNewFragment(View view, Fragment nextFragment) {
             AppCompatActivity activity = (AppCompatActivity) view.getContext();

@@ -7,11 +7,30 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.usmile.R;
 
 
 public class DetailAcceptedHealthRecordFragment extends Fragment {
+
+    private TextView recordTimeTextView;
+    private TextView doctorFullNameTextView;
+    private TextView doctorWorkPlaceTextView;
+    private EditText patientMessageEditText;
+
+    ImageView firstPicture;
+    ImageView secondPicture;
+    ImageView thirdPicture;
+    ImageView fourthPicture;
+
+    TextView firstDetailAdvice;
+    TextView secondDetailAdvice;
+    TextView thirdDetailAdvice;
+    TextView fourthDetailAdvice;
+
 
     public DetailAcceptedHealthRecordFragment() {
 

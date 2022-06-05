@@ -12,7 +12,9 @@ import android.widget.Toast;
 import com.example.usmile.Account.AccountFactory;
 import com.example.usmile.Account.models.User;
 import com.example.usmile.R;
+import com.example.usmile.user.adapters.MultiHealthRecordAdapter;
 import com.example.usmile.user.fragment.CollectPictureFragment;
+import com.example.usmile.user.fragment.DetailAcceptedHealthRecordFragment;
 import com.example.usmile.user.fragment.HealthRecordFragment;
 import com.example.usmile.user.fragment.SettingFragment;
 import com.example.usmile.user.fragment.TipsFragment;
@@ -70,5 +72,8 @@ public class UserMainActivity extends AppCompatActivity {
                     return true;
         });
     }
+
+
+
 
 }

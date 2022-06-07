@@ -46,8 +46,9 @@
                     android:spinnerMode="dropdown"
                     android:dropDownVerticalOffset="40dp"
                     android:background="@android:color/transparent">
-
                 </Spinner>
+
+
 
                 <Button
                     android:id="@+id/continueButton"

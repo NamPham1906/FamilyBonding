@@ -24,5 +24,12 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"/>
 
+    <View
+        android:layout_below="@id/actorSelectedTextView"
+        android:layout_width="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_height="1dp"
+        android:background="@color/light_blue"/>
+
 
 </RelativeLayout>

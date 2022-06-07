@@ -11,6 +11,11 @@ public class Doctor implements Account {
     }
 
     @Override
+    public String typeVietsub() {
+        return AccountFactory.DOCTORSTRING_VN;
+    }
+
+    @Override
     public String email() {
         return this.email;
     }

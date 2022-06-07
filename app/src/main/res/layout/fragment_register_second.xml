@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:background="@drawable/gradient_background"
+    tools:context=".login.fragment.RegisterSecondFragment">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/firstTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="60dp"
+            android:text="Đăng ký"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+    <ScrollView
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/firstTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/top_rounded_background">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp">
+
+            <FrameLayout
+                android:id="@+id/layoutImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp">
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/imageProfile"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/avatar_image"
+                    android:scaleType="centerCrop"
+                    app:riv_oval="true"/>
+
+                <TextView
+                    android:id="@+id/textAddImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="+"
+
+                    android:textColor="@color/black"
+                    android:textSize="30sp"/>
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/fullNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/layoutImage"
+                android:backgroundTint="@color/light_blue"
+                android:drawableStart="@drawable/person"
+                android:drawableEnd="@drawable/edit_pen"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/light_blue"
+                android:hint="Họ tên"
+                android:textColor="@color/light_blue"
+                android:textColorHint="@color/light_blue"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/dobText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fullNameText"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/light_blue"
+                android:drawableStart="@drawable/calendar"
+                android:drawableEnd="@drawable/edit_pen"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/light_blue"
+                android:hint="Ngày sinh"
+                android:textColor="@color/light_blue"
+                android:textColorHint="@color/light_blue"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/phoneText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dobText"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/light_blue"
+                android:drawableStart="@drawable/phone"
+                android:drawableEnd="@drawable/edit_pen"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/light_blue"
+                android:hint="Số điện thoại"
+                android:textColor="@color/light_blue"
+                android:textColorHint="@color/light_blue"
+                android:textSize="15sp" />
+
+            <Spinner
+                android:layout_marginTop="15dp"
+                android:id="@+id/genderSpinner"
+                android:layout_below="@id/phoneText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:dropDownVerticalOffset="40dp"
+                android:background="@android:color/transparent"/>
+
+            <View
+                android:layout_below="@id/genderSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/light_blue"/>
+
+
+            <Button
+                android:id="@+id/contButton"
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:layout_below="@id/genderSpinner"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="170dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/all_rounded_button_shape_light_blue"
+                android:text="Tiếp tục"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:backgroundTint="@null" />
+
+
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    </RelativeLayout>
+
+
+
+</FrameLayout>

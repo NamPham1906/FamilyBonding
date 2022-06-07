@@ -52,6 +52,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.firebase:firebase-client-android:2.5.0'
 
+    // Rounded ImageView
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 
 
 }

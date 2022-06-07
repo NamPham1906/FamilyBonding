@@ -11,6 +11,11 @@ public class Admin implements Account  {
     }
 
     @Override
+    public String typeVietsub() {
+        return AccountFactory.ADMINSTRING_VN;
+    }
+
+    @Override
     public String email() {
         return this.email;
     }

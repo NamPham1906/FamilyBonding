@@ -21,7 +21,7 @@ import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
 import com.example.usmile.R;
 import com.example.usmile.login.fragment.RegisterFragment;
-import com.example.usmile.user.fragment.CollectPictureFragment;
+import com.example.usmile.login.fragment.RegisterFirstFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 progressBar.setVisibility(View.VISIBLE);
                 String email = "phamnam0126@gmail.com";
                 String password = "pass123";
+
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -96,8 +97,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.registerBtn:
 
-                 fragmentManager = getSupportFragmentManager();
-                 fragmentManager.beginTransaction().replace(R.id.loginFragmentHolder, RegisterFragment.class, null).commit();
+                fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.loginFragmentHolder, RegisterFirstFragment.class, null).commit();
                 break;
             case R.id.forgetPasswordBtn:
 

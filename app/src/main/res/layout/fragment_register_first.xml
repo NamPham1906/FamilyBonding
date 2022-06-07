@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_background"
+    tools:context=".login.fragment.RegisterFirstFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/firstTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="60dp"
+            android:text="Bạn là..."
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/firstTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/top_rounded_background">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp">
+
+
+                <Spinner
+                    android:id="@+id/actorSpinner"
+                    android:layout_marginTop="120dp"
+                    android:layout_centerInParent="true"
+                    android:layout_width="270dp"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"
+                    android:dropDownVerticalOffset="40dp"
+                    android:background="@android:color/transparent">
+
+                </Spinner>
+
+                <Button
+                    android:id="@+id/continueButton"
+                    android:layout_width="300dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@id/actorSpinner"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="170dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/all_rounded_button_shape_light_blue"
+                    android:text="Tiếp tục"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:backgroundTint="@null" />
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+
+
+
+</FrameLayout>

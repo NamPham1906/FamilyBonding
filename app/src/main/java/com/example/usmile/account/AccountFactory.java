@@ -9,6 +9,12 @@ public class AccountFactory {
     final static public String USERSTRING = "User";
     final static public String DOCTORSTRING = "Doctor";
     final static public String ADMINSTRING = "Admin";
+
+    final static public String USERSTRING_VN = "Người dùng cá nhân";
+    final static public String DOCTORSTRING_VN = "Bác sĩ";
+    final static public String ADMINSTRING_VN = "Quản trị";
+
+
     public static Account createAccount(String accountType, String email) {
 
         switch(accountType) {

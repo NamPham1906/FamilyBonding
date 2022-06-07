@@ -155,19 +155,19 @@
                 android:textColor="@color/primary_blue"
                 android:textSize="15sp"></TextView>
 
-            <Button
-                android:id="@+id/registerBtn"
-                android:layout_width="300dp"
-                android:layout_height="55dp"
-                android:layout_below="@+id/or"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/all_rounded_button_shape_light_blue"
-                android:text="@string/register"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:backgroundTint="@null" />
+                <Button
+                    android:id="@+id/registerBtn"
+                    android:layout_width="300dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@+id/or"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/all_rounded_button_shape_light_blue"
+                    android:text="@string/register"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:backgroundTint="@null" />
         </RelativeLayout>
         </ScrollView>
         <ProgressBar

@@ -11,6 +11,12 @@ public class User implements Account {
     }
 
     @Override
+    public String typeVietsub() {
+        return AccountFactory.USERSTRING_VN;
+    }
+
+
+    @Override
     public String email() {
         return this.email;
     }

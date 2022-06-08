@@ -29,6 +29,7 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
     ActorSpinnerAdapter spinnerAdapter;
 
     Button continueButton;
+    Account newAccount;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -71,6 +72,11 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         Toast.makeText(getContext(), spinnerAdapter.getItem(i).typeVietsub(), Toast.LENGTH_SHORT).show();
+
+        String type = spinnerAdapter.getItem(i).type();
+        newAccount = AccountFactory.createAccount(type,"");
+
+
     }
 
     @Override
@@ -85,8 +91,13 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
         switch (id) {
             case R.id.continueButton:
 
-                Fragment fragment = new RegisterSecondFragment();
-                openNewFragment(fragment);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("NEW_ACCOUNT", newAccount);
+
+                Fragment secondFragment = new RegisterSecondFragment();
+                secondFragment.setArguments(bundle);
+
+                openNewFragment(secondFragment);
                 break;
         }
     }

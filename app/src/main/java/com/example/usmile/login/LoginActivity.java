@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
 import com.example.usmile.R;
-import com.example.usmile.login.fragment.RegisterFragment;
 import com.example.usmile.login.fragment.RegisterFirstFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

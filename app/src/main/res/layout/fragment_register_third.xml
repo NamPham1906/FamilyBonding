@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".login.fragment.RegisterFragment"
+    tools:context=".login.fragment.RegisterThirdFragment"
     android:background="@drawable/gradient_background">
 
     <RelativeLayout
@@ -37,7 +37,7 @@
 
                 <EditText
                     android:layout_marginTop="60dp"
-                    android:id="@+id/accountTextView"
+                    android:id="@+id/accountTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/light_blue"
@@ -54,7 +54,7 @@
                     android:id="@+id/passTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/accountTextView"
+                    android:layout_below="@id/accountTV"
                     android:layout_marginTop="20dp"
                     android:backgroundTint="@color/light_blue"
                     android:drawableStart="@drawable/lock"
@@ -62,12 +62,13 @@
                     android:drawablePadding="8dp"
                     android:drawableTint="@color/light_blue"
                     android:hint="Mật khẩu"
+                    android:inputType="textPassword"
                     android:textColor="@color/light_blue"
                     android:textColorHint="@color/light_blue"
                     android:textSize="15sp" />
 
                 <EditText
-                    android:id="@+id/confirmPassTextView"
+                    android:id="@+id/confirmPassTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/passTextView"
@@ -78,15 +79,16 @@
                     android:drawablePadding="8dp"
                     android:drawableTint="@color/light_blue"
                     android:hint="Xác nhận mật khẩu"
+                    android:inputType="textPassword"
                     android:textColor="@color/light_blue"
                     android:textColorHint="@color/light_blue"
                     android:textSize="15sp" />
 
                 <Button
-                    android:id="@+id/registerBtn"
+                    android:id="@+id/registerButton"
                     android:layout_width="300dp"
                     android:layout_height="55dp"
-                    android:layout_below="@+id/confirmPassTextView"
+                    android:layout_below="@+id/confirmPassTV"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="30dp"
                     android:background="@drawable/all_rounded_button_shape_light_blue"

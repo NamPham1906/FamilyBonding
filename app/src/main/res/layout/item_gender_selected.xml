@@ -13,7 +13,7 @@
         android:padding="10dp"
         android:drawableStart="@drawable/question"
         android:drawableTint="@color/light_blue"
-        android:drawablePadding="30dp"/>
+        android:drawablePadding="8dp"/>
 
     <ImageView
         android:layout_width="wrap_content"

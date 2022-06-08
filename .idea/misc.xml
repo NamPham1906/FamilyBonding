@@ -33,6 +33,7 @@
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_register_3.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_register_first.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_register_second.xml" value="0.27447916666666666" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_register_third.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_account_info.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_setting_application_info.xml" value="0.27447916666666666" />
@@ -45,6 +46,8 @@
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/health_record_waiting_item_layout.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/item_actor_list.xml" value="0.14375" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/item_actor_selected.xml" value="0.264" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/item_gender_list.xml" value="0.27447916666666666" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/item_gender_selected.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/new_tip_item_layout.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/settings_instruction_item_layout.xml" value="0.2222222222222222" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/tip_item_layout.xml" value="0.27447916666666666" />

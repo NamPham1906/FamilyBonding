@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.usmile.R;
 import com.example.usmile.account.Account;
+import com.example.usmile.account.AccountFactory;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
@@ -165,11 +166,16 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
                     preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
                     preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
 
-                    // assume that this is a user ?
 
-                    Intent intent = new Intent(getContext(), UserMainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+
+                    if (account.type() == AccountFactory.USERSTRING) {
+                        Intent intent = new Intent(getContext(), UserMainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                    else
+                        showToast("Not implement other actor yet");
+
                 })
                 .addOnFailureListener(exception -> {
                     showToast(exception.getMessage());

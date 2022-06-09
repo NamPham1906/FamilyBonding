@@ -16,6 +16,12 @@ import android.widget.Toast;
 
 import com.example.usmile.R;
 import com.example.usmile.login.LoginActivity;
+import com.example.usmile.utilities.Constants;
+import com.example.usmile.utilities.PreferenceManager;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
@@ -25,6 +31,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     TextView instructionButton;
     TextView appInfoButton;
     Button logOutButton;
+    PreferenceManager preferenceManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,6 +42,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        preferenceManager = new PreferenceManager(getContext());
 
         accInfoButton = (TextView) view.findViewById(R.id.accInfoTextView);
         generalSettingButton = (TextView) view.findViewById(R.id.generalSettingTextView);
@@ -81,7 +90,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.logOutBtn:
                 showToast("Log Out");
-                logOut();
+                signOut();
                 break;
         }
 
@@ -104,5 +113,16 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void logOut() {
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
+    }
+
+
+
+    private void signOut() {
+        showToast("Signing out....");
+
+        preferenceManager.clear();
+        getActivity().moveTaskToBack(true);
+        getActivity().finish();
+
     }
 }

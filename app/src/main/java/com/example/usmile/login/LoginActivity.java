@@ -58,9 +58,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)) {
             // assume this is user
-            Intent intent = new Intent(getApplicationContext(), UserMainActivity.class);
-            startActivity(intent);
-            finish();
+
+            if (preferenceManager.getString(Constants.KEY_ACCOUNT_TYPE) == AccountFactory.USERSTRING) {
+                Intent intent = new Intent(getApplicationContext(), UserMainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
         }
 
         loginButton =  this.findViewById(R.id.loginBtn);

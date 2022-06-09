@@ -18,6 +18,7 @@ import com.example.usmile.user.fragment.DetailAcceptedHealthRecordFragment;
 import com.example.usmile.user.fragment.HealthRecordFragment;
 import com.example.usmile.user.fragment.SettingFragment;
 import com.example.usmile.user.fragment.TipsFragment;
+import com.example.usmile.utilities.PreferenceManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class UserMainActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class UserMainActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     Fragment fragment = null;
     User user;
+    PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,9 @@ public class UserMainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_main);
+
+        preferenceManager = new PreferenceManager(getApplicationContext());
+
         fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, new TipsFragment()).commit();

@@ -37,90 +37,52 @@
 
                 android:padding="20dp">
 
-            <RelativeLayout
-                android:id="@+id/account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="70dp"
-                android:layout_marginBottom="20dp">
-                <ImageView
-                    android:id="@+id/accountImageView"
-                    android:layout_width="35dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/account_icon"></ImageView>
-
-                <TextView
-                    android:id="@+id/accountTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:gravity="center_vertical"
-                    android:layout_toRightOf="@+id/accountImageView"
-                    android:text="@string/account"
-                    android:textColor="@color/primary_blue"
-                    android:textSize="20sp" />
-
                 <EditText
-                    android:id="@+id/accountText"
-                    android:layout_width="250dp"
-                    android:layout_height="42dp"
-                    android:layout_toRightOf="@+id/accountTextView"
-                    android:backgroundTint="@color/primary_blue"
+                    android:layout_marginTop="60dp"
+                    android:id="@+id/accountSignInTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/light_blue"
+                    android:drawableStart="@drawable/person"
                     android:drawableEnd="@drawable/edit_pen"
                     android:drawablePadding="8dp"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="5dp"
-                    android:paddingBottom="10dp"
+
+                    android:hint="Tài khoản"
+                    android:drawableTint="@color/primary_blue"
                     android:textColor="@color/primary_blue"
-                    android:textSize="20sp" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/account"
-                >
-                <ImageView
-                    android:id="@+id/passwordImageView"
-                    android:layout_width="35dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/password_icon"></ImageView>
-                <TextView
-                    android:id="@+id/passwordTextView"
-                    android:gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_toRightOf="@+id/passwordImageView"
-                    android:text="@string/password"
-                    android:textColor="@color/primary_blue"
-                    android:textSize="20sp" />
+                    android:textColorHint="@color/primary_blue"
+                    android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/passwordText"
-                    android:layout_width="250dp"
-                    android:layout_height="42dp"
-                    android:layout_toRightOf="@+id/passwordTextView"
-                    android:backgroundTint="@color/primary_blue"
+                    android:id="@+id/passSignInTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/accountSignInTV"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/light_blue"
+                    android:drawableStart="@drawable/lock"
                     android:drawableEnd="@drawable/edit_pen"
                     android:drawablePadding="8dp"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="5dp"
-                    android:paddingBottom="10dp"
+                    android:drawableTint="@color/primary_blue"
+                    android:hint="Mật khẩu"
+                    android:inputType="textPassword"
                     android:textColor="@color/primary_blue"
-                    android:textSize="20sp" />
+                    android:textColorHint="@color/primary_blue"
+                    android:textSize="18sp" />
 
-            </RelativeLayout>
+
+
             <RelativeLayout
-                android:id="@+id/fogotPassword"
-                android:layout_width="match_parent"
+                android:id="@+id/forgotPassword"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@+id/password"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="30dp"
+                android:layout_below="@+id/passSignInTV"
                 android:layout_marginBottom="50dp">
 
                 <TextView
-                    android:id="@+id/fogotPasswordTextView"
+                    android:id="@+id/forgotPasswordTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
@@ -128,14 +90,15 @@
                     android:textAllCaps="false"
                     android:textColor="@color/primary_blue"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="italic|bold" />
+
             </RelativeLayout>
 
             <Button
                 android:id="@+id/loginBtn"
                 android:layout_width="300dp"
                 android:layout_height="55dp"
-                android:layout_below="@+id/fogotPassword"
+                android:layout_below="@+id/forgotPassword"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/all_rounded_button_shape_blue"
                 android:text="@string/login"
@@ -153,7 +116,7 @@
                 android:layout_margin="10dp"
                 android:text="@string/or"
                 android:textColor="@color/primary_blue"
-                android:textSize="15sp"></TextView>
+                android:textSize="15sp"/>
 
                 <Button
                     android:id="@+id/registerBtn"

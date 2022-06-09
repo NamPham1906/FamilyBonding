@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,11 +22,16 @@ import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
 import com.example.usmile.R;
 import com.example.usmile.login.fragment.RegisterFirstFragment;
+import com.example.usmile.user.UserMainActivity;
+import com.example.usmile.utilities.Constants;
+import com.example.usmile.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -35,25 +41,38 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String accountType = "";
     Button loginButton;
     Button registerButton;
-    TextView fogotPasswordTextView;
+    TextView forgotPasswordTextView;
     ProgressBar progressBar;
+
+    EditText accountSignInTV;
+    EditText passwordSignInTV;
+
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        preferenceManager = new PreferenceManager(getApplicationContext());
+
+        if (preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)) {
+            // assume this is user
+            Intent intent = new Intent(getApplicationContext(), UserMainActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         loginButton =  this.findViewById(R.id.loginBtn);
-        loginButton.setOnClickListener(this);
         registerButton = this.findViewById(R.id.registerBtn);
-        registerButton.setOnClickListener(this);
-        fogotPasswordTextView = this.findViewById(R.id.fogotPasswordTextView);
-        fogotPasswordTextView.setOnClickListener(this);
+        forgotPasswordTextView = this.findViewById(R.id.forgotPasswordTextView);
         progressBar = this.findViewById(R.id.progressBar);
+        accountSignInTV = this.findViewById(R.id.accountSignInTV);
+        passwordSignInTV = this.findViewById(R.id.passSignInTV);
 
-
-
+        loginButton.setOnClickListener(this);
+        registerButton.setOnClickListener(this);
+        forgotPasswordTextView.setOnClickListener(this);
 
     }
 
@@ -69,37 +88,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.loginBtn:
-                progressBar.setVisibility(View.VISIBLE);
-                String email = "phamnam0126@gmail.com";
-                String password = "pass123";
 
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressBar.setVisibility(View.INVISIBLE);
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d(TAG, "signInWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    updateUI(user);
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                    updateUI(null);
-                                }
-                            }
-                        });
+
+                if (!isValidLoginDetails())
+                    return;
+
+                signIn();
 
                 break;
             case R.id.registerBtn:
 
                 fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.loginFragmentHolder, RegisterFirstFragment.class, null).commit();
+
                 break;
-            case R.id.forgetPasswordBtn:
+            case R.id.forgotPasswordTextView:
+
+                showToast("Oh hi cool kid ?");
 
                 break;
         }
@@ -115,6 +120,72 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             this.finish();
         }
+    }
+
+    private Boolean isFilledDetail(EditText editText) {
+        String text = editText.getText().toString().trim();
+
+        if (text.isEmpty()) {
+            editText.setError("Không được để trống");
+            return false;
+        } else {
+            editText.setError(null);
+            return true;
+        }
+    }
+
+    private void signIn() {
+
+        String accountStr = accountSignInTV.getText().toString().trim();
+        String password = passwordSignInTV.getText().toString().trim();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .whereEqualTo(Constants.KEY_ACCOUNT_ACCOUNT, accountStr)
+                .whereEqualTo(Constants.KEY_ACCOUNT_PASSWORD, password)
+                .get()
+                .addOnCompleteListener(task -> {
+
+                    if (task.isSuccessful() && task.getResult() != null
+                        && task.getResult().getDocuments().size() > 0) {
+                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+
+                        preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                        preferenceManager.putString(Constants.KEY_ACCOUNT_ID, documentSnapshot.getId());
+
+                        preferenceManager.putString(Constants.KEY_ACCOUNT_AVATAR, documentSnapshot.getString(Constants.KEY_ACCOUNT_AVATAR));
+                        preferenceManager.putString(Constants.KEY_ACCOUNT_FULL_NAME, documentSnapshot.getString(Constants.KEY_ACCOUNT_FULL_NAME));
+                        preferenceManager.putString(Constants.KEY_ACCOUNT_DOB, documentSnapshot.getString(Constants.KEY_ACCOUNT_DOB));
+                        preferenceManager.putString(Constants.KEY_ACCOUNT_GENDER, documentSnapshot.getString(Constants.KEY_ACCOUNT_GENDER));
+
+                        preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, documentSnapshot.getString(Constants.KEY_ACCOUNT_ACCOUNT));
+                        preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, documentSnapshot.getString(Constants.KEY_ACCOUNT_PASSWORD));
+                        preferenceManager.putString(Constants.KEY_ACCOUNT_TYPE, documentSnapshot.getString(Constants.KEY_ACCOUNT_TYPE));
+
+
+                        // assume type = "User"
+                        Intent intent = new Intent(getApplicationContext(), UserMainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } else {
+                        showToast("Unable to sign in");
+                    }
+                });
+    }
+
+    private Boolean isValidLoginDetails() {
+
+        if (!isFilledDetail(accountSignInTV))
+            return false;
+
+        if (!isFilledDetail(passwordSignInTV))
+            return false;
+
+        return true;
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
 }

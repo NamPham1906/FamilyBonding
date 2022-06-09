@@ -89,6 +89,7 @@
                     android:layout_width="300dp"
                     android:layout_height="55dp"
                     android:layout_below="@+id/confirmPassTV"
+                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="30dp"
                     android:background="@drawable/all_rounded_button_shape_light_blue"
@@ -96,8 +97,7 @@
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    app:backgroundTint="@null"
-                    android:layout_alignParentBottom="true"/>
+                    app:backgroundTint="@null" />
             </RelativeLayout>
         </ScrollView>
 

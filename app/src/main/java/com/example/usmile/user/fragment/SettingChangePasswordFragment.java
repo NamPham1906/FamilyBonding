@@ -1,60 +1,52 @@
 package com.example.usmile.user.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.User;
+import com.example.usmile.user.UserMainActivity;
+import com.example.usmile.utilities.Constants;
+import com.example.usmile.utilities.PreferenceManager;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SettingChangePasswordFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SettingChangePasswordFragment extends Fragment {
+import java.util.HashMap;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class SettingChangePasswordFragment extends Fragment implements View.OnClickListener{
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    User user;
+    EditText currentPasswordEditText;
+    EditText newPasswordEditText;
+    EditText confirmPasswordEditText;
 
-    public SettingChangePasswordFragment() {
-        // Required empty public constructor
-    }
+    Button changeButton;
+    Button forgetPasswordButton;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingChangePasswordFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SettingChangePasswordFragment newInstance(String param1, String param2) {
-        SettingChangePasswordFragment fragment = new SettingChangePasswordFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    PreferenceManager preferenceManager;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        preferenceManager = new PreferenceManager(getContext());
+
+        getBundle();
+        bindingView(view);
+        setListeners();
     }
 
     @Override
@@ -62,5 +54,139 @@ public class SettingChangePasswordFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_setting_change_password, container, false);
+    }
+
+    private void bindingView(@NonNull View view) {
+        currentPasswordEditText = (EditText) view.findViewById(R.id.currentPasswordEditText);
+        newPasswordEditText = (EditText) view.findViewById(R.id.newPasswordEditText);
+        confirmPasswordEditText = (EditText) view.findViewById(R.id.confirmPasswordEditText);
+
+        changeButton = (Button) view.findViewById(R.id.changeButton);
+        forgetPasswordButton = (Button) view.findViewById(R.id.forgetPasswordBtn);
+    }
+
+    private void setListeners() {
+        changeButton.setOnClickListener(this);
+        forgetPasswordButton.setOnClickListener(this);
+    }
+
+    private void getBundle() {
+        Bundle bundle = getArguments();
+
+        if (bundle != null)
+            user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+
+        switch (id) {
+            case R.id.changeButton:
+
+                if (!isAllFilled())
+                    return;
+
+                if (!checkCurrentPassword())
+                    return;
+
+                if (!checkNewPasswordMatch())
+                    return;
+
+                updatePassword();
+
+                break;
+            case R.id.forgetPasswordBtn:
+                break;
+        }
+    }
+
+    private boolean isAllFilled() {
+        boolean filled = true;
+
+        String inputPass = currentPasswordEditText.getText().toString().trim();
+        String pass = newPasswordEditText.getText().toString().trim();
+        String confirm = confirmPasswordEditText.getText().toString().trim();
+
+        String error = "Không được để trống";
+
+        if (inputPass.isEmpty()) {
+            filled = false;
+            currentPasswordEditText.setError(error);
+        }
+
+        if (pass.isEmpty()) {
+            filled = false;
+            newPasswordEditText.setError(error);
+        }
+
+        if (confirm.isEmpty()) {
+            filled = false;
+            confirmPasswordEditText.setError(error);
+        }
+
+        return filled;
+    }
+
+    private boolean checkCurrentPassword() {
+        String inputPass = currentPasswordEditText.getText().toString().trim();
+
+        if (inputPass.equals(user.getPassword())) {
+            currentPasswordEditText.setError(null);
+            return true;
+        }
+
+
+        currentPasswordEditText.setError("Mật khẩu không đúng");
+        return false;
+    }
+
+    private boolean checkNewPasswordMatch() {
+        String pass = newPasswordEditText.getText().toString().trim();
+        String confirm = confirmPasswordEditText.getText().toString().trim();
+
+        if (pass.equals(confirm)) {
+            newPasswordEditText.setError(null);
+            confirmPasswordEditText.setError(null);
+            return true;
+        }
+
+        newPasswordEditText.setError("Mật khẩu không giống với xác nhận");
+        confirmPasswordEditText.setError("Mật khẩu xác nhận chưa chính xác");
+        return false;
+    }
+
+    private void updatePassword() {
+        String password = newPasswordEditText.getText().toString().trim();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        DocumentReference documentReference
+                = database.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .document(preferenceManager.getString(Constants.KEY_ACCOUNT_ID));
+
+        HashMap<String, Object> updates = new HashMap<>();
+
+        updates.put(Constants.KEY_ACCOUNT_PASSWORD, password);
+
+        documentReference.update(updates)
+                .addOnSuccessListener(unused -> {
+
+                    preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, password);
+
+                    showToast("Updated password successfully");
+
+                    Intent intent = new Intent(getContext(), UserMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+
+                })
+                .addOnFailureListener(e -> {
+                    showToast("Unable to update password");
+                });
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 }

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".user.fragment.SettingAccountInfoFragment">
 
 
@@ -20,14 +21,20 @@
             android:layout_marginTop="60dp"
             android:background="@drawable/all_rounded_button_shape">
 
-            <ImageView
+
+
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/avatarImageView"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/avatar_image"
                 android:scaleType="centerCrop"
                 android:layout_centerHorizontal="true"
-                android:padding="10dp"
-                android:src="@drawable/example_avatar" />
+                app:riv_oval="true"
+                app:riv_border_width="2dp"
+                app:riv_border_color="#dedede"
+                android:src="@drawable/example_avatar"
+                />
 
             <EditText
                 android:id="@+id/userNameEditText"
@@ -42,7 +49,8 @@
                 android:text="Nam 7749"
                 android:textColor="@color/primary_blue"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
 
             <RelativeLayout

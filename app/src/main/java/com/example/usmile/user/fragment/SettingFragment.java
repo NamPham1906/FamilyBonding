@@ -15,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.account.Account;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.User;
 import com.example.usmile.login.LoginActivity;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
@@ -32,6 +35,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     TextView appInfoButton;
     Button logOutButton;
     PreferenceManager preferenceManager;
+
+    User user;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +50,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         preferenceManager = new PreferenceManager(getContext());
+        getBundle();
 
         accInfoButton = (TextView) view.findViewById(R.id.accInfoTextView);
         generalSettingButton = (TextView) view.findViewById(R.id.generalSettingTextView);
@@ -62,6 +69,13 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    private void getBundle() {
+        Bundle bundle = getArguments();
+
+        if (bundle != null)
+            user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -72,8 +86,13 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         switch (id) {
             case R.id.accInfoTextView:
-                showToast("Account Info");
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountFactory.USERSTRING, user);
+
                 nextFragment = new SettingAccountInfoFragment();
+                nextFragment.setArguments(bundle);
+
                 break;
             case R.id.generalSettingTextView:
                 showToast("General Settings");

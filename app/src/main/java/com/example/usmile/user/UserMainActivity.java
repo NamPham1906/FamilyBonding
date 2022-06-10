@@ -18,6 +18,7 @@ import com.example.usmile.user.fragment.DetailAcceptedHealthRecordFragment;
 import com.example.usmile.user.fragment.HealthRecordFragment;
 import com.example.usmile.user.fragment.SettingFragment;
 import com.example.usmile.user.fragment.TipsFragment;
+import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -36,6 +37,8 @@ public class UserMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_main);
 
         preferenceManager = new PreferenceManager(getApplicationContext());
+
+        loadUserInformation();
 
         fragmentManager = getSupportFragmentManager();
 
@@ -65,8 +68,12 @@ public class UserMainActivity extends AppCompatActivity {
                     }
 
                     else if (R.id.action_settings == id) {
-                        Toast.makeText(UserMainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(AccountFactory.USERSTRING, user);
+
                         fragment = new SettingFragment();
+                        fragment.setArguments(bundle);
                     }
 
                     if (fragment != null) {
@@ -76,6 +83,21 @@ public class UserMainActivity extends AppCompatActivity {
 
                     return true;
         });
+    }
+
+    private void loadUserInformation() {
+        user = new User("");
+
+        user.setAccount(preferenceManager.getString(Constants.KEY_ACCOUNT_ACCOUNT));
+        user.setPassword(preferenceManager.getString(Constants.KEY_ACCOUNT_PASSWORD));
+
+        user.setFullName(preferenceManager.getString(Constants.KEY_ACCOUNT_FULL_NAME));
+        user.setDOB(preferenceManager.getString(Constants.KEY_ACCOUNT_DOB));
+        user.setPhone(preferenceManager.getString(Constants.KEY_ACCOUNT_PHONE));
+        user.setGender(preferenceManager.getString(Constants.KEY_ACCOUNT_GENDER));
+
+        user.setAvatar(preferenceManager.getString(Constants.KEY_ACCOUNT_AVATAR));
+
     }
 
 

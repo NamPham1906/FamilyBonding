@@ -53,10 +53,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.firebase:firebase-client-android:2.5.0'
     implementation platform('com.google.firebase:firebase-bom:30.1.0')
-
-    // Declare the dependency for the Cloud Firestore library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.firebaseui:firebase-ui-firestore:7.1.1'
 
     // Rounded ImageView
     implementation 'com.makeramen:roundedimageview:2.3.0'

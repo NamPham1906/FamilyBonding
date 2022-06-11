@@ -1,32 +1,70 @@
 package com.example.usmile.user.models;
 
-import java.util.Date;
+import com.google.firebase.firestore.PropertyName;
 
-public class Tips {
-    private int ID;
+import java.io.Serializable;
+
+public class Tips implements Serializable {
+
     private String title;
-    private String URL;
+    private String url;
     private String type;
-    private boolean isDeleted;
+    private String short_content;
+    private boolean deleted;
+    private String source;
+    private int resource;
 
 
 
-    public Tips(int ID, String title, String URL, String type) {
-        this.ID = ID;
+    public Tips(String title, String URL, String type, String shortContent) {
         this.title = title;
-        this.URL = URL;
+        this.url = URL;
         this.type = type;
-        this.isDeleted = false;
+        this.short_content = shortContent;
+        this.deleted = false;
     }
 
-    public int getID() {
-        return ID;
+    public Tips(int res, String title, String URL, String type, String shortContent) {
+        this.resource = res;
+        this.title = title;
+        this.url = URL;
+        this.type = type;
+        this.short_content = shortContent;
+        this.deleted = false;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public int getResource() {
+        return resource;
     }
 
+    public void setResource(int resource) {
+        this.resource = resource;
+    }
+
+    public Tips() {
+
+    }
+
+    @PropertyName("source")
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    @PropertyName("short_content")
+    public String getShort_content() {
+        return short_content;
+    }
+
+    public void setShort_content(String short_content) {
+        this.short_content = short_content;
+    }
+
+
+    @PropertyName("title")
     public String getTitle() {
         return title;
     }
@@ -35,21 +73,29 @@ public class Tips {
         this.title = title;
     }
 
-    public String getURL() {
-        return URL;
+    @PropertyName("url")
+    public String getUrl() {
+        return url;
     }
 
     // https://github.com/NamPham1906/USmile/tree/nam -> github.com
     public String getSourceWebsWebsite() {
-        String cut = URL.substring(URL.indexOf("://") + 3);
+        String cut = url.substring(url.indexOf("://") + 3);
         String source = cut.substring(0, cut.indexOf('/'));
         return source;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public String findSource(String url) {
+        String cut = url.substring(url.indexOf("://") + 3);
+        String source = cut.substring(0, cut.indexOf('/'));
+        return source;
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @PropertyName("type")
     public String getType() {
         return type;
     }
@@ -58,11 +104,12 @@ public class Tips {
         this.type = type;
     }
 
+    @PropertyName("deleted")
     public boolean isDeleted() {
-        return isDeleted;
+        return deleted;
     }
 
     public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
+        this.deleted = deleted;
     }
 }

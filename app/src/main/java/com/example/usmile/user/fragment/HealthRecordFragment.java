@@ -66,9 +66,9 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
 
     private void initData() {
         healthRecords = new ArrayList<>();
-        healthRecords.add(new HealthRecord(1,null,"",false,"Ngày 02/06/2022"));
-        healthRecords.add(new HealthRecord(1,null,"",false,"Ngày 04/05/2022"));
-        healthRecords.add(new HealthRecord(1,null,"",false,"Ngày 12/04/2022"));
+        healthRecords.add(new HealthRecord("1",null,"",false,"Ngày 02/06/2022"));
+        healthRecords.add(new HealthRecord("1",null,"",false,"Ngày 04/05/2022"));
+        healthRecords.add(new HealthRecord("1",null,"",false,"Ngày 12/04/2022"));
     }
 
     private void initRecordRecyclerViewMulti() {
@@ -82,11 +82,11 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
 
     private void initDataForMultiAdapter() {
         healthRecords = new ArrayList<>();
-        healthRecords.add(new HealthRecord(1,null,"",false,false,"Ngày 02/06/2022"));
-        healthRecords.add(new HealthRecord(1,null,"",true,false,"Ngày 04/05/2022"));
-        healthRecords.add(new HealthRecord(1,null,"",true,false,"Ngày 12/04/2022"));
-        healthRecords.add(new HealthRecord(1,null,"",false,false,"Ngày 03/04/2022"));
-        healthRecords.add(new HealthRecord(1,null,"",true,false,"Ngày 02/02/2022"));
+        healthRecords.add(new HealthRecord("1",null,"",false,false,"Ngày 02/06/2022"));
+        healthRecords.add(new HealthRecord("1",null,"",true,false,"Ngày 04/05/2022"));
+        healthRecords.add(new HealthRecord("1",null,"",true,false,"Ngày 12/04/2022"));
+        healthRecords.add(new HealthRecord("1",null,"",false,false,"Ngày 03/04/2022"));
+        healthRecords.add(new HealthRecord("1",null,"",true,false,"Ngày 02/02/2022"));
     }
 
     @Override

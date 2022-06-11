@@ -1,10 +1,9 @@
 package com.example.usmile.user.fragment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -13,8 +12,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,19 +23,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.login.fragment.RegisterFirstFragment;
+import com.example.usmile.user.UserMainActivity;
+import com.example.usmile.user.models.HealthRecord;
+import com.example.usmile.utilities.Constants;
+import com.example.usmile.utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 
 public class CollectPictureFragment extends Fragment implements View.OnClickListener {
+
+    FragmentManager fragmentManager;
 
     ImageView firstImageView;
     ImageView secondImageView;
     ImageView thirdImageView;
     ImageView fourthImageView;
+    Button sendBtn;
+    EditText descriptionEditText;
+
+    PreferenceManager preferenceManager;
+    ProgressDialog pd;
 
     final int CAPTURE_FIRST_IMAGE = 1;
     final int CAPTURE_SECOND_IMAGE = 2;
@@ -46,10 +74,14 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
     final int LOAD_THIRD_IMAGE = 7;
     final int LOAD_FOURTH_IMAGE = 8;
 
+    String encodeImage1 = "";
+    String encodeImage2 = "";
+    String encodeImage3 = "";
+    String encodeImage4 = "";
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         firstImageView = (ImageView) view.findViewById(R.id.firstImageView);
         secondImageView = (ImageView) view.findViewById(R.id.secondImageView);
         thirdImageView = (ImageView) view.findViewById(R.id.thirdImageView);
@@ -59,6 +91,104 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         secondImageView.setOnClickListener(this);
         thirdImageView.setOnClickListener(this);
         fourthImageView.setOnClickListener(this);
+
+        pd = new ProgressDialog(getContext());
+
+        descriptionEditText = (EditText) view.findViewById(R.id.descriptionEditText);
+        sendBtn = (Button) view.findViewById(R.id.sendBtn);
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isCompleted())
+                    return;
+
+                sendHealthRecord();
+            }
+        });
+    }
+
+    private void sendHealthRecord() {
+        pd.setTitle("Gửi hồ sơ...");
+        pd.show();
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        HashMap<String, Object> newHealthRecord = new HashMap<>();
+        UUID ID = UUID.randomUUID();
+
+        String description = descriptionEditText.getText().toString().trim();
+        List<String> healthPictures = new ArrayList<>();
+        healthPictures.add(encodeImage1);
+        healthPictures.add(encodeImage2);
+        healthPictures.add(encodeImage3);
+        healthPictures.add(encodeImage4);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String sendDate = sdf.format(new Date());
+
+        newHealthRecord.put("description", description);
+        newHealthRecord.put("health_pictures", healthPictures);
+        newHealthRecord.put("advices", "");
+        newHealthRecord.put("deleted", false);
+        newHealthRecord.put("accepted", false);
+        newHealthRecord.put("send_date", sendDate);
+
+        database.collection("healthRecord").document(ID.toString())
+                .set(newHealthRecord)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        pd.dismiss();
+
+//                    preferenceManager.putString("description", sentData);
+//                    preferenceManager.putString("id", Integer.toString(id));
+//
+//                    preferenceManager.putString("advices", "");
+//                    preferenceManager.putBoolean("deleted", false);
+//                    preferenceManager.putBoolean("accepted", false);
+//
+//                    Intent intent = new Intent(getContext(), UserMainActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    startActivity(intent);
+                        Toast.makeText(getContext(), "successfully uploaded", Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        pd.dismiss();
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+
+    }
+
+    private boolean isCompleted(){
+        if (!isFillEditText(descriptionEditText))
+            return false;
+        if(encodeImage1.equals("") || encodeImage2.equals("") 
+                || encodeImage3.equals("") || encodeImage4.equals(""))
+        {
+            String msg = "Chưa chụp đủ 4 bức ảnh";
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isFillEditText(EditText editText) {
+        String input = editText.getText().toString().trim();
+
+        if (input.isEmpty()) {
+            editText.setError("Không được để trống");
+            return false;
+        } else {
+            editText.setError(null);
+            return true;
+        }
     }
 
 
@@ -93,21 +223,25 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
             switch (requestCode) {
                 case CAPTURE_FIRST_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
+                    encodeImage1 = encodeImage(bp);
                     firstImageView.setImageBitmap(bp);
                     firstImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case CAPTURE_SECOND_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
+                    encodeImage2 = encodeImage(bp);
                     secondImageView.setImageBitmap(bp);
                     secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case CAPTURE_THIRD_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
+                    encodeImage3 = encodeImage(bp);
                     thirdImageView.setImageBitmap(bp);
                     thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case CAPTURE_FOURTH_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
+                    encodeImage4 = encodeImage(bp);
                     fourthImageView.setImageBitmap(bp);
                     fourthImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
@@ -115,9 +249,9 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         }
         else {
             Uri selectedImage = data.getData();
-            Bitmap BitmapFactory = null;
+            Bitmap bp = null;
             try {
-                BitmapFactory = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                bp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
             } catch (IOException e) {
                 Log.i("GALERY", "Some exception " + e);
             }
@@ -135,36 +269,41 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
 
             switch (requestCode) {
                 case LOAD_FIRST_IMAGE:
-                    firstImageView.setImageBitmap(BitmapFactory);
+                    encodeImage1 = encodeImage(bp);
+                    firstImageView.setImageBitmap(bp);
 //                    firstImageView.setImageBitmap(BitmapFactory
 //                            .decodeFile(imgDecodableString));
                     firstImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case LOAD_SECOND_IMAGE:
-                    secondImageView.setImageBitmap(BitmapFactory);
+                    encodeImage2 = encodeImage(bp);
+
+                    secondImageView.setImageBitmap(bp);
 //                    secondImageView.setImageBitmap(BitmapFactory
 //                            .decodeFile(imgDecodableString));
                     secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case LOAD_THIRD_IMAGE:
-                    thirdImageView.setImageBitmap(BitmapFactory);
+                    encodeImage3 = encodeImage(bp);
+
+                    thirdImageView.setImageBitmap(bp);
 //                    thirdImageView.setImageBitmap(BitmapFactory
 //                            .decodeFile(imgDecodableString));
                     thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case LOAD_FOURTH_IMAGE:
-                    fourthImageView.setImageBitmap(BitmapFactory);
+                    encodeImage4 = encodeImage(bp);
+
+                    fourthImageView.setImageBitmap(bp);
 //                    fourthImageView.setImageBitmap(BitmapFactory
 //                            .decodeFile(imgDecodableString));
                     fourthImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
             }
         }
-
-
-
-
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -180,6 +319,18 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
 
         int order = view.getId();
         openChooseSourceOfPictureDialog(order);
+
+    }
+
+    private String encodeImage(Bitmap bitmap) {
+        int previewWidth = 150;
+        int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
+
+        Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
 
     }
 

@@ -1,27 +1,28 @@
 package com.example.usmile.user.models;
 
+import java.util.List;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 public class HealthRecord {
-    private int ID;
+    private String description;
     private List<String> healthPictures;
     private String advices;
     private boolean deleted;
     private String sentDate;
+    private String Description;
     private boolean accepted;
 
-    public HealthRecord(int ID, List<String> healthPictures, String advices, boolean deleted, String sentDate) {
-        this.ID = ID;
+    public HealthRecord(String description, List<String> healthPictures, String advices, boolean deleted, String sentDate) {
+        this.description = description;
         this.healthPictures = healthPictures;
         this.advices = advices;
         this.deleted = deleted;
         this.sentDate = sentDate;
     }
 
-    public HealthRecord(int ID, List<String> healthPictures, String advices, boolean accepted, boolean deleted, String sentDate) {
-        this.ID = ID;
+    public HealthRecord(String description, List<String> healthPictures, String advices, boolean accepted, boolean deleted, String sentDate) {
+        this.description = description;
         this.healthPictures = healthPictures;
         this.advices = advices;
         this.deleted = deleted;
@@ -49,12 +50,12 @@ public class HealthRecord {
         this.sentDate = sentDate;
     }
 
-    public int getID() {
-        return ID;
+    public String getDescription() {
+        return description;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(String description) {
+        this.description = description;
     }
 
     public List<String> getHealthPictures() {

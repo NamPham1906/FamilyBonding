@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.example.usmile.R;
+
+import java.io.IOException;
 
 
 public class CollectPictureFragment extends Fragment implements View.OnClickListener {
@@ -67,10 +70,14 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
 
     public void openGallery(int requestCode) {
 
-        Intent galleryIntent = new Intent(
-                Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(galleryIntent , requestCode );
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, requestCode);
+//        Intent galleryIntent = new Intent(
+//                Intent.ACTION_PICK,
+//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        galleryIntent.setType("image/*");
+//        startActivityForResult(galleryIntent , requestCode );
     }
 
 
@@ -108,37 +115,47 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         }
         else {
             Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
-            // Get the cursor
-            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            // Move to first row
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String imgDecodableString = cursor.getString(columnIndex);
-            cursor.close();
+            Bitmap BitmapFactory = null;
+            try {
+                BitmapFactory = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+            } catch (IOException e) {
+                Log.i("GALERY", "Some exception " + e);
+            }
+//            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//
+//            // Get the cursor
+//            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+//                    filePathColumn, null, null, null);
+//            // Move to first row
+//            cursor.moveToFirst();
+//
+//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//            String imgDecodableString = cursor.getString(columnIndex);
+//            cursor.close();
 
             switch (requestCode) {
                 case LOAD_FIRST_IMAGE:
-                    firstImageView.setImageBitmap(BitmapFactory
-                            .decodeFile(imgDecodableString));
+                    firstImageView.setImageBitmap(BitmapFactory);
+//                    firstImageView.setImageBitmap(BitmapFactory
+//                            .decodeFile(imgDecodableString));
                     firstImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case LOAD_SECOND_IMAGE:
-                    secondImageView.setImageBitmap(BitmapFactory
-                            .decodeFile(imgDecodableString));
+                    secondImageView.setImageBitmap(BitmapFactory);
+//                    secondImageView.setImageBitmap(BitmapFactory
+//                            .decodeFile(imgDecodableString));
                     secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case LOAD_THIRD_IMAGE:
-                    thirdImageView.setImageBitmap(BitmapFactory
-                            .decodeFile(imgDecodableString));
+                    thirdImageView.setImageBitmap(BitmapFactory);
+//                    thirdImageView.setImageBitmap(BitmapFactory
+//                            .decodeFile(imgDecodableString));
                     thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case LOAD_FOURTH_IMAGE:
-                    fourthImageView.setImageBitmap(BitmapFactory
-                            .decodeFile(imgDecodableString));
+                    fourthImageView.setImageBitmap(BitmapFactory);
+//                    fourthImageView.setImageBitmap(BitmapFactory
+//                            .decodeFile(imgDecodableString));
                     fourthImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
             }

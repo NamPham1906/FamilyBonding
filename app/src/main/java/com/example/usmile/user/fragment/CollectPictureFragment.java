@@ -127,6 +127,9 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String sendDate = sdf.format(new Date());
 
+        String id = UUID.randomUUID().toString();
+
+        newHealthRecord.put("id", id);
         newHealthRecord.put(Constants.KEY_ACCOUNT_ID, userID);
         newHealthRecord.put("description", description);
         newHealthRecord.put("healthPictures", healthPictures);
@@ -139,8 +142,8 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                 .add(newHealthRecord)
                 .addOnSuccessListener(documentReference -> {
                     pd.dismiss();
-                    preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, documentReference.getId());
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_ID, userID);
+                    Toast.makeText(getContext(),"upload successed",Toast.LENGTH_LONG).show();
+
                 })
                 .addOnFailureListener(exception -> {
                     pd.dismiss();

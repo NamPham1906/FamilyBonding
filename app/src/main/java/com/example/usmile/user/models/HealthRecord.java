@@ -3,6 +3,7 @@ package com.example.usmile.user.models;
 import java.util.List;
 
 public class HealthRecord {
+    private String id;
     private String accountId;
     private String description;
     private List<String> healthPictures;
@@ -11,7 +12,8 @@ public class HealthRecord {
     private String sentDate;
     private boolean accepted;
 
-    public HealthRecord(String accountId, String description, List<String> healthPictures, String advices, boolean deleted, String sentDate) {
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, String advices, boolean deleted, String sentDate) {
+        this.id = id;
         this.accountId = accountId;
         this.description = description;
         this.healthPictures = healthPictures;
@@ -20,7 +22,8 @@ public class HealthRecord {
         this.sentDate = sentDate;
     }
 
-    public HealthRecord(String accountId, String description, List<String> healthPictures, String advices, boolean accepted, boolean deleted, String sentDate) {
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, String advices, boolean accepted, boolean deleted, String sentDate) {
+        this.id = id;
         this.accountId = accountId;
         this.description = description;
         this.healthPictures = healthPictures;
@@ -32,6 +35,11 @@ public class HealthRecord {
 
     public HealthRecord() {
 
+    }
+    public String getId() { return id;}
+
+    public void setId(String id) {
+        this.id = id;
     }
     public String getAccountId() { return accountId;}
 

@@ -85,7 +85,6 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
     private void initDataForMultiAdapter() {
 
         String user_id = preferenceManager.getString(Constants.KEY_ACCOUNT_ID);
-        Log.d("userid: ", user_id );
 
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
@@ -97,16 +96,17 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
                         for (DocumentSnapshot doc: task.getResult())
                         {
                             List<String> healthPictures = (ArrayList) doc.get("healthPictures");
+                            String id = doc.getString("id");
                             String userID = doc.getString(Constants.KEY_ACCOUNT_ID);
                             String description = doc.getString("description");
                             String advice = doc.getString("advices");
                             String sendDate = doc.getString("sendDate");
                             Boolean deleted = doc.getBoolean("deleted");
                             Boolean accepted = doc.getBoolean("accepted");
-                            healthRecords.add(new HealthRecord(userID, description,
+
+                            healthRecords.add(new HealthRecord(id, userID, description,
                                             healthPictures, advice, accepted, deleted, sendDate));
-                            //hr.setHealthPictures(healthPictures);
-                            //healthRecords.add(hr);
+
                             Log.d("userid",userID );
                             Log.d("description",description );
                             Log.d("accepted", accepted.toString());

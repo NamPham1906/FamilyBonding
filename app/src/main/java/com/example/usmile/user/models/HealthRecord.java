@@ -1,20 +1,18 @@
 package com.example.usmile.user.models;
 
 import java.util.List;
-import java.util.UUID;
 
 public class HealthRecord {
-    private String userID;
+    private String accountId;
     private String description;
     private List<String> healthPictures;
     private String advices;
     private boolean deleted;
     private String sentDate;
-    private String Description;
     private boolean accepted;
 
-    public HealthRecord(String userID, String description, List<String> healthPictures, String advices, boolean deleted, String sentDate) {
-        this.userID = userID;
+    public HealthRecord(String accountId, String description, List<String> healthPictures, String advices, boolean deleted, String sentDate) {
+        this.accountId = accountId;
         this.description = description;
         this.healthPictures = healthPictures;
         this.advices = advices;
@@ -22,8 +20,8 @@ public class HealthRecord {
         this.sentDate = sentDate;
     }
 
-    public HealthRecord(String userID, String description, List<String> healthPictures, String advices, boolean accepted, boolean deleted, String sentDate) {
-        this.userID = userID;
+    public HealthRecord(String accountId, String description, List<String> healthPictures, String advices, boolean accepted, boolean deleted, String sentDate) {
+        this.accountId = accountId;
         this.description = description;
         this.healthPictures = healthPictures;
         this.advices = advices;
@@ -35,10 +33,10 @@ public class HealthRecord {
     public HealthRecord() {
 
     }
-    public String getUserID() { return userID;}
+    public String getAccountId() { return accountId;}
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     public boolean isAccepted() {

@@ -127,15 +127,15 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String sendDate = sdf.format(new Date());
 
-        newHealthRecord.put("user_id", userID);
+        newHealthRecord.put(Constants.KEY_ACCOUNT_ID, userID);
         newHealthRecord.put("description", description);
-        newHealthRecord.put("health_pictures", healthPictures);
+        newHealthRecord.put("healthPictures", healthPictures);
         newHealthRecord.put("advices", "");
         newHealthRecord.put("deleted", false);
         newHealthRecord.put("accepted", false);
-        newHealthRecord.put("send_date", sendDate);
+        newHealthRecord.put("sendDate", sendDate);
 
-        database.collection("health_records")
+        database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
                 .add(newHealthRecord)
                 .addOnSuccessListener(documentReference -> {
                     pd.dismiss();

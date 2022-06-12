@@ -94,6 +94,8 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
 
         pd = new ProgressDialog(getContext());
 
+        preferenceManager = new PreferenceManager(getContext());
+
         descriptionEditText = (EditText) view.findViewById(R.id.descriptionEditText);
         sendBtn = (Button) view.findViewById(R.id.sendBtn);
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -113,8 +115,8 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
 
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, Object> newHealthRecord = new HashMap<>();
-        UUID ID = UUID.randomUUID();
 
+        String userID = preferenceManager.getString(Constants.KEY_ACCOUNT_ID);
         String description = descriptionEditText.getText().toString().trim();
         List<String> healthPictures = new ArrayList<>();
         healthPictures.add(encodeImage1);
@@ -125,6 +127,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String sendDate = sdf.format(new Date());
 
+        newHealthRecord.put("user_id", userID);
         newHealthRecord.put("description", description);
         newHealthRecord.put("health_pictures", healthPictures);
         newHealthRecord.put("advices", "");
@@ -132,35 +135,38 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         newHealthRecord.put("accepted", false);
         newHealthRecord.put("send_date", sendDate);
 
-        database.collection("healthRecord").document(ID.toString())
-                .set(newHealthRecord)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        pd.dismiss();
-
-//                    preferenceManager.putString("description", sentData);
-//                    preferenceManager.putString("id", Integer.toString(id));
-//
-//                    preferenceManager.putString("advices", "");
-//                    preferenceManager.putBoolean("deleted", false);
-//                    preferenceManager.putBoolean("accepted", false);
-//
-//                    Intent intent = new Intent(getContext(), UserMainActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    startActivity(intent);
-                        Toast.makeText(getContext(), "successfully uploaded", Toast.LENGTH_SHORT).show();
-
-                    }
+        database.collection("health_records")
+                .add(newHealthRecord)
+                .addOnSuccessListener(documentReference -> {
+                    pd.dismiss();
+                    preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, documentReference.getId());
+                    preferenceManager.putString(Constants.KEY_ACCOUNT_ID, userID);
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        pd.dismiss();
-                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
+                .addOnFailureListener(exception -> {
+                    pd.dismiss();
+                    Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_LONG).show();
                 });
+//        database.collection("healthRecord").document(ID.toString())
+//                .set(newHealthRecord)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        pd.dismiss();
+////                    Intent intent = new Intent(getContext(), UserMainActivity.class);
+////                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+////                    startActivity(intent);
+//                        Toast.makeText(getContext(), "successfully uploaded", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        pd.dismiss();
+//                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                });
 
 
 

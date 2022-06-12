@@ -22,5 +22,6 @@ public class Constants {
     public static final String KEY_PREFERENCE_NAME = "USmilePreference";
     public static final String KEY_IS_SIGNED_IN = "isSignedIn";
     public static final String KEY_ACCOUNT_ID = "accountId";
+    public static final String KEY_HEALTH_RECORD_ID = "healthRecordID";
 
 }

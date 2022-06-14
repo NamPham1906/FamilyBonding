@@ -48,9 +48,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Predicate;
 
 public class DetailWaitingHealthRecordFragment extends Fragment implements View.OnClickListener {
@@ -195,6 +198,9 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
         newHealthPictures.add(encodeImage3);
         newHealthPictures.add(encodeImage4);
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String sendDate = sdf.format(new Date());
+
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference
                 = database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
@@ -205,7 +211,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
 
         updates.put(Constants.KEY_HEALTH_RECORD_PICTURES, newHealthPictures);
         updates.put(Constants.KEY_HEALTH_RECORD_DESCRIPTION, newDescription);
-
+        updates.put(Constants.KEY_HEALTH_RECORD_DATE, sendDate);
         documentReference.update(updates)
                 .addOnSuccessListener(unused -> {
                     showToast("Updated successfully");

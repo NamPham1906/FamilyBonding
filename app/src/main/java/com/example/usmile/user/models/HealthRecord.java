@@ -7,12 +7,13 @@ public class HealthRecord {
     private String accountId;
     private String description;
     private List<String> healthPictures;
-    private String advices;
+    private List<String> advices;
     private boolean deleted;
     private String sentDate;
     private boolean accepted;
+//    private String dentistId;
 
-    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, String advices, boolean deleted, String sentDate) {
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean deleted, String sentDate) {
         this.id = id;
         this.accountId = accountId;
         this.description = description;
@@ -22,7 +23,7 @@ public class HealthRecord {
         this.sentDate = sentDate;
     }
 
-    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, String advices, boolean accepted, boolean deleted, String sentDate) {
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean accepted, boolean deleted, String sentDate) {
         this.id = id;
         this.accountId = accountId;
         this.description = description;
@@ -79,11 +80,11 @@ public class HealthRecord {
         this.healthPictures = healthPictures;
     }
 
-    public String getAdvices() {
+    public List<String> getAdvices() {
         return advices;
     }
 
-    public void setAdvices(String advices) {
+    public void setAdvices(List<String> advices) {
         this.advices = advices;
     }
 

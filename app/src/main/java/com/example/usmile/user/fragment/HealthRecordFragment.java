@@ -95,17 +95,18 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
                     public void onComplete(Task<QuerySnapshot> task) {
                         for (DocumentSnapshot doc: task.getResult())
                         {
-                            List<String> healthPictures = (ArrayList) doc.get("healthPictures");
+                            List<String> healthPictures = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_PICTURES);
+                            List<String> advices = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_ADVICES);
+
                             String id = doc.getString(Constants.KEY_HEALTH_RECORD_ID);
                             String userID = doc.getString(Constants.KEY_ACCOUNT_ID);
                             String description = doc.getString(Constants.KEY_HEALTH_RECORD_DESCRIPTION);
-                            String advice = doc.getString(Constants.KEY_HEALTH_RECORD_ADVICES);
                             String sendDate = doc.getString(Constants.KEY_HEALTH_RECORD_DATE);
                             Boolean deleted = doc.getBoolean(Constants.KEY_HEALTH_RECORD_DELETED);
                             Boolean accepted = doc.getBoolean(Constants.KEY_HEALTH_RECORD_ACCEPTED);
 
                             healthRecords.add(new HealthRecord(id, userID, description,
-                                            healthPictures, advice, accepted, deleted, sendDate));
+                                            healthPictures, advices, accepted, deleted, sendDate));
 
 //                            Log.d("userid",userID );
 //                            Log.d("description",description );

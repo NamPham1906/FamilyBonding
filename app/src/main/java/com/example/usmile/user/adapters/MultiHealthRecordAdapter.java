@@ -114,6 +114,8 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
         TextView checkPictureButton;
         TextView checkAdviceButton;
 
+        PreferenceManager preferenceManager;
+
         public AcceptedHealthRecordViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -124,6 +126,8 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
 
             checkAdviceButton.setOnClickListener(this);
             checkPictureButton.setOnClickListener(this);
+
+            preferenceManager = new PreferenceManager(context);
         }
 
 
@@ -140,7 +144,7 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
             switch (id) {
                 case R.id.checkAdvicesButton:
                     // this one first
-
+                    preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
                     Fragment accepted = new DetailAcceptedHealthRecordFragment();
                     openNewFragment(view, accepted);
 
@@ -195,8 +199,8 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
             switch (id) {
                 case R.id.editButton:
                     preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
-                    String pm = preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID);
-                    Toast.makeText(context, position + " " + item.getId(), Toast.LENGTH_SHORT).show();
+//                    String pm = preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID);
+//                    Toast.makeText(context, position + " " + item.getId(), Toast.LENGTH_SHORT).show();
                     Fragment fragment = new DetailWaitingHealthRecordFragment();
                     openNewFragment(view, fragment);
 

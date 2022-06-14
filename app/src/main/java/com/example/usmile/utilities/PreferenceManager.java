@@ -2,6 +2,21 @@ package com.example.usmile.utilities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import com.google.common.reflect.TypeToken;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.logging.LogFactory;
+import com.google.gson.Gson;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PreferenceManager {
     private final SharedPreferences sharedPreferences;
@@ -30,9 +45,26 @@ public class PreferenceManager {
         return sharedPreferences.getString(key, null);
     }
 
+    public  void putListString(String key, List<String> value)
+    {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(value);
+        editor.putString(key, json);
+        editor.apply();
+    }
+    public List<String> getListString(String key, List<String> value) {
+
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(key, null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
     public void clear() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
     }
+
 }

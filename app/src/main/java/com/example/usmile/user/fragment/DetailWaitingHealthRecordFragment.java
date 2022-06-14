@@ -137,18 +137,19 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                         String description = doc.getString("description");
                         String sendDate = doc.getString("sendDate");
 
-//                        Log.d("description",description );
-//                        Log.d("sendDate",sendDate );
+                        encodeImage1 = healthPictures.get(0);
+                        encodeImage2 = healthPictures.get(1);
+                        encodeImage3 = healthPictures.get(2);
+                        encodeImage4 = healthPictures.get(3);
 
-                        firstImageView.setImageBitmap(decodeImage(healthPictures.get(0)));
-                        secondImageView.setImageBitmap(decodeImage(healthPictures.get(1)));
-                        thirdImageView.setImageBitmap(decodeImage(healthPictures.get(2)));
-                        fourthImageView.setImageBitmap(decodeImage(healthPictures.get(3)));
+                        firstImageView.setImageBitmap(decodeImage(encodeImage1));
+                        secondImageView.setImageBitmap(decodeImage(encodeImage2));
+                        thirdImageView.setImageBitmap(decodeImage(encodeImage3));
+                        fourthImageView.setImageBitmap(decodeImage(encodeImage4));
 
                         timeDetailTextView.setText("Hồ sơ ngày " + sendDate);
                         askForAdviceEditText.setText(description);
                         editButton.setEnabled(false);
-
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -173,7 +174,6 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                 || id == R.id.thirdPicture || id == R.id.secondPicture)
         {
             openChooseSourceOfPictureDialog(id);
-
         }
         switch (id) {
             case R.id.editButton:
@@ -200,6 +200,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                 = database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
                 .document(preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
 
+
         HashMap<String, Object> updates = new HashMap<>();
 
         updates.put(Constants.KEY_HEALTH_RECORD_PICTURES, newHealthPictures);
@@ -208,11 +209,9 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
         documentReference.update(updates)
                 .addOnSuccessListener(unused -> {
                     showToast("Updated successfully");
-
-
                 })
                 .addOnFailureListener(e -> {
-                    showToast("Unable to update");
+                    Log.e("update health record", e.getMessage());
                 });
 
     }

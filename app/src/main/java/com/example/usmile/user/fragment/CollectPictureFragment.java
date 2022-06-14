@@ -37,6 +37,7 @@ import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
@@ -105,6 +106,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                     return;
 
                 sendHealthRecord();
+//                updateIdHealthRecord();
             }
         });
     }
@@ -139,8 +141,11 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DATE, sendDate);
 
         database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
-                .add(newHealthRecord)
+                .document(id)
+                .set(newHealthRecord)
                 .addOnSuccessListener(documentReference -> {
+//                    preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, documentReference.getId());
+
                     pd.dismiss();
                     Toast.makeText(getContext(),"upload successed",Toast.LENGTH_LONG).show();
 
@@ -149,29 +154,27 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                     pd.dismiss();
                     Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_LONG).show();
                 });
-//        database.collection("healthRecord").document(ID.toString())
-//                .set(newHealthRecord)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        pd.dismiss();
-////                    Intent intent = new Intent(getContext(), UserMainActivity.class);
-////                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-////                    startActivity(intent);
-//                        Toast.makeText(getContext(), "successfully uploaded", Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        pd.dismiss();
-//                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-//
-//                    }
-//                });
+    }
 
+    private void updateIdHealthRecord() {
+        // update -> health record id = document id
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
 
+        DocumentReference documentReference
+                = database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
+                .document(preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
+
+        HashMap<String, Object> updateId = new HashMap<>();
+        updateId.put(Constants.KEY_HEALTH_RECORD_ID,
+                preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
+
+        documentReference.update(updateId)
+                .addOnSuccessListener(unused -> {
+                    Log.d("update record id", preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("error update record id", e.getMessage());
+                });
 
     }
 

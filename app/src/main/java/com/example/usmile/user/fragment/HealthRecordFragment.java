@@ -107,9 +107,9 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
                             healthRecords.add(new HealthRecord(id, userID, description,
                                             healthPictures, advice, accepted, deleted, sendDate));
 
-                            Log.d("userid",userID );
-                            Log.d("description",description );
-                            Log.d("accepted", accepted.toString());
+//                            Log.d("userid",userID );
+//                            Log.d("description",description );
+//                            Log.d("accepted", accepted.toString());
 
                         }
                         Toast.makeText(getContext(), "read db successed", Toast.LENGTH_LONG).show();

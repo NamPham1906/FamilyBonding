@@ -36,7 +36,7 @@ public class HealthRecord {
     public HealthRecord() {
 
     }
-    public String getId() { return id;}
+    public String getId() { return this.id;}
 
     public void setId(String id) {
         this.id = id;

@@ -129,14 +129,14 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
 
         String id = UUID.randomUUID().toString();
 
-        newHealthRecord.put("id", id);
+        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_ID, id);
         newHealthRecord.put(Constants.KEY_ACCOUNT_ID, userID);
-        newHealthRecord.put("description", description);
-        newHealthRecord.put("healthPictures", healthPictures);
-        newHealthRecord.put("advices", "");
-        newHealthRecord.put("deleted", false);
-        newHealthRecord.put("accepted", false);
-        newHealthRecord.put("sendDate", sendDate);
+        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DESCRIPTION, description);
+        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_PICTURES, healthPictures);
+        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_ADVICES, "");
+        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DELETED, false);
+        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_ACCEPTED, false);
+        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DATE, sendDate);
 
         database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
                 .add(newHealthRecord)

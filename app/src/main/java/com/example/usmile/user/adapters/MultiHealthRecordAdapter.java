@@ -1,10 +1,12 @@
 package com.example.usmile.user.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,8 @@ import com.example.usmile.R;
 import com.example.usmile.user.fragment.DetailAcceptedHealthRecordFragment;
 import com.example.usmile.user.fragment.DetailWaitingHealthRecordFragment;
 import com.example.usmile.user.models.HealthRecord;
+import com.example.usmile.utilities.Constants;
+import com.example.usmile.utilities.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,6 +163,11 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
         TextView sentDateTextView;
         TextView editButton;
         TextView cancelButton;
+        Context context;
+
+        PreferenceManager preferenceManager;
+
+
 
         public WaitingHealthRecordViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -171,15 +180,23 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
             // click listener
             editButton.setOnClickListener(this);
             cancelButton.setOnClickListener(this);
+
+            context = itemView.getContext();
+            preferenceManager = new PreferenceManager(context);
+
         }
 
         @Override
         public void onClick(View view) {
             int id = view.getId();
+            int position = getLayoutPosition();
+            HealthRecord item = healthRecords.get(position);
 
             switch (id) {
                 case R.id.editButton:
-
+                    preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
+                    String pm = preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID);
+                    Toast.makeText(context, position + " " + item.getId(), Toast.LENGTH_SHORT).show();
                     Fragment fragment = new DetailWaitingHealthRecordFragment();
                     openNewFragment(view, fragment);
 

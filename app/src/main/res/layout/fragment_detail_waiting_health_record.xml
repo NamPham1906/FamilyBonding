@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient_background"
     tools:context=".user.fragment.DetailWaitingHealthRecordFragment">
 
@@ -24,13 +25,12 @@
                 android:id="@+id/timeDetailTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
                 android:text="Hồ sơ ngày 08/04/2022"
                 android:textColor="@color/primary_blue"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"
-                android:layout_centerHorizontal="true"
-                />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/statusLayout"
@@ -181,28 +181,31 @@
                 android:layout_marginBottom="20dp"
                 android:layout_below="@id/askForAdviceLayout">
 
-                <TextView
+                <Button
                     android:id="@+id/editButton"
+                    android:enabled="false"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_marginStart="10dp"
-                    android:background="@drawable/small_green_button_shape"
+                    android:background="@drawable/small_gray_button_shape"
                     android:gravity="center"
                     android:paddingStart="10dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="5dp"
                     android:text="Chỉnh sửa"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    app:backgroundTint="@null" />
 
-                <TextView
+                <Button
                     android:id="@+id/cancelButton"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/small_pink_button_shape"
                     android:gravity="center"
@@ -212,8 +215,8 @@
                     android:paddingBottom="5dp"
                     android:text="Hủy nhận tư vấn"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_alignParentRight="true"/>
+                    android:textAllCaps="false"
+                    app:backgroundTint="@null" />
             </RelativeLayout>
 
 

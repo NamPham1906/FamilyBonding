@@ -166,15 +166,15 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
                         android:background="@drawable/all_rounded_button_shape_blue"
-                        android:textAllCaps="false"
                         android:paddingStart="10dp"
                         android:paddingTop="5dp"
                         android:paddingEnd="10dp"
                         android:paddingBottom="5dp"
                         android:text="Gửi hồ sơ"
+                        android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textStyle="bold"
-                        app:backgroundTint="@null"/>
+                        app:backgroundTint="@null" />
                 </RelativeLayout>
 
 

@@ -136,9 +136,18 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
 
     }
 
-    private void loadHealthRecordDetails() {
-        String healthRecordId = preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
 
+        return inflater.inflate(R.layout.fragment_detail_waiting_health_record, container, false);
+    }
+
+    private void loadHealthRecordDetails() {
+
+        String healthRecordId = preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID);
+        Log.d("HR ID", healthRecordId );
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
                 .whereEqualTo(Constants.KEY_HEALTH_RECORD_ID, healthRecordId)
@@ -173,13 +182,6 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_waiting_health_record, container, false);
     }
 
     @Override

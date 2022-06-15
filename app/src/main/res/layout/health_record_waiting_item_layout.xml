@@ -84,7 +84,7 @@
                 android:paddingTop="5dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="5dp"
-                android:text="Chỉnh sửa"
+                android:text="Xem chi tiết"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 

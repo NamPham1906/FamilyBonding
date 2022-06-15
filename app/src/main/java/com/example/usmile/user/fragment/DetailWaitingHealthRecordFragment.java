@@ -1,5 +1,6 @@
 package com.example.usmile.user.fragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,13 +9,16 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -58,6 +62,8 @@ import java.util.function.Predicate;
 
 public class DetailWaitingHealthRecordFragment extends Fragment implements View.OnClickListener {
 
+    UserMainActivity main;
+
     final int CAPTURE_FIRST_IMAGE = 1;
     final int CAPTURE_SECOND_IMAGE = 2;
     final int CAPTURE_THIRD_IMAGE = 3;
@@ -87,6 +93,12 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
 
     PreferenceManager preferenceManager;
 
+    AlertDialog cancelDialog;
+    AlertDialog.Builder dialogBuilder;
+
+    Fragment fragment;
+
+
     public DetailWaitingHealthRecordFragment(HealthRecord healthRecord) {
 
     }
@@ -96,7 +108,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        main = (UserMainActivity) getActivity();
         preferenceManager = new PreferenceManager(getContext());
 
         timeDetailTextView = (TextView) view.findViewById(R.id.timeDetailTextView);
@@ -181,11 +193,17 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
         switch (id) {
             case R.id.editButton:
                 updateHealthRecord();
-                Fragment fragment = new HealthRecordFragment();
+                fragment = new HealthRecordFragment();
                 openNewFragment(view, fragment);
                 break;
             case R.id.cancelButton:
-                cancelHealthRecord();
+                try{
+                    createCancelDialog();
+                }
+                catch (Exception e)
+                {
+                    Log.e("CANCEL DIALOG",e.getMessage());
+                }
                 break;
         }
     }
@@ -222,6 +240,55 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
 
     }
     private void cancelHealthRecord() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
+                .document(preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID))
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("DELETE HR", "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Error deleting document", e.getMessage());
+                    }
+                });
+    }
+
+    public void createCancelDialog(){
+        dialogBuilder = new AlertDialog.Builder(main);
+        final View quitPopup = getLayoutInflater().inflate(R.layout.popup_cancel_health_record, null);
+
+        Button quitBtn = (Button) quitPopup.findViewById(R.id.btnQuit);
+        Button cancelBtn = (Button) quitPopup.findViewById(R.id.btnCancel);
+        dialogBuilder.setView(quitPopup);
+        cancelDialog = dialogBuilder.create();
+        cancelDialog.show();
+        cancelDialog.setCanceledOnTouchOutside(false);
+        cancelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        quitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //dimiss dialog
+                cancelHealthRecord();
+                cancelDialog.dismiss();
+                fragment = new HealthRecordFragment();
+                openNewFragment(view, fragment);
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //dimiss dialog
+                cancelDialog.dismiss();
+            }
+        });
     }
 
     private void openNewFragment(View view, Fragment nextFragment) {

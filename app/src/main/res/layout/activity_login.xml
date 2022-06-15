@@ -94,18 +94,18 @@
 
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/loginBtn"
-                android:layout_width="300dp"
-                android:layout_height="55dp"
-                android:layout_below="@+id/forgotPassword"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/all_rounded_button_shape_blue"
-                android:text="@string/login"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:backgroundTint="@null" />
+                <Button
+                    android:id="@+id/loginBtn"
+                    android:layout_width="300dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@+id/forgotPassword"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/all_rounded_button_shape_blue"
+                    android:text="@string/login"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    app:backgroundTint="@null" />
 
             <TextView
                 android:id="@+id/or"

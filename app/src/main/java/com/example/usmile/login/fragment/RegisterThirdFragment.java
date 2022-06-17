@@ -19,6 +19,10 @@ import com.example.usmile.account.AccountFactory;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -32,6 +36,7 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
 
     Account account;
     PreferenceManager preferenceManager;
+    FirebaseAuth mAuth  = FirebaseAuth.getInstance();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -78,6 +83,7 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
 
         if (password.equals(confirmPass)) {
             account.setAccount(accountText);
+            account.setEmail("phamnam0126@gmail.com");
             account.setPassword(password);
             account.setLocked(false);
             account.setDeleted(false);
@@ -133,53 +139,61 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
     }
 
     private void signUp() {
+        mAuth.createUserWithEmailAndPassword(account.email(),account.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    showToast("Sign up complete");
+                    FirebaseFirestore database = FirebaseFirestore.getInstance();
+                    HashMap<String, Object> newAccount = new HashMap<>();
+                    newAccount.put(Constants.KEY_ACCOUNT_TYPE, account.type());
 
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
+                    newAccount.put(Constants.KEY_ACCOUNT_AVATAR, account.getAvatar());
+                    newAccount.put(Constants.KEY_ACCOUNT_FULL_NAME, account.getFullName());
+                    newAccount.put(Constants.KEY_ACCOUNT_DOB, account.getDOB());
+                    newAccount.put(Constants.KEY_ACCOUNT_PHONE, account.getPhone());
+                    newAccount.put(Constants.KEY_ACCOUNT_GENDER, account.getGender());
 
-        HashMap<String, Object> newAccount = new HashMap<>();
+                    newAccount.put(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
+                    newAccount.put(Constants.KEY_ACCOUNT_EMAIL, account.email());
+                    newAccount.put(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
 
-        newAccount.put(Constants.KEY_ACCOUNT_TYPE, account.type());
-
-        newAccount.put(Constants.KEY_ACCOUNT_AVATAR, account.getAvatar());
-        newAccount.put(Constants.KEY_ACCOUNT_FULL_NAME, account.getFullName());
-        newAccount.put(Constants.KEY_ACCOUNT_DOB, account.getDOB());
-        newAccount.put(Constants.KEY_ACCOUNT_PHONE, account.getPhone());
-        newAccount.put(Constants.KEY_ACCOUNT_GENDER, account.getGender());
-
-        newAccount.put(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
-        newAccount.put(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
-
-        database.collection(Constants.KEY_COLLECTION_ACCOUNT)
-                .add(newAccount)
-                .addOnSuccessListener(documentReference -> {
-
-
-                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_ID, documentReference.getId());
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_TYPE, account.type());
-
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_AVATAR, account.getAvatar());
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_FULL_NAME, account.getFullName());
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_DOB,  account.getDOB());
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_GENDER, account.getAccount());
-
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
+                    database.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                            .add(newAccount)
+                            .addOnSuccessListener(documentReference -> {
 
 
+                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_ID, documentReference.getId());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_TYPE, account.type());
 
-                    if (account.type() == AccountFactory.USERSTRING) {
-                        Intent intent = new Intent(getContext(), UserMainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    }
-                    else
-                        showToast("Not implement other actor yet");
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_AVATAR, account.getAvatar());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_FULL_NAME, account.getFullName());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_DOB,  account.getDOB());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_GENDER, account.getAccount());
 
-                })
-                .addOnFailureListener(exception -> {
-                    showToast(exception.getMessage());
-                });
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_EMAIL, account.email());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
+
+
+
+                                if (account.type() == AccountFactory.USERSTRING) {
+                                    Intent intent = new Intent(getContext(), UserMainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                }
+                                else
+                                    showToast("Not implement other actor yet");
+
+                            })
+                            .addOnFailureListener(exception -> {
+                                showToast(exception.getMessage());
+                            });
+                }
+            }
+        });
+
     }
 
     private void showToast(String msg) {

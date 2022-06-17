@@ -21,6 +21,7 @@ import com.example.usmile.account.models.User;
 import com.example.usmile.login.LoginActivity;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -109,7 +110,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.logOutBtn:
                 showToast("Log Out");
-                signOut();
+                 logOut();
+                //signOut();
                 break;
         }
 
@@ -130,6 +132,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     }
 
     private void logOut() {
+        FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
     }

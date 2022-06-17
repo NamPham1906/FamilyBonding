@@ -59,6 +59,9 @@ public class Doctor implements Account {
     }
 
     @Override
+    public void setEmail(String email) { this.email = email; }
+
+    @Override
     public void setAccount(String account) {
         this.account = account;
     }

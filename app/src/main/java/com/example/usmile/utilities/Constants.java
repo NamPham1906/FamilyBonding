@@ -8,6 +8,7 @@ public class Constants {
 
     public static final String KEY_ACCOUNT_TYPE = "type";
 
+    public static final String KEY_ACCOUNT_EMAIL = "email";
     public static final String KEY_ACCOUNT_AVATAR = "avatar";
     public static final String KEY_ACCOUNT_FULL_NAME = "fullname";
     public static final String KEY_ACCOUNT_DOB = "dob";

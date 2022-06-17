@@ -1,6 +1,5 @@
 package com.example.usmile.login;
 
-import static android.content.ContentValues.TAG;
 import static java.lang.Thread.sleep;
 
 import androidx.annotation.NonNull;
@@ -10,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -85,7 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        updateUI(currentUser);
     }
 
     @Override
@@ -97,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (!isValidLoginDetails())
                     return;
 
-                signIn();
+                signInAuth();
 
                 break;
             case R.id.registerBtn:
@@ -136,6 +135,62 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editText.setError(null);
             return true;
         }
+    }
+    private String getEmailFromUsername(String username){
+        //get email in firestore system
+        String result = "";
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        Task<QuerySnapshot> task = database.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .whereEqualTo(Constants.KEY_ACCOUNT_ACCOUNT, username)
+                .get();
+
+        if (task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
+            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+            result = documentSnapshot.getString(Constants.KEY_ACCOUNT_EMAIL);
+
+        } else {
+            if (task.getResult() == null) showToast("login fail:result empty");
+            if (task.getResult().getDocuments().size() <= 0) showToast("login fail:no account found");
+        }
+
+        return result;
+    }
+
+    private void signInAuth() {
+        String accountStr = accountSignInTV.getText().toString().trim();
+        String password = passwordSignInTV.getText().toString().trim();
+        progressBar.setVisibility(View.VISIBLE);
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .whereEqualTo(Constants.KEY_ACCOUNT_ACCOUNT, accountStr)
+                .get()
+                .addOnCompleteListener(task -> {
+
+                            if (task.isSuccessful() && task.getResult() != null
+                                    && task.getResult().getDocuments().size() > 0) {
+                                DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                                String email = documentSnapshot.getString(Constants.KEY_ACCOUNT_EMAIL);
+                                mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        if (task.isSuccessful()){
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            updateUI(user);
+                                        } else{
+                                            showToast("Wrong password");
+                                        }
+
+                                    }
+                                });
+                            }
+                            else {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                showToast("Wrong user name");
+                            }
+                });
+
     }
 
     private void signIn() {

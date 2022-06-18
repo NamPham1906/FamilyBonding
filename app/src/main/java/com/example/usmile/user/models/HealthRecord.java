@@ -1,27 +1,32 @@
 package com.example.usmile.user.models;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public class HealthRecord {
-    private int ID;
+    private String id;
+    private String accountId;
+    private String description;
     private List<String> healthPictures;
-    private String advices;
+    private List<String> advices;
     private boolean deleted;
     private String sentDate;
     private boolean accepted;
+//    private String dentistId;
 
-    public HealthRecord(int ID, List<String> healthPictures, String advices, boolean deleted, String sentDate) {
-        this.ID = ID;
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean deleted, String sentDate) {
+        this.id = id;
+        this.accountId = accountId;
+        this.description = description;
         this.healthPictures = healthPictures;
         this.advices = advices;
         this.deleted = deleted;
         this.sentDate = sentDate;
     }
 
-    public HealthRecord(int ID, List<String> healthPictures, String advices, boolean accepted, boolean deleted, String sentDate) {
-        this.ID = ID;
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean accepted, boolean deleted, String sentDate) {
+        this.id = id;
+        this.accountId = accountId;
+        this.description = description;
         this.healthPictures = healthPictures;
         this.advices = advices;
         this.deleted = deleted;
@@ -31,6 +36,16 @@ public class HealthRecord {
 
     public HealthRecord() {
 
+    }
+    public String getId() { return this.id;}
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getAccountId() { return accountId;}
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     public boolean isAccepted() {
@@ -49,12 +64,12 @@ public class HealthRecord {
         this.sentDate = sentDate;
     }
 
-    public int getID() {
-        return ID;
+    public String getDescription() {
+        return description;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<String> getHealthPictures() {
@@ -65,11 +80,11 @@ public class HealthRecord {
         this.healthPictures = healthPictures;
     }
 
-    public String getAdvices() {
+    public List<String> getAdvices() {
         return advices;
     }
 
-    public void setAdvices(String advices) {
+    public void setAdvices(List<String> advices) {
         this.advices = advices;
     }
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
     EditText passwordTextView;
     EditText confirmPasswordTextView;
     Button registerButton;
+    ProgressBar progressBar;
 
     Account account;
     PreferenceManager preferenceManager;
@@ -60,6 +62,7 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
         passwordTextView = (EditText) view.findViewById(R.id.passTextView);
         confirmPasswordTextView = (EditText) view.findViewById(R.id.confirmPassTV);
         registerButton = (Button) view.findViewById(R.id.registerButton);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
     }
 
     @Override
@@ -83,7 +86,6 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
 
         if (password.equals(confirmPass)) {
             account.setAccount(accountText);
-            account.setEmail("phamnam0126@gmail.com");
             account.setPassword(password);
             account.setLocked(false);
             account.setDeleted(false);
@@ -139,6 +141,7 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
     }
 
     private void signUp() {
+        progressBar.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(account.email(),account.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -156,13 +159,13 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
 
                     newAccount.put(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
                     newAccount.put(Constants.KEY_ACCOUNT_EMAIL, account.email());
-                    newAccount.put(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
+                   // newAccount.put(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
 
                     database.collection(Constants.KEY_COLLECTION_ACCOUNT)
                             .add(newAccount)
                             .addOnSuccessListener(documentReference -> {
 
-
+                                progressBar.setVisibility(View.INVISIBLE);
                                 preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
                                 preferenceManager.putString(Constants.KEY_ACCOUNT_ID, documentReference.getId());
                                 preferenceManager.putString(Constants.KEY_ACCOUNT_TYPE, account.type());
@@ -190,6 +193,9 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
                             .addOnFailureListener(exception -> {
                                 showToast(exception.getMessage());
                             });
+                } else {
+                    showToast("Sign up unsuccessfully!");
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -199,8 +205,6 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
     private void showToast(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
-    private void addSuccessfully() {
 
-    }
 
 }

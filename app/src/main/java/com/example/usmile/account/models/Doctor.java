@@ -34,8 +34,8 @@ public class Doctor implements Account {
     }
 
 
-    public Doctor (String email){
-        this.email = email;
+    public Doctor (){
+
     }
 
     @Override

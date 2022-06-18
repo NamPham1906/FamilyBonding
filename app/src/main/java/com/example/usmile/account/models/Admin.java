@@ -32,8 +32,8 @@ public class Admin implements Account  {
 
 
 
-    public Admin(String email){
-        this.email = email;
+    public Admin(){
+
     }
 
     @Override

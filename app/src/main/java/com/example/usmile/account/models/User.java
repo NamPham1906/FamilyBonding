@@ -131,7 +131,7 @@ public class User implements Account {
 
 
 
-    public User(String email){
-        this.email = email;
+    public User(){
+        ;
     }
 }

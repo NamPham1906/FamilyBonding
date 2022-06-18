@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
 import com.example.usmile.R;
+import com.example.usmile.login.fragment.FogotPasswordFirstFragment;
+import com.example.usmile.login.fragment.FogotPasswordSecondFragment;
 import com.example.usmile.login.fragment.RegisterFirstFragment;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.utilities.Constants;
@@ -91,24 +93,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.loginBtn:
-
-
                 if (!isValidLoginDetails())
                     return;
-
                 signInAuth();
-
                 break;
             case R.id.registerBtn:
 
                 fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.loginFragmentHolder, RegisterFirstFragment.class, null).commit();
-
                 break;
             case R.id.forgotPasswordTextView:
-
-                showToast("Oh hi cool kid ?");
-
+                fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.loginFragmentHolder, FogotPasswordFirstFragment.class, null).commit();
                 break;
         }
     }
@@ -118,7 +114,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String email = user.getEmail();
             accountType = AccountFactory.USERSTRING;
             Intent intent = new Intent(getApplicationContext(), AccountFactory.createAccountClass(accountType));
-            Account account = AccountFactory.createAccount(accountType, email);
+            Account account = AccountFactory.createAccount(accountType);
+            account.setEmail(email);
             intent.putExtra(account.type(), account);
             startActivity(intent);
             this.finish();
@@ -135,25 +132,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editText.setError(null);
             return true;
         }
-    }
-    private String getEmailFromUsername(String username){
-        //get email in firestore system
-        String result = "";
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        Task<QuerySnapshot> task = database.collection(Constants.KEY_COLLECTION_ACCOUNT)
-                .whereEqualTo(Constants.KEY_ACCOUNT_ACCOUNT, username)
-                .get();
-
-        if (task.isSuccessful() && task.getResult() != null && task.getResult().getDocuments().size() > 0) {
-            DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-            result = documentSnapshot.getString(Constants.KEY_ACCOUNT_EMAIL);
-
-        } else {
-            if (task.getResult() == null) showToast("login fail:result empty");
-            if (task.getResult().getDocuments().size() <= 0) showToast("login fail:no account found");
-        }
-
-        return result;
     }
 
     private void signInAuth() {

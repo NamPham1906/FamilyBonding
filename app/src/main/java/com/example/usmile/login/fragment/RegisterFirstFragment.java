@@ -47,13 +47,11 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
     }
 
     private List<Account> getListAccount() {
-        String testEmail = "test@gmail.com";
-
         List<Account> list = new ArrayList<>();
 
-        Account user = AccountFactory.createAccount(AccountFactory.USERSTRING, testEmail);
-        Account doctor = AccountFactory.createAccount(AccountFactory.DOCTORSTRING, testEmail);
-        Account admin = AccountFactory.createAccount(AccountFactory.ADMINSTRING, testEmail);
+        Account user = AccountFactory.createAccount(AccountFactory.USERSTRING);
+        Account doctor = AccountFactory.createAccount(AccountFactory.DOCTORSTRING);
+        Account admin = AccountFactory.createAccount(AccountFactory.ADMINSTRING);
 
         list.add(user);
         list.add(doctor);
@@ -74,7 +72,7 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
         Toast.makeText(getContext(), spinnerAdapter.getItem(i).typeVietsub(), Toast.LENGTH_SHORT).show();
 
         String type = spinnerAdapter.getItem(i).type();
-        newAccount = AccountFactory.createAccount(type,"");
+        newAccount = AccountFactory.createAccount(type);
 
 
     }

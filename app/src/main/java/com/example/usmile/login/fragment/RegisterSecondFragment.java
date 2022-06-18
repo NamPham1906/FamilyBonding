@@ -46,6 +46,7 @@ public class RegisterSecondFragment extends Fragment implements AdapterView.OnIt
     Button contButton;
 
     EditText fullNameText;
+    EditText emailText;
     EditText dobText;
     EditText phoneText;
     FrameLayout layoutImage;
@@ -103,6 +104,7 @@ public class RegisterSecondFragment extends Fragment implements AdapterView.OnIt
         fullNameText = (EditText) view.findViewById(R.id.fullNameText);
         dobText = (EditText) view.findViewById(R.id.dobText);
         phoneText = (EditText) view.findViewById(R.id.phoneText);
+        emailText = (EditText) view.findViewById(R.id.emailText);
         layoutImage = (FrameLayout) view.findViewById(R.id.layoutImage);
         imageProfile = (RoundedImageView) view.findViewById(R.id.imageProfile);
         textAddImage = (TextView) view.findViewById(R.id.textAddImage);
@@ -174,19 +176,21 @@ public class RegisterSecondFragment extends Fragment implements AdapterView.OnIt
             return false;
         if (!isFillEditText(phoneText))
             return false;
-
+        if (!isFillEditText(emailText))
+            return false;
 
         // waiting
         String fullname = fullNameText.getText().toString().trim();
         String dob = dobText.getText().toString().trim();
         String phone = phoneText.getText().toString().trim();
-
+        String email = emailText.getText().toString().trim();
 
         account.setFullName(fullname);
         account.setDOB(dob);
         account.setPhone(phone);
         account.setGender(gender);
         account.setAvatar(encodedImage);
+        account.setEmail(email);
 
         return true;
     }

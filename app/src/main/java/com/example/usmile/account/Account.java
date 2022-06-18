@@ -12,6 +12,7 @@ public interface Account extends Serializable {
     boolean getLocked();
     boolean getDeleted();
 
+    void setEmail(String email);
     void setAccount(String account);
     void setPassword(String password);
     void setLocked(boolean locked);

@@ -94,12 +94,27 @@
                 android:textColor="@color/light_blue"
                 android:textColorHint="@color/light_blue"
                 android:textSize="15sp" />
+            <EditText
+                android:id="@+id/emailText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dobText"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/light_blue"
+                android:drawableStart="@drawable/phone"
+                android:drawableEnd="@drawable/edit_pen"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/light_blue"
+                android:hint="Email"
+                android:textColor="@color/light_blue"
+                android:textColorHint="@color/light_blue"
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/phoneText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/dobText"
+                android:layout_below="@+id/emailText"
                 android:layout_marginTop="15dp"
                 android:backgroundTint="@color/light_blue"
                 android:drawableStart="@drawable/phone"
@@ -110,6 +125,8 @@
                 android:textColor="@color/light_blue"
                 android:textColorHint="@color/light_blue"
                 android:textSize="15sp" />
+
+
 
             <Spinner
                 android:layout_marginTop="15dp"
@@ -138,7 +155,7 @@
                 android:layout_marginTop="170dp"
                 android:layout_marginBottom="50dp"
                 android:background="@drawable/all_rounded_button_shape_light_blue"
-                android:text="Tiếp tục"
+                android:text="@string/continueTV"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="20sp"

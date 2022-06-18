@@ -1,11 +1,14 @@
 package com.example.usmile.utilities;
 
 public class Constants {
+
+    // for Account Interface
     public static final String KEY_COLLECTION_ACCOUNT = "accounts";
 
 
     public static final String KEY_ACCOUNT_TYPE = "type";
 
+    public static final String KEY_ACCOUNT_EMAIL = "email";
     public static final String KEY_ACCOUNT_AVATAR = "avatar";
     public static final String KEY_ACCOUNT_FULL_NAME = "fullname";
     public static final String KEY_ACCOUNT_DOB = "dob";
@@ -31,5 +34,18 @@ public class Constants {
     public static final String KEY_HEALTH_RECORD_DATE  = "sendDate";
     public static final String KEY_HEALTH_RECORD_DELETED  = "deleted";
     public static final String KEY_HEALTH_RECORD_ACCEPTED  = "accepted";
+
+    // for tips
+    public static final String KEY_COLLECTION_TIP = "tips";
+
+    public static final String KEY_TIP_URL = "url";
+    public static final String KEY_TIP_TITLE = "title";
+    public static final String KEY_TIP_TYPE = "type";
+    public static final String KEY_TIP_SHORT_CONTENT = "short_content";
+    public static final String KEY_TIP_DELETED_STATUS = "deleted";
+
+    public static final String KEY_TIP_SYSTEM_ID = "tip_id";
+
+
 
 }

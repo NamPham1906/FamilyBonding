@@ -86,7 +86,7 @@ public class UserMainActivity extends AppCompatActivity {
     }
 
     private void loadUserInformation() {
-        user = new User("");
+        user = new User();
 
         user.setAccount(preferenceManager.getString(Constants.KEY_ACCOUNT_ACCOUNT));
         user.setPassword(preferenceManager.getString(Constants.KEY_ACCOUNT_PASSWORD));

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,10 @@ import com.example.usmile.account.AccountFactory;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -29,9 +34,11 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
     EditText passwordTextView;
     EditText confirmPasswordTextView;
     Button registerButton;
+    ProgressBar progressBar;
 
     Account account;
     PreferenceManager preferenceManager;
+    FirebaseAuth mAuth  = FirebaseAuth.getInstance();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -55,6 +62,7 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
         passwordTextView = (EditText) view.findViewById(R.id.passTextView);
         confirmPasswordTextView = (EditText) view.findViewById(R.id.confirmPassTV);
         registerButton = (Button) view.findViewById(R.id.registerButton);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
     }
 
     @Override
@@ -133,60 +141,70 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
     }
 
     private void signUp() {
+        progressBar.setVisibility(View.VISIBLE);
+        mAuth.createUserWithEmailAndPassword(account.email(),account.getPassword()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    showToast("Sign up complete");
+                    FirebaseFirestore database = FirebaseFirestore.getInstance();
+                    HashMap<String, Object> newAccount = new HashMap<>();
+                    newAccount.put(Constants.KEY_ACCOUNT_TYPE, account.type());
 
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
+                    newAccount.put(Constants.KEY_ACCOUNT_AVATAR, account.getAvatar());
+                    newAccount.put(Constants.KEY_ACCOUNT_FULL_NAME, account.getFullName());
+                    newAccount.put(Constants.KEY_ACCOUNT_DOB, account.getDOB());
+                    newAccount.put(Constants.KEY_ACCOUNT_PHONE, account.getPhone());
+                    newAccount.put(Constants.KEY_ACCOUNT_GENDER, account.getGender());
 
-        HashMap<String, Object> newAccount = new HashMap<>();
+                    newAccount.put(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
+                    newAccount.put(Constants.KEY_ACCOUNT_EMAIL, account.email());
+                   // newAccount.put(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
 
-        newAccount.put(Constants.KEY_ACCOUNT_TYPE, account.type());
+                    database.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                            .add(newAccount)
+                            .addOnSuccessListener(documentReference -> {
 
-        newAccount.put(Constants.KEY_ACCOUNT_AVATAR, account.getAvatar());
-        newAccount.put(Constants.KEY_ACCOUNT_FULL_NAME, account.getFullName());
-        newAccount.put(Constants.KEY_ACCOUNT_DOB, account.getDOB());
-        newAccount.put(Constants.KEY_ACCOUNT_PHONE, account.getPhone());
-        newAccount.put(Constants.KEY_ACCOUNT_GENDER, account.getGender());
+                                progressBar.setVisibility(View.INVISIBLE);
+                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_ID, documentReference.getId());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_TYPE, account.type());
 
-        newAccount.put(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
-        newAccount.put(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_AVATAR, account.getAvatar());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_FULL_NAME, account.getFullName());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_DOB,  account.getDOB());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_GENDER, account.getAccount());
 
-        database.collection(Constants.KEY_COLLECTION_ACCOUNT)
-                .add(newAccount)
-                .addOnSuccessListener(documentReference -> {
-
-
-                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_ID, documentReference.getId());
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_TYPE, account.type());
-
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_AVATAR, account.getAvatar());
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_FULL_NAME, account.getFullName());
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_DOB,  account.getDOB());
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_GENDER, account.getAccount());
-
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
-                    preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_EMAIL, account.email());
+                                preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
 
 
 
-                    if (account.type() == AccountFactory.USERSTRING) {
-                        Intent intent = new Intent(getContext(), UserMainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    }
-                    else
-                        showToast("Not implement other actor yet");
+                                if (account.type() == AccountFactory.USERSTRING) {
+                                    Intent intent = new Intent(getContext(), UserMainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                }
+                                else
+                                    showToast("Not implement other actor yet");
 
-                })
-                .addOnFailureListener(exception -> {
-                    showToast(exception.getMessage());
-                });
+                            })
+                            .addOnFailureListener(exception -> {
+                                showToast(exception.getMessage());
+                            });
+                } else {
+                    showToast("Sign up unsuccessfully!");
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
     }
 
     private void showToast(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
-    private void addSuccessfully() {
 
-    }
 
 }

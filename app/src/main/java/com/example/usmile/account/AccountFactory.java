@@ -15,15 +15,15 @@ public class AccountFactory {
     final static public String ADMINSTRING_VN = "Quản trị";
 
 
-    public static Account createAccount(String accountType, String email) {
+    public static Account createAccount(String accountType) {
 
         switch(accountType) {
             case USERSTRING:
-                return new User(email);
+                return new User();
             case DOCTORSTRING:
-                return new Doctor(email);
+                return new Doctor();
             case ADMINSTRING:
-                return new Admin(email);
+                return new Admin();
             default:
                 return null;
         }

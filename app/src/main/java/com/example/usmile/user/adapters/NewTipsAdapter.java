@@ -7,19 +7,13 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.usmile.R;
-import com.example.usmile.user.models.InstructionItem;
 import com.example.usmile.user.models.Tips;
 
 import java.util.ArrayList;
@@ -65,9 +59,9 @@ public class NewTipsAdapter extends RecyclerView.Adapter<NewTipsAdapter.NewTipsV
         holder.sourceTextView.setText(item.getSourceWebsWebsite());
         holder.titleTextView.setText(item.getTitle());
         holder.timeTextView.setText("2 phút trước");
-        holder.tipImageView.setImageResource(R.drawable.example_avatar);
+        holder.tipImageView.setImageResource(item.getResource());
 
-        source = item.getURL();
+        source = item.getUrl();
     }
 
     @Override
@@ -106,7 +100,6 @@ public class NewTipsAdapter extends RecyclerView.Adapter<NewTipsAdapter.NewTipsV
                     context.startActivity(i);
                 }
             });
-
         }
     }
 }

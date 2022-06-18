@@ -30,8 +30,10 @@ public class Admin implements Account  {
         return this.email;
     }
 
-    public Admin(String email){
-        this.email = email;
+
+
+    public Admin(){
+
     }
 
     @Override
@@ -58,6 +60,9 @@ public class Admin implements Account  {
     public void setAccount(String account) {
         this.account = account;
     }
+
+    @Override
+    public void setEmail(String email) { this.email = email; }
 
     @Override
     public void setPassword(String password) {

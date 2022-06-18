@@ -53,6 +53,7 @@ public class User implements Account {
         return deleted;
     }
 
+
     @Override
     public void setAccount(String account) {
         this.account = account;
@@ -130,7 +131,7 @@ public class User implements Account {
 
 
 
-    public User(String email){
-        this.email = email;
+    public User(){
+        ;
     }
 }

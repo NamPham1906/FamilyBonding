@@ -1,6 +1,5 @@
 package com.example.usmile.login;
 
-import static android.content.ContentValues.TAG;
 import static java.lang.Thread.sleep;
 
 import androidx.annotation.NonNull;
@@ -10,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +19,8 @@ import android.widget.Toast;
 import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
 import com.example.usmile.R;
+import com.example.usmile.login.fragment.FogotPasswordFirstFragment;
+import com.example.usmile.login.fragment.FogotPasswordSecondFragment;
 import com.example.usmile.login.fragment.RegisterFirstFragment;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.utilities.Constants;
@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -85,31 +86,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
+        updateUI(currentUser);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.loginBtn:
-
-
                 if (!isValidLoginDetails())
                     return;
-
-                signIn();
-
+                signInAuth();
                 break;
             case R.id.registerBtn:
 
                 fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.loginFragmentHolder, RegisterFirstFragment.class, null).commit();
-
                 break;
             case R.id.forgotPasswordTextView:
-
-                showToast("Oh hi cool kid ?");
-
+                fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.loginFragmentHolder, FogotPasswordFirstFragment.class, null).commit();
                 break;
         }
     }
@@ -119,7 +114,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String email = user.getEmail();
             accountType = AccountFactory.USERSTRING;
             Intent intent = new Intent(getApplicationContext(), AccountFactory.createAccountClass(accountType));
-            Account account = AccountFactory.createAccount(accountType, email);
+            Account account = AccountFactory.createAccount(accountType);
+            account.setEmail(email);
             intent.putExtra(account.type(), account);
             startActivity(intent);
             this.finish();
@@ -136,6 +132,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             editText.setError(null);
             return true;
         }
+    }
+
+    private void signInAuth() {
+        String accountStr = accountSignInTV.getText().toString().trim();
+        String password = passwordSignInTV.getText().toString().trim();
+        progressBar.setVisibility(View.VISIBLE);
+
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        database.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .whereEqualTo(Constants.KEY_ACCOUNT_ACCOUNT, accountStr)
+                .get()
+                .addOnCompleteListener(task -> {
+
+                            if (task.isSuccessful() && task.getResult() != null
+                                    && task.getResult().getDocuments().size() > 0) {
+                                DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                                String email = documentSnapshot.getString(Constants.KEY_ACCOUNT_EMAIL);
+                                mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        if (task.isSuccessful()){
+                                            FirebaseUser user = mAuth.getCurrentUser();
+                                            updateUI(user);
+                                        } else{
+                                            showToast("Wrong password");
+                                        }
+
+                                    }
+                                });
+                            }
+                            else {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                showToast("Wrong user name");
+                            }
+                });
+
     }
 
     private void signIn() {

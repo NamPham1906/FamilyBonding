@@ -21,6 +21,10 @@ import com.example.usmile.account.models.User;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -159,8 +163,22 @@ public class SettingChangePasswordFragment extends Fragment implements View.OnCl
 
     private void updatePassword() {
         String password = newPasswordEditText.getText().toString().trim();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+        user.updatePassword(password)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            showToast("Updated password successfully");
+                        } else {
+                            showToast("Unable to update password");
+                        }
+                    }
+                });
+
+        /*FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference
                 = database.collection(Constants.KEY_COLLECTION_ACCOUNT)
                 .document(preferenceManager.getString(Constants.KEY_ACCOUNT_ID));
@@ -183,7 +201,7 @@ public class SettingChangePasswordFragment extends Fragment implements View.OnCl
                 })
                 .addOnFailureListener(e -> {
                     showToast("Unable to update password");
-                });
+                });*/
     }
 
     private void showToast(String msg) {

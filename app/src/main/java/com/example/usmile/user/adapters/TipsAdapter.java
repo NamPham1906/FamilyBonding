@@ -1,6 +1,8 @@
 package com.example.usmile.user.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.usmile.R;
 import com.example.usmile.user.models.Tips;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +24,8 @@ public class TipsAdapter extends RecyclerView.Adapter<TipsAdapter.TipsViewHolder
 
     private List<Tips> tipsList;
     private Context context;
+
+    String source;
 
     public TipsAdapter(List<Tips> newTips) {
         this.tipsList = newTips;
@@ -55,13 +57,15 @@ public class TipsAdapter extends RecyclerView.Adapter<TipsAdapter.TipsViewHolder
         if (item == null)
             return;
 
-        holder.tipsAvatar.setImageResource(R.drawable.example_avatar);
+        holder.tipsAvatar.setImageResource(item.getResource());
 
         holder.titleTextView.setText(item.getTitle());
         holder.sourceTextView.setText(item.getSourceWebsWebsite());
         holder.timeTextView.setText("2 giờ trước");
 
-        holder.contentTextView.setText("Bạn luôn băn khoăn mỗi lần lựa chọn bàn chải với nhiều sự ...");
+        holder.contentTextView.setText(item.getShort_content());
+
+        source = item.getUrl();
     }
 
     @Override
@@ -89,6 +93,16 @@ public class TipsAdapter extends RecyclerView.Adapter<TipsAdapter.TipsViewHolder
             sourceTextView = (TextView) itemView.findViewById(R.id.sourceTextView);
             timeTextView = (TextView) itemView.findViewById(R.id.timeTextView);
             checkDetailsButton = (TextView) itemView.findViewById(R.id.checkDetailButton);
+
+            checkDetailsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String url = source;
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    context.startActivity(i);
+                }
+            });
         }
 
 

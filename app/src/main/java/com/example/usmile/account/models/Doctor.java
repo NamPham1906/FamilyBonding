@@ -34,8 +34,8 @@ public class Doctor implements Account {
     }
 
 
-    public Doctor (String email){
-        this.email = email;
+    public Doctor (){
+
     }
 
     @Override
@@ -57,6 +57,9 @@ public class Doctor implements Account {
     public boolean getDeleted() {
         return deleted;
     }
+
+    @Override
+    public void setEmail(String email) { this.email = email; }
 
     @Override
     public void setAccount(String account) {

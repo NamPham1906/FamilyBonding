@@ -46,6 +46,9 @@ public class Constants {
 
     public static final String KEY_TIP_SYSTEM_ID = "tip_id";
 
+    // for doctor
+    public static final String KEY_ACCOUNT_WORKPLACE = "workPlace";
+
 
 
 }

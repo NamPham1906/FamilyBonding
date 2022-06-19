@@ -17,7 +17,9 @@ import android.widget.Toast;
 import com.example.usmile.R;
 import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
+import com.example.usmile.doctor.fragment.SettingDoctorAccountInfoFragment;
 import com.example.usmile.login.LoginActivity;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
@@ -38,6 +40,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     PreferenceManager preferenceManager;
 
     User user;
+    Account account;
+    String type;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +56,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         preferenceManager = new PreferenceManager(getContext());
         getBundle();
+        showToast(account.type());
 
         accInfoButton = (TextView) view.findViewById(R.id.accInfoTextView);
         generalSettingButton = (TextView) view.findViewById(R.id.generalSettingTextView);
@@ -73,8 +78,19 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private void getBundle() {
         Bundle bundle = getArguments();
 
-        if (bundle != null)
-            user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
+        if (bundle != null) {
+            type = bundle.getString("TYPE");
+
+            if (type.equals(AccountFactory.USERSTRING)) {
+                account = (User) bundle.getSerializable(AccountFactory.USERSTRING);
+            } else if (type.equals(AccountFactory.DOCTORSTRING)) {
+                account = (Doctor) bundle.getSerializable(AccountFactory.DOCTORSTRING);
+            }
+        }
+
+        // original code
+        /*if (bundle != null)
+            user = (User) bundle.getSerializable(AccountFactory.USERSTRING);*/
     }
 
 
@@ -89,10 +105,24 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             case R.id.accInfoTextView:
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(AccountFactory.USERSTRING, user);
 
-                nextFragment = new SettingAccountInfoFragment();
-                nextFragment.setArguments(bundle);
+                if (type.equals(AccountFactory.USERSTRING)) {
+                    bundle.putSerializable(AccountFactory.USERSTRING, account);
+
+                    nextFragment = new SettingAccountInfoFragment();
+                    nextFragment.setArguments(bundle);
+                } else if (type.equals(AccountFactory.DOCTORSTRING))  {
+                    bundle.putSerializable(AccountFactory.DOCTORSTRING, account);
+
+                    nextFragment = new SettingDoctorAccountInfoFragment();
+                    nextFragment.setArguments(bundle);
+                }
+
+                // original code
+                //bundle.putSerializable(AccountFactory.USERSTRING, user);
+
+                //nextFragment = new SettingAccountInfoFragment();
+                //nextFragment.setArguments(bundle);
 
                 break;
             case R.id.generalSettingTextView:

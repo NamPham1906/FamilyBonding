@@ -151,12 +151,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     && task.getResult().getDocuments().size() > 0) {
                                 DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                                 String email = documentSnapshot.getString(Constants.KEY_ACCOUNT_EMAIL);
+
                                 mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         progressBar.setVisibility(View.INVISIBLE);
                                         if (task.isSuccessful()){
                                             FirebaseUser user = mAuth.getCurrentUser();
+
+                                            // ....
+                                            preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_ID, documentSnapshot.getId());
+
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_AVATAR, documentSnapshot.getString(Constants.KEY_ACCOUNT_AVATAR));
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_FULL_NAME, documentSnapshot.getString(Constants.KEY_ACCOUNT_FULL_NAME));
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_DOB, documentSnapshot.getString(Constants.KEY_ACCOUNT_DOB));
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_GENDER, documentSnapshot.getString(Constants.KEY_ACCOUNT_GENDER));
+
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, documentSnapshot.getString(Constants.KEY_ACCOUNT_ACCOUNT));
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, documentSnapshot.getString(Constants.KEY_ACCOUNT_PASSWORD));
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_TYPE, documentSnapshot.getString(Constants.KEY_ACCOUNT_TYPE));
+                                            // ....
                                             updateUI(user);
                                         } else{
                                             showToast("Wrong password");

@@ -16,6 +16,9 @@ public class Doctor implements Account {
     private String phone;
     private String avatar;
 
+    private String workPlace;
+
+
 
 
     @Override
@@ -35,7 +38,15 @@ public class Doctor implements Account {
 
 
     public Doctor (){
+        workPlace = "Chưa cập nhật";
+    }
 
+    public String getWorkPlace() {
+        return workPlace;
+    }
+
+    public void setWorkPlace(String workPlace) {
+        this.workPlace = workPlace;
     }
 
     @Override

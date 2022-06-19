@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.usmile.R;
 import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
+import com.example.usmile.doctor.DoctorMainActivity;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
@@ -186,14 +187,18 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                 }
-                                else
-                                    showToast("Not implement other actor yet");
+                                else if (account.type() == AccountFactory.DOCTORSTRING) {
+                                    Intent intent = new Intent(getContext(), DoctorMainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                }
 
                             })
                             .addOnFailureListener(exception -> {
                                 showToast(exception.getMessage());
                             });
                 } else {
+                    showToast(task.getException().toString());
                     showToast("Sign up unsuccessfully!");
                     progressBar.setVisibility(View.INVISIBLE);
                 }

@@ -79,8 +79,6 @@ public class UserMainActivity extends AppCompatActivity {
                     if (fragment != null) {
                         fragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, fragment).commit();
                     }
-
-
                     return true;
         });
     }

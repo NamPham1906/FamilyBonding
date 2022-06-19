@@ -3,6 +3,7 @@ package com.example.usmile.account;
 import com.example.usmile.account.models.Admin;
 import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
+import com.example.usmile.doctor.DoctorMainActivity;
 import com.example.usmile.user.UserMainActivity;
 
 public class AccountFactory {
@@ -35,7 +36,7 @@ public class AccountFactory {
             case USERSTRING:
                 return UserMainActivity.class;
             case DOCTORSTRING:
-                //return DoctorMainActivity.class;
+                return DoctorMainActivity.class;
             case ADMINSTRING:
                 //return AdminMainActivity.class;
             default:

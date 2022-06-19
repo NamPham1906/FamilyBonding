@@ -112,7 +112,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void updateUI(FirebaseUser user){
         if (user!=null) {
             String email = user.getEmail();
-            accountType = AccountFactory.USERSTRING;
+            //accountType = AccountFactory.USERSTRING;
+            accountType = preferenceManager.getString(Constants.KEY_ACCOUNT_TYPE);
+
             Intent intent = new Intent(getApplicationContext(), AccountFactory.createAccountClass(accountType));
             Account account = AccountFactory.createAccount(accountType);
             account.setEmail(email);

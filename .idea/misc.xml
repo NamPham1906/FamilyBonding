@@ -32,6 +32,9 @@
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/doctor_waiting_health_record.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_account_info.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_collect_picture.xml" value="0.264" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_detail_accepted_health_record.xml" value="0.2564814814814815" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_detail_waiting_health_record.xml" value="0.2564814814814815" />
+        <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_doctor_detail_waiting_health_record.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_health_record.xml" value="0.2601851851851852" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_received_health_record.xml" value="0.27447916666666666" />
         <entry key="..\:/Coding/AndroidPractice/USmile/app/src/main/res/layout/fragment_register_first.xml" value="0.2638888888888889" />

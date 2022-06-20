@@ -10,9 +10,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.usmile.R;
+import com.example.usmile.doctor.fragment.DoctorDetailWaitingHealthRecordFragment;
+import com.example.usmile.user.fragment.DetailWaitingHealthRecordFragment;
 import com.example.usmile.user.models.HealthRecord;
 
 import java.util.List;
@@ -58,19 +62,6 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
         holder.senderAvatar.setImageResource(R.drawable.example_avatar);
         holder.senderName.setText("Nam 7749");
 
-        holder.checkHealthRecordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showToast("Not implement yet");
-            }
-        });
-
-        holder.skipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showToast("Not implement either");
-            }
-        });
 
     }
 
@@ -85,7 +76,9 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
         return healthRecords.size();
     }
 
-    public class DoctorWaitingHealthRecordViewHolder extends RecyclerView.ViewHolder {
+
+
+    public class DoctorWaitingHealthRecordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView senderAvatar;
         TextView senderName;
@@ -106,6 +99,36 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
 
             checkHealthRecordButton = (TextView) itemView.findViewById(R.id.checkHealthRecordButton);
             skipButton = (TextView) itemView.findViewById(R.id.skipButton);
+
+            skipButton.setOnClickListener(this);
+            checkHealthRecordButton.setOnClickListener(this);
+        }
+
+        private void openNewFragment(View view, Fragment nextFragment) {
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainFragmentHolder, nextFragment).addToBackStack(null).commit();
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            int id = view.getId();
+            int position = getLayoutPosition();
+            HealthRecord item = healthRecords.get(position);
+
+            switch (id) {
+                case R.id.checkHealthRecordButton:
+
+                    Fragment fragment = new DoctorDetailWaitingHealthRecordFragment();
+                    openNewFragment(view, fragment);
+
+
+                    break;
+                case R.id.skipButton:
+                    break;
+            }
+
         }
     }
 }

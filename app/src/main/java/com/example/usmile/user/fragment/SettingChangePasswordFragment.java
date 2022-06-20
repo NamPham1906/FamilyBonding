@@ -16,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.utilities.Constants;
@@ -33,6 +35,7 @@ import java.util.HashMap;
 public class SettingChangePasswordFragment extends Fragment implements View.OnClickListener{
 
     User user;
+    Account account;
     EditText currentPasswordEditText;
     EditText newPasswordEditText;
     EditText confirmPasswordEditText;
@@ -77,8 +80,19 @@ public class SettingChangePasswordFragment extends Fragment implements View.OnCl
     private void getBundle() {
         Bundle bundle = getArguments();
 
-        if (bundle != null)
-            user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
+        if (bundle != null) {
+            String type = bundle.getString("TYPE");
+
+            if (type.equals(AccountFactory.USERSTRING)) {
+                account = (User) bundle.getSerializable(AccountFactory.USERSTRING);
+            } else if (type.equals(AccountFactory.DOCTORSTRING)) {
+                account = (Doctor) bundle.getSerializable(AccountFactory.DOCTORSTRING);
+            }
+
+        }
+
+        //if (bundle != null)
+            //user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
     }
 
 
@@ -136,7 +150,7 @@ public class SettingChangePasswordFragment extends Fragment implements View.OnCl
     private boolean checkCurrentPassword() {
         String inputPass = currentPasswordEditText.getText().toString().trim();
 
-        if (inputPass.equals(user.getPassword())) {
+        if (inputPass.equals(account.getPassword())) {
             currentPasswordEditText.setError(null);
             return true;
         }

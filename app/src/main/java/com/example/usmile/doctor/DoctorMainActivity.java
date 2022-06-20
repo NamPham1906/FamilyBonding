@@ -48,7 +48,7 @@ public class DoctorMainActivity extends AppCompatActivity {
 
             switch (id) {
                 case R.id.doc_action_tips:
-                    showToast("Doc Tips");
+
                     fragment = new TipsFragment();
                     break;
                 case R.id.action_check_history:
@@ -58,7 +58,7 @@ public class DoctorMainActivity extends AppCompatActivity {
                     showToast("Give advices");
                     break;
                 case R.id.doc_action_settings:
-                    showToast("Settings docs");
+
 
                     Bundle bundle = new Bundle();
                     bundle.putString("TYPE", AccountFactory.DOCTORSTRING);

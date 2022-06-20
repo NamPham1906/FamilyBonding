@@ -171,6 +171,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, documentSnapshot.getString(Constants.KEY_ACCOUNT_ACCOUNT));
                                             preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, documentSnapshot.getString(Constants.KEY_ACCOUNT_PASSWORD));
                                             preferenceManager.putString(Constants.KEY_ACCOUNT_TYPE, documentSnapshot.getString(Constants.KEY_ACCOUNT_TYPE));
+
+                                            if (documentSnapshot.get(Constants.KEY_ACCOUNT_TYPE).equals(AccountFactory.DOCTORSTRING)) {
+                                                preferenceManager.putString(Constants.KEY_ACCOUNT_WORKPLACE, documentSnapshot.getString(Constants.KEY_ACCOUNT_WORKPLACE));
+                                            }
+                                            //if (documentSnapshot.getString())
                                             // ....
                                             updateUI(user);
                                         } else{

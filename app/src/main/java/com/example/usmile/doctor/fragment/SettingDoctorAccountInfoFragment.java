@@ -1,5 +1,6 @@
 package com.example.usmile.doctor.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,6 +29,7 @@ import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
 import com.example.usmile.doctor.DoctorMainActivity;
 import com.example.usmile.user.UserMainActivity;
+import com.example.usmile.user.fragment.SettingChangePasswordFragment;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
 import com.google.firebase.firestore.DocumentReference;
@@ -131,22 +133,37 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
         workPlaceEditText.setText(doctor.getWorkPlace());
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
 
         int id = view.getId();
 
+        Fragment nextFragment = null;
+
         switch (id) {
             case R.id.docCancelButton:
+                showToast("Cancel");
                 break;
             case R.id.docConfirmButton:
                 updateInfo();
                 break;
             case R.id.docChangePasswordTextView:
+                Bundle bundle = new Bundle();
+                bundle.putString("TYPE", AccountFactory.DOCTORSTRING);
+
+                bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+
+                nextFragment = new SettingChangePasswordFragment();
+                nextFragment.setArguments(bundle);
                 break;
             case R.id.docAvatarImageView:
                 selectImage();
                 break;
+        }
+
+        if (id == R.id.docChangePasswordTextView) {
+            openNewFragment(nextFragment);
         }
 
     }

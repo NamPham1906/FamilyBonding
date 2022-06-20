@@ -146,6 +146,8 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
         switch (id) {
             case R.id.changePasswordTextView:
                 Bundle bundle = new Bundle();
+                bundle.putString("TYPE", AccountFactory.USERSTRING);
+
                 bundle.putSerializable(AccountFactory.USERSTRING, user);
 
                 nextFragment = new SettingChangePasswordFragment();

@@ -160,6 +160,11 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
 
                     newAccount.put(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
                     newAccount.put(Constants.KEY_ACCOUNT_EMAIL, account.email());
+
+
+                    if (account.type() == AccountFactory.DOCTORSTRING)
+                        newAccount.put(Constants.KEY_ACCOUNT_WORKPLACE, "Chưa cập nhật");
+
                    // newAccount.put(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
 
                     database.collection(Constants.KEY_COLLECTION_ACCOUNT)
@@ -182,12 +187,16 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
 
 
 
-                                if (account.type() == AccountFactory.USERSTRING) {
+
+                                if (account.type().equals(AccountFactory.USERSTRING)) {
                                     Intent intent = new Intent(getContext(), UserMainActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                 }
-                                else if (account.type() == AccountFactory.DOCTORSTRING) {
+                                else if (account.type().equals(AccountFactory.DOCTORSTRING)) {
+
+                                    preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, "Chưa cập nhật");
+
                                     Intent intent = new Intent(getContext(), DoctorMainActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);

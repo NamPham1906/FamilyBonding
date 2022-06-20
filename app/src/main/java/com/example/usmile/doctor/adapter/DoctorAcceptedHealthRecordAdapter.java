@@ -10,10 +10,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.usmile.R;
+import com.example.usmile.doctor.fragment.DoctorDetailReceivedHealthRecordFragment;
+import com.example.usmile.doctor.fragment.DoctorDetailWaitingHealthRecordFragment;
+import com.example.usmile.doctor.fragment.DoctorGiveSpecificAdviceFragment;
 import com.example.usmile.user.models.HealthRecord;
 
 import java.util.List;
@@ -64,19 +69,6 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
             holder.statusTextView.setTextColor(ContextCompat.getColor(context, R.color.primary_yellow));
         }
 
-        holder.checkDetailHealthRecordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showToast("Not implement yet");
-            }
-        });
-
-        holder.archiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showToast("Not implement either");
-            }
-        });
     }
 
     @Override
@@ -90,7 +82,7 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
         Toast.makeText(context.getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
-    public class DoctorAcceptedHealthRecordViewHolder extends RecyclerView.ViewHolder {
+    public class DoctorAcceptedHealthRecordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageView patientAvatar;
         TextView patientName;
@@ -101,6 +93,8 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
         TextView checkDetailHealthRecordButton;
         TextView archiveButton;
 
+
+
         public DoctorAcceptedHealthRecordViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -110,8 +104,39 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
             statusTextView = (TextView) itemView.findViewById(R.id.statusTextView);
             patientMessage = (TextView) itemView.findViewById(R.id.patientMessage);
 
+
+
             checkDetailHealthRecordButton = (TextView) itemView.findViewById(R.id.checkDetailHealthRecordButton);
             archiveButton = (TextView) itemView.findViewById(R.id.archiveButton);
+
+
+            checkDetailHealthRecordButton.setOnClickListener(this);
+            archiveButton.setOnClickListener(this);
+
+        }
+
+        private void openNewFragment(View view, Fragment nextFragment) {
+            AppCompatActivity activity = (AppCompatActivity) view.getContext();
+            activity.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainFragmentHolder, nextFragment).addToBackStack(null).commit();
+        }
+
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            int position = getLayoutPosition();
+            HealthRecord item = healthRecords.get(position);
+
+            Fragment fragment = null;
+
+            switch (id) {
+                case R.id.checkDetailHealthRecordButton:
+                    fragment = new DoctorDetailReceivedHealthRecordFragment();
+                    openNewFragment(view, fragment);
+                    break;
+                case R.id.archiveButton:
+                    break;
+            }
         }
     }
 }

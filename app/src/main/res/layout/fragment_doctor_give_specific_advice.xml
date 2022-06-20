@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".doctor.fragment.DoctorGiveSpecificAdviceFragment">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/all_rounded_button_shape"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp">
+
+        <RelativeLayout
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/infoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/patientFirstDetailPicture"
+                    android:layout_width="100dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentStart="true"
+                    android:background="@drawable/blue_border_rounded_shape"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/example_avatar" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toLeftOf="@id/patientFirstDetailPicture"
+                    android:layout_toEndOf="@id/patientFirstDetailPicture"
+                    android:background="@drawable/all_rounded_button_shape"
+                    android:backgroundTint="#DEF2FE">
+
+                    <TextView
+                        android:id="@+id/firstTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:text="Tư vấn"
+                        android:textColor="@color/primary_blue"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/firstDetailAdvice"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/firstTitle"
+                        android:backgroundTint="@color/primary_blue"
+                        android:padding="5dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:text="Răng khôn có dấu hiệu mọc xiên vào răng kế bên"
+                        android:textColor="#808080"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/infoLayout"
+                android:background="@drawable/all_rounded_button_shape"
+                android:backgroundTint="#DEF2FE">
+
+                <TextView
+                    android:id="@+id/doctorRequirement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:paddingStart="15dp"
+                    android:text="Yêu cầu của nha sĩ"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/doctorRequirementTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/doctorRequirement"
+                    android:backgroundTint="@color/primary_blue"
+                    android:padding="5dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="Em đang mọc răng khôn, cần tới phòng khám gấp để nha sĩ xử lí, tránh tình trạng răng mọc lệch.  "
+                    android:textColor="#808080"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+
+</FrameLayout>

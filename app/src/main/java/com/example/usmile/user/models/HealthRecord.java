@@ -11,6 +11,8 @@ public class HealthRecord {
     private boolean deleted;
     private String sentDate;
     private boolean accepted;
+
+    private boolean isAdvised;
     //    private String dentistId;
 
 
@@ -39,6 +41,14 @@ public class HealthRecord {
 
     public HealthRecord() {
 
+    }
+
+    public boolean isAdvised() {
+        return isAdvised;
+    }
+
+    public void setAdvised(boolean advised) {
+        isAdvised = advised;
     }
 
     public String getId() { return this.id;}

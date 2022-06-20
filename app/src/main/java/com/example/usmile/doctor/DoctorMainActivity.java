@@ -11,6 +11,7 @@ import com.example.usmile.R;
 import com.example.usmile.account.AccountFactory;
 import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
+import com.example.usmile.doctor.fragment.ReceivedHealthRecordListFragment;
 import com.example.usmile.doctor.fragment.WaitingHealthRecordListFragment;
 import com.example.usmile.user.fragment.SettingFragment;
 import com.example.usmile.user.fragment.TipsFragment;
@@ -53,7 +54,8 @@ public class DoctorMainActivity extends AppCompatActivity {
                     fragment = new TipsFragment();
                     break;
                 case R.id.action_check_history:
-                    showToast("Check history");
+                    showToast("Received HealthRecord");
+                    fragment = new ReceivedHealthRecordListFragment();
                     break;
                 case R.id.action_give_advices:
                     showToast("Waiting HealthRecord");
@@ -61,7 +63,6 @@ public class DoctorMainActivity extends AppCompatActivity {
 
                     break;
                 case R.id.doc_action_settings:
-
 
                     Bundle bundle = new Bundle();
                     bundle.putString("TYPE", AccountFactory.DOCTORSTRING);

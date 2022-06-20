@@ -11,7 +11,10 @@ public class HealthRecord {
     private boolean deleted;
     private String sentDate;
     private boolean accepted;
-//    private String dentistId;
+    //    private String dentistId;
+
+
+
 
     public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean deleted, String sentDate) {
         this.id = id;
@@ -37,12 +40,14 @@ public class HealthRecord {
     public HealthRecord() {
 
     }
+
     public String getId() { return this.id;}
 
     public void setId(String id) {
         this.id = id;
     }
     public String getAccountId() { return accountId;}
+
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;

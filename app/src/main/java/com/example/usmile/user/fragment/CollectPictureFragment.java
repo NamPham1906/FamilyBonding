@@ -141,6 +141,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DELETED, false);
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_ACCEPTED, false);
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DATE, sendDate);
+        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DENTIST_ID, "");
 
         database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
                 .document(id)

@@ -13,12 +13,12 @@ public class HealthRecord {
     private boolean accepted;
 
     private boolean isAdvised;
-    //    private String dentistId;
+    private String dentistId;
 
 
 
 
-    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean deleted, String sentDate) {
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean deleted, String sentDate, String dentistId) {
         this.id = id;
         this.accountId = accountId;
         this.description = description;
@@ -26,9 +26,10 @@ public class HealthRecord {
         this.advices = advices;
         this.deleted = deleted;
         this.sentDate = sentDate;
+        this.dentistId = dentistId;
     }
 
-    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean accepted, boolean deleted, String sentDate) {
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean accepted, boolean deleted, String sentDate, String dentistId) {
         this.id = id;
         this.accountId = accountId;
         this.description = description;
@@ -37,6 +38,8 @@ public class HealthRecord {
         this.deleted = deleted;
         this.sentDate = sentDate;
         this.accepted = accepted;
+        this.dentistId = dentistId;
+
     }
 
     public HealthRecord() {
@@ -109,5 +112,13 @@ public class HealthRecord {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getDentistId() {
+        return dentistId;
+    }
+
+    public void setDentistId(String dentistId) {
+        this.dentistId = dentistId;
     }
 }

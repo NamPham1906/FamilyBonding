@@ -82,6 +82,8 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
         recordRecyclerView.setHasFixedSize(true);
     }
 
+
+
     private void initDataForMultiAdapter() {
 
         String user_id = preferenceManager.getString(Constants.KEY_ACCOUNT_ID);
@@ -104,9 +106,10 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
                             String sendDate = doc.getString(Constants.KEY_HEALTH_RECORD_DATE);
                             Boolean deleted = doc.getBoolean(Constants.KEY_HEALTH_RECORD_DELETED);
                             Boolean accepted = doc.getBoolean(Constants.KEY_HEALTH_RECORD_ACCEPTED);
+                            String dentistId = doc.getString(Constants.KEY_HEALTH_RECORD_DENTIST_ID);
 
                             healthRecords.add(new HealthRecord(id, userID, description,
-                                            healthPictures, advices, accepted, deleted, sendDate));
+                                            healthPictures, advices, accepted, deleted, sendDate, dentistId));
 
 //                            Log.d("userid",userID );
 //                            Log.d("description",description );
@@ -129,6 +132,8 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
 //        healthRecords.add(new HealthRecord("1","",null,"",false,false,"Ngày 03/04/2022"));
 //        healthRecords.add(new HealthRecord("1","",null,"",true,false,"Ngày 02/02/2022"));
     }
+
+
 
     @Override
     public void onClick(View view) {

@@ -1,7 +1,11 @@
 package com.example.usmile.doctor.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +22,15 @@ import com.example.usmile.R;
 import com.example.usmile.doctor.fragment.DoctorDetailWaitingHealthRecordFragment;
 import com.example.usmile.user.fragment.DetailWaitingHealthRecordFragment;
 import com.example.usmile.user.models.HealthRecord;
+import com.example.usmile.utilities.Constants;
+import com.example.usmile.utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<DoctorWaitingHealthRecordAdapter.DoctorWaitingHealthRecordViewHolder>{
@@ -26,6 +38,7 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
 
     private List<HealthRecord> healthRecords;
     private Context context;
+    PreferenceManager preferenceManager;
 
     public DoctorWaitingHealthRecordAdapter(List<HealthRecord> list) {
         this.healthRecords = list;
@@ -50,6 +63,7 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
     @Override
     public void onBindViewHolder(@NonNull DoctorWaitingHealthRecordViewHolder holder, int position) {
         HealthRecord item = healthRecords.get(position);
+        preferenceManager = new PreferenceManager(this.context);
 
         if (item == null)
             return;
@@ -57,12 +71,54 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
 
         holder.senderMessage.setText(item.getDescription());
         holder.sendDate.setText(item.getSentDate());
+        userInfor(item);
+        try
+        {
+            String ava = preferenceManager.getString(Constants.KEY_GET_USER_AVATAR);
+            Bitmap bitmap = decodeImage(ava);
+            holder.senderAvatar.setImageBitmap(bitmap);
+        }
+        catch (Exception e)
+        {
+            Log.e("ERR", e.getMessage());
+        }
+
+        holder.senderName.setText(preferenceManager.getString(Constants.KEY_GET_USER_NAME));
 
         // from account id -> load user avatar and name from firestore
-        holder.senderAvatar.setImageResource(R.drawable.example_avatar);
-        holder.senderName.setText("Nam 7749");
+//        holder.senderAvatar.setImageResource(R.drawable.example_avatar);
+//        holder.senderName.setText("fake name");
 
 
+    }
+
+    private void userInfor(HealthRecord hr) {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = db.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .document(hr.getAccountId());
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        preferenceManager.putString(Constants.KEY_GET_USER_NAME,
+                                doc.getString(Constants.KEY_ACCOUNT_FULL_NAME));
+                        preferenceManager.putString(Constants.KEY_GET_USER_AVATAR,
+                                doc.getString(Constants.KEY_ACCOUNT_AVATAR));
+//                        Log.d("AVA", preferenceManager.getString(Constants.KEY_GET_USER_AVATAR));
+//                        Log.d("NAME", preferenceManager.getString(Constants.KEY_GET_USER_NAME));
+
+
+                    } else {
+                        Log.d("DEN-ID", "No such document");
+                    }
+                } else {
+                    Log.d("DEN-ID", "get failed with ", task.getException());
+                }
+            }
+        });
     }
 
     private void showToast(String msg) {
@@ -75,6 +131,13 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
             return 0;
         return healthRecords.size();
     }
+
+    private Bitmap decodeImage(String encodedImage) {
+        byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        return bitmap;
+    }
+
 
 
 

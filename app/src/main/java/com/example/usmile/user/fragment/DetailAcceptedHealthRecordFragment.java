@@ -30,11 +30,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.user.models.HealthRecord;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -110,6 +112,33 @@ public class DetailAcceptedHealthRecordFragment extends Fragment {
 
     }
 
+    private void getDentistInfo(String dentistId)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = db.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .document(dentistId);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        preferenceManager.putString(Constants.KEY_GET_DENTIST_NAME,
+                                doc.getString(Constants.KEY_ACCOUNT_FULL_NAME));
+                        preferenceManager.putString(Constants.KEY_GET_DENTIST_WORKPLACE,
+                                doc.getString(Constants.KEY_DENTIST_WORKPLACE));
+
+                    } else {
+                        Log.d("DEN-ID", "No such document");
+                    }
+                } else {
+                    Log.d("DEN-ID", "get failed with ", task.getException());
+                }
+            }
+        });
+
+    }
+
     private void loadHealthRecordDetails() {
         String healthRecordId = preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID);
 
@@ -123,8 +152,16 @@ public class DetailAcceptedHealthRecordFragment extends Fragment {
                         DocumentSnapshot doc = task.getResult().getDocuments().get(0);
 
                         List<String> healthPictures = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_PICTURES);
-                        String description = doc.getString("description");
-                        String sendDate = doc.getString("sendDate");
+                        String description = doc.getString(Constants.KEY_HEALTH_RECORD_DESCRIPTION);
+                        String sendDate = doc.getString(Constants.KEY_HEALTH_RECORD_DATE);
+                        String dentistID = doc.getString(Constants.KEY_HEALTH_RECORD_DENTIST_ID);
+                        getDentistInfo(dentistID);
+                        String dentistName = preferenceManager.getString(Constants.KEY_GET_DENTIST_NAME);
+                        String dentistWorkPlace = preferenceManager.getString(Constants.KEY_GET_DENTIST_WORKPLACE);
+
+
+                        doctorFullNameTextView.setText("Bác sĩ " + dentistName);
+                        doctorWorkPlaceTextView.setText("Phòng khám nha khoa " + dentistWorkPlace);
 
                         recordTimeTextView.setText("Hồ sơ ngày" + sendDate);
 

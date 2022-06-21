@@ -29,9 +29,14 @@ import com.example.usmile.user.fragment.HealthRecordFragment;
 import com.example.usmile.user.models.HealthRecord;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +49,15 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
     private List<HealthRecord> healthRecords;
     private Context context;
 
+    PreferenceManager preferenceManager;
+
+
+
+
 
     public MultiHealthRecordAdapter(List<HealthRecord> healthRecords) {
         this.healthRecords = healthRecords;
+
     }
 
     public MultiHealthRecordAdapter() {
@@ -56,6 +67,7 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
 
         if (ACCEPTED_HEALTH_RECORD == viewType) {
 
@@ -82,7 +94,6 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         HealthRecord item = healthRecords.get(position);
-
         if (item == null)
             return;
 
@@ -90,9 +101,11 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
             AcceptedHealthRecordViewHolder acceptedHealthRecordViewHolder = (AcceptedHealthRecordViewHolder) holder;
 
             acceptedHealthRecordViewHolder.dateTimeTextView.setText(item.getSentDate());
+            preferenceManager = new PreferenceManager(this.context);
 
             // should add this property to Health Record ?
-            acceptedHealthRecordViewHolder.statusDetailTextView.setText("BS Nguyễn Tấn Hưng đã tiếp nhận");
+            String dentistName = getDentistName(item);
+            acceptedHealthRecordViewHolder.statusDetailTextView.setText("BS " + dentistName + " đã tiếp nhận");
         } else if (WAITING_HEALTH_RECORD == holder.getItemViewType()) {
 
             WaitingHealthRecordViewHolder waitingHealthRecordViewHolder = (WaitingHealthRecordViewHolder) holder;
@@ -102,6 +115,36 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
 
     }
 
+    private String getDentistName(@NonNull HealthRecord hr)
+    {
+        preferenceManager = new PreferenceManager(this.context);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = db.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .document(hr.getDentistId());
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        preferenceManager.putString(Constants.KEY_GET_DENTIST_NAME,
+                                doc.getString(Constants.KEY_ACCOUNT_FULL_NAME));
+//                        Toast.makeText(context,doc.getId(),
+//                                Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Log.d("DEN-ID", "No such document");
+                    }
+                } else {
+                    Log.d("DEN-ID", "get failed with ", task.getException());
+                }
+            }
+        });
+        String dentistName = preferenceManager.getString(Constants.KEY_GET_DENTIST_NAME);
+
+        return dentistName;
+    }
     @Override
     public int getItemCount() {
         if (healthRecords == null)

@@ -199,10 +199,11 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
                 case R.id.checkDetailHealthRecordButton:
                     if (item.isAccepted() == true && !item.getDentistId().equals("")) {
                         preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
-                        preferenceManager.putListString(Constants.KEY_HEALTH_RECORD_ADVICES, item.getAdvices());
+                        preferenceManager.putString(Constants.KEY_GET_USER_ID, item.getAccountId());
                         fragment = new DoctorDetailReceivedHealthRecordFragment();
                         openNewFragment(view, fragment);
                     } else if (!item.isAccepted() && !item.getDentistId().equals("")) {
+                        preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
                         fragment = new DoctorGiveSpecificAdviceFragment();
                         openNewFragment(view, fragment);
                     }

@@ -31,7 +31,7 @@
             android:id="@+id/btnQuit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hủy"
+            android:text="Bỏ qua"
             android:textSize="16sp"
             android:paddingHorizontal="5dp"
             android:background="@drawable/small_blue_button_shape"

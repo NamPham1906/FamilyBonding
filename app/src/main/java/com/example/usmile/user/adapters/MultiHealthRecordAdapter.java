@@ -274,7 +274,7 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
                     preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
 
                     try{
-                        showAlertDialog(view.getContext());
+                        createCancelDialog(view.getContext());
                     }
                     catch (Exception e)
                     {
@@ -304,7 +304,7 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
                     });
         }
 
-        public void showAlertDialog(Context context) {
+        public void createCancelDialog(Context context) {
             dialogBuilder = new AlertDialog.Builder(context);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
             final View cancelPopup = inflater.inflate( R.layout.popup_cancel_health_record, null );

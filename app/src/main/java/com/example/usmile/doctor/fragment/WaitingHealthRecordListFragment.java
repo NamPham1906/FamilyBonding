@@ -87,7 +87,7 @@ public class WaitingHealthRecordListFragment extends Fragment {
 
                         }
                         Toast.makeText(getContext(), "read db successed", Toast.LENGTH_LONG).show();
-                        for (int i = 0; i < healthRecords.size(); i++)
+                        for (int i = healthRecords.size() - 1; i >= 0; i--)
                         {
 
                             List<String> del = healthRecords.get(i).getDeleted();
@@ -101,7 +101,10 @@ public class WaitingHealthRecordListFragment extends Fragment {
                                 {
                                     Log.d("delete id", str);
                                     if(str.equals(preferenceManager.getString(Constants.KEY_ACCOUNT_ID)))
+                                    {
                                         healthRecords.remove(i);
+                                    }
+
                                 }
                             }
 

@@ -3,6 +3,7 @@ package com.example.usmile.doctor.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.util.Base64;
 import android.util.Log;
@@ -94,6 +95,9 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
             holder.statusTextView.setTextColor(ContextCompat.getColor(context, R.color.primary_green));
         } else if (!item.isAccepted() && !item.getDentistId().equals("")) {
             holder.statusTextView.setText("Chờ tư vấn");
+            holder.checkDetailHealthRecordButton.setText("Tư vấn");
+            holder.archiveButton.setEnabled(false);
+            holder.archiveButton.setBackground(ContextCompat.getDrawable(context, R.drawable.small_gray_button_shape));
             holder.statusTextView.setTextColor(ContextCompat.getColor(context, R.color.primary_yellow));
         }
 
@@ -193,8 +197,16 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
 
             switch (id) {
                 case R.id.checkDetailHealthRecordButton:
-                    fragment = new DoctorDetailReceivedHealthRecordFragment();
-                    openNewFragment(view, fragment);
+                    if (item.isAccepted() == true && !item.getDentistId().equals("")) {
+                        preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
+                        preferenceManager.putListString(Constants.KEY_HEALTH_RECORD_ADVICES, item.getAdvices());
+                        fragment = new DoctorDetailReceivedHealthRecordFragment();
+                        openNewFragment(view, fragment);
+                    } else if (!item.isAccepted() && !item.getDentistId().equals("")) {
+                        fragment = new DoctorGiveSpecificAdviceFragment();
+                        openNewFragment(view, fragment);
+                    }
+
                     break;
                 case R.id.archiveButton:
                     break;

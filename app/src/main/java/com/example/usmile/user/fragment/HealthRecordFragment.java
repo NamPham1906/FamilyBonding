@@ -99,12 +99,12 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
                         {
                             List<String> healthPictures = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_PICTURES);
                             List<String> advices = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_ADVICES);
+                            List<String> deleted = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_DELETED);
 
                             String id = doc.getString(Constants.KEY_HEALTH_RECORD_ID);
                             String userID = doc.getString(Constants.KEY_ACCOUNT_ID);
                             String description = doc.getString(Constants.KEY_HEALTH_RECORD_DESCRIPTION);
                             String sendDate = doc.getString(Constants.KEY_HEALTH_RECORD_DATE);
-                            Boolean deleted = doc.getBoolean(Constants.KEY_HEALTH_RECORD_DELETED);
                             Boolean accepted = doc.getBoolean(Constants.KEY_HEALTH_RECORD_ACCEPTED);
                             String dentistId = doc.getString(Constants.KEY_HEALTH_RECORD_DENTIST_ID);
 

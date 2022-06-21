@@ -127,7 +127,9 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         healthPictures.add(encodeImage4);
 
         List<String> advices = new ArrayList<>();
-        advices.add("");
+        List<String> delete = new ArrayList<>();
+
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String sendDate = sdf.format(new Date());
 
@@ -138,7 +140,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DESCRIPTION, description);
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_PICTURES, healthPictures);
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_ADVICES, advices);
-        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DELETED, false);
+        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DELETED, delete);
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_ACCEPTED, false);
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DATE, sendDate);
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DENTIST_ID, "");

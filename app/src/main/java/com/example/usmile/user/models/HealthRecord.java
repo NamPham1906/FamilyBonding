@@ -8,7 +8,7 @@ public class HealthRecord {
     private String description;
     private List<String> healthPictures;
     private List<String> advices;
-    private boolean deleted;
+    private List<String> deleted;
     private String sentDate;
     private boolean accepted;
     private String dentistId;
@@ -16,7 +16,7 @@ public class HealthRecord {
 
 
 
-    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean deleted, String sentDate, String dentistId) {
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, List<String>  deleted, String sentDate, String dentistId) {
         this.id = id;
         this.accountId = accountId;
         this.description = description;
@@ -27,7 +27,7 @@ public class HealthRecord {
         this.dentistId = dentistId;
     }
 
-    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean accepted, boolean deleted, String sentDate, String dentistId) {
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean accepted, List<String>  deleted, String sentDate, String dentistId) {
         this.id = id;
         this.accountId = accountId;
         this.description = description;
@@ -104,11 +104,11 @@ public class HealthRecord {
         this.advices = advices;
     }
 
-    public boolean isDeleted() {
+    public List<String>  getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(List<String>  deleted) {
         this.deleted = deleted;
     }
 

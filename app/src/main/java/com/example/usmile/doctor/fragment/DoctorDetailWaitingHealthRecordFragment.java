@@ -46,11 +46,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 
-public class DoctorDetailWaitingHealthRecordFragment extends Fragment {
+public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements View.OnClickListener{
     DoctorMainActivity main;
 
     TextView senderGender;
@@ -105,6 +106,9 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment {
         thirdImageView = (ImageView) view.findViewById(R.id.thirdPicture);
         fourthImageView = (ImageView) view.findViewById(R.id.fourthPicture);
 
+        acceptButton.setOnClickListener(this);
+        cancelButton.setOnClickListener(this);
+
         loadWaitingHealthRecordDetails();
         try{
             loadUserInfor();
@@ -114,6 +118,26 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment {
             Log.d("ERR", e.getMessage());
         }
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.acceptButton:
+//                fragment = new HealthRecordFragment();
+//                openNewFragment(view, fragment);
+                break;
+            case R.id.cancelButton:
+                try{
+                    createCancelDialog();
+                }
+                catch (Exception e)
+                {
+                    Log.e("CANCEL DIALOG",e.getMessage());
+                }
+                break;
+        }
     }
 
     private int calculateAge(String date) throws ParseException {
@@ -203,28 +227,30 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment {
     }
 
     private void cancelHealthRecord() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
-                .document(preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID))
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("DELETE HR", "DocumentSnapshot successfully deleted!");
-                    }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference documentReference
+                = db.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
+                .document(preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
+
+        List<String> del = preferenceManager.getListString(Constants.KEY_HEALTH_RECORD_DELETED);
+        del.add(preferenceManager.getString(Constants.KEY_ACCOUNT_ID));
+        HashMap<String, Object> updates = new HashMap<>();
+        updates.put(Constants.KEY_HEALTH_RECORD_DELETED, del);
+
+        documentReference.update(updates)
+                .addOnSuccessListener(unused -> {
+                    showToast("Updated successfully");
+
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("Error deleting document", e.getMessage());
-                    }
+                .addOnFailureListener(e -> {
+                    Log.e("update health record", e.getMessage());
                 });
     }
 
     public void createCancelDialog(){
         dialogBuilder = new AlertDialog.Builder(main);
-        final View quitPopup = getLayoutInflater().inflate(R.layout.popup_cancel_health_record, null);
+        final View quitPopup = getLayoutInflater().inflate(R.layout.popup_doctor_cancel_health_record, null);
 
         Button quitBtn = (Button) quitPopup.findViewById(R.id.btnQuit);
         Button cancelBtn = (Button) quitPopup.findViewById(R.id.btnCancel);
@@ -240,7 +266,7 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment {
                 //dimiss dialog
                 cancelHealthRecord();
                 cancelDialog.dismiss();
-                fragment = new HealthRecordFragment();
+                fragment = new WaitingHealthRecordListFragment();
                 openNewFragment(view, fragment);
             }
         });

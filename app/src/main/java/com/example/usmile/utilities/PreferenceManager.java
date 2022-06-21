@@ -53,7 +53,7 @@ public class PreferenceManager {
         editor.putString(key, json);
         editor.apply();
     }
-    public List<String> getListString(String key, List<String> value) {
+    public List<String> getListString(String key) {
 
         Gson gson = new Gson();
         String json = sharedPreferences.getString(key, null);

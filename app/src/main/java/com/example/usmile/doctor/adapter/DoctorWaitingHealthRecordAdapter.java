@@ -190,7 +190,7 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
                 case R.id.checkHealthRecordButton:
                     preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
                     preferenceManager.putString(Constants.KEY_GET_USER_ID, item.getAccountId());
-
+                    preferenceManager.putListString(Constants.KEY_HEALTH_RECORD_DELETED, item.getDeleted());
                     Fragment fragment = new DoctorDetailWaitingHealthRecordFragment();
                     openNewFragment(view, fragment);
 

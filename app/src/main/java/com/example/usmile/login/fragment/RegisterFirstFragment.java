@@ -75,6 +75,7 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
         newAccount = AccountFactory.createAccount(type);
 
 
+
     }
 
     @Override
@@ -91,6 +92,7 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("NEW_ACCOUNT", newAccount);
+
 
                 Fragment secondFragment = new RegisterSecondFragment();
                 secondFragment.setArguments(bundle);

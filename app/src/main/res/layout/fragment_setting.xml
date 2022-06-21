@@ -25,10 +25,10 @@
 
             <TextView
                 android:id="@+id/titleTextView"
-                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
+                android:gravity="center"
                 android:text="@string/settings"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

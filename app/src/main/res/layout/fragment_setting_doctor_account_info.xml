@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".user.fragment.SettingAccountInfoFragment">
-
+    tools:context=".doctor.fragment.SettingDoctorAccountInfoFragment">
 
     <RelativeLayout
 
@@ -22,42 +21,25 @@
             android:background="@drawable/all_rounded_button_shape">
 
 
-
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/avatarImageView"
+                android:id="@+id/docAvatarImageView"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
                 android:background="@drawable/avatar_image"
                 android:scaleType="centerCrop"
-                android:layout_centerHorizontal="true"
-                app:riv_oval="true"
-                app:riv_border_width="2dp"
-                app:riv_border_color="#dedede"
                 android:src="@drawable/example_avatar"
-                />
+                app:riv_border_color="#dedede"
+                app:riv_border_width="2dp"
+                app:riv_oval="true" />
 
-            <EditText
-                android:id="@+id/userNameEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/avatarImageView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:background="@null"
-                android:drawableRight="@drawable/edit_pen"
-                android:drawablePadding="8dp"
-                android:text="Nam 7749"
-                android:textColor="@color/primary_blue"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:visibility="gone"/>
 
 
             <RelativeLayout
                 android:id="@+id/fullNameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/userNameEditText"
+                android:layout_below="@id/docAvatarImageView"
                 android:layout_margin="8dp">
 
                 <TextView
@@ -71,7 +53,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/fullNameEditText"
+                    android:id="@+id/doctorNameEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -105,7 +87,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/dobEditText"
+                    android:id="@+id/doctorDOBEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -139,7 +121,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/genderEditText"
+                    android:id="@+id/doctorGenderEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -161,10 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/genderLayout"
 
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="15dp">
+                android:layout_margin="8dp">
 
                 <TextView
                     android:id="@+id/emailTextView"
@@ -177,11 +156,10 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/accountEditText"
+                    android:id="@+id/doctorAccountEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"
                     android:background="@null"
                     android:text="nampham0126"
                     android:textColor="@color/primary_blue"
@@ -194,15 +172,61 @@
                     android:src="@drawable/edit_pen" />
             </RelativeLayout>
 
+
+            <RelativeLayout
+                android:id="@+id/workPlaceLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="15dp"
+                android:layout_below="@id/emailLayout">
+
+                <TextView
+                    android:id="@+id/workPlaceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Công tác:"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/workPlaceText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@null"
+                    android:text="Bệnh viện nha khoa Hoàn Mỹ"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="15sp" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/edit_pen" />
+
+
+
+            </RelativeLayout>
+
+
+
+
             <RelativeLayout
                 android:id="@+id/buttonLayout"
                 android:layout_marginBottom="15dp"
-                android:layout_below="@id/emailLayout"
+                android:layout_below="@id/workPlaceLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/confirmButton"
+                    android:id="@+id/docConfirmButton"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -218,18 +242,18 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/cancelButton"
+                    android:id="@+id/docCancelButton"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="30dp"
                     android:background="@drawable/small_pink_button_shape"
+                    android:gravity="center"
                     android:paddingStart="10dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="5dp"
                     android:text="Hủy"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="30dp"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -240,7 +264,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/changePasswordTextView"
+            android:id="@+id/docChangePasswordTextView"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_alignParentEnd="true"
@@ -261,5 +285,4 @@
             android:textStyle="bold" />
 
     </RelativeLayout>
-
 </FrameLayout>

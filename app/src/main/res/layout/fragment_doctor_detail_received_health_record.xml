@@ -4,95 +4,146 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
-    tools:context=".user.fragment.DetailAcceptedHealthRecordFragment">
+    tools:context=".doctor.fragment.DoctorDetailReceivedHealthRecordFragment">
+
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="35dp"
-        android:background="@drawable/top_rounded_background">
+        android:background="@drawable/all_rounded_button_shape"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp">
-
-            <TextView
-                android:id="@+id/recordTimeTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="Hồ sơ ngày 08/04/2022"
-                android:textColor="@color/primary_blue"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/statusTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/recordTimeTextView"
-                android:layout_centerHorizontal="true"
-                android:text="Đã tư vấn"
-                android:textColor="@color/primary_green"
-                android:textStyle="bold" />
+            android:layout_height="match_parent">
 
             <RelativeLayout
-                android:id="@+id/doctorInfoLayout"
-                android:layout_width="match_parent"
+                android:id="@+id/headerLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/statusTextView"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp">
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true">
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/doctorImage"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_alignParentStart="true"
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Hồ sơ ngày "
+                    android:textColor="@color/primary_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/healhRecordSendDate"
+                    android:layout_toEndOf="@id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="20/06/2022"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/patientInfoLayout"
+                android:layout_below="@id/headerLayout"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/patientImage"
+                    android:layout_marginStart="30dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:src="@drawable/example_avatar"
-                    app:civ_border_color="#808080"
-                    app:civ_border_width="1dp" />
+                    android:scaleType="centerCrop"/>
 
                 <LinearLayout
+                    android:id="@+id/detailInfoLayout"
+                    android:layout_toEndOf="@id/patientImage"
+                    android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:layout_toEndOf="@id/doctorImage"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/doctorFullNameTextView"
+                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/verified_icon"
-                        android:drawablePadding="8dp"
-                        android:drawableTint="@color/primary_green"
-                        android:text="Bác sĩ Đàm Vĩnh Hưng"
+                        android:text="Nam 7749"
                         android:textColor="@color/primary_blue"
-                        android:textSize="17sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/doctorWorkPlaceTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Phòng khám nha khoa Hoàn Mỹ"
-                        android:textColor="@color/primary_blue"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Giới tính: "
+                            android:textColor="@color/primary_blue"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/patientGender"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="Nam"
+                            android:textColor="@color/primary_blue"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text=" - "
+                            android:textColor="@color/primary_blue"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="Tuổi: "
+                            android:textColor="@color/primary_blue"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/patiendAge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="20"
+                            android:textColor="@color/primary_blue"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
-            </RelativeLayout>
 
+            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/patientMessageLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/doctorInfoLayout"
+                android:layout_below="@id/patientInfoLayout"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
@@ -117,7 +168,7 @@
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/patientMessageTextView"
+                    android:id="@+id/patientSentMessageTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
@@ -145,7 +196,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/firstPicture"
+                        android:id="@+id/firstDetailPicture"
                         android:layout_width="100dp"
                         android:layout_height="120dp"
                         android:layout_alignParentStart="true"
@@ -157,13 +208,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_toLeftOf="@id/firstPicture"
-                        android:layout_toEndOf="@id/firstPicture"
+                        android:layout_toLeftOf="@id/firstDetailPicture"
+                        android:layout_toEndOf="@id/firstDetailPicture"
                         android:background="@drawable/all_rounded_button_shape"
                         android:backgroundTint="#DEF2FE">
 
                         <TextView
-                            android:id="@+id/title"
+                            android:id="@+id/firstTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -177,7 +228,7 @@
                             android:id="@+id/firstDetailAdvice"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_below="@id/title"
+                            android:layout_below="@id/firstTitle"
                             android:backgroundTint="@color/primary_blue"
                             android:padding="5dp"
                             android:paddingStart="15dp"
@@ -198,7 +249,7 @@
                     android:layout_marginTop="10dp">
 
                     <ImageView
-                        android:id="@+id/secondPicture"
+                        android:id="@+id/secondDetailPicture"
                         android:layout_width="100dp"
                         android:layout_height="120dp"
                         android:layout_alignParentStart="true"
@@ -210,8 +261,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_toLeftOf="@id/secondPicture"
-                        android:layout_toEndOf="@id/secondPicture"
+                        android:layout_toLeftOf="@id/secondDetailPicture"
+                        android:layout_toEndOf="@id/secondDetailPicture"
                         android:background="@drawable/all_rounded_button_shape"
                         android:backgroundTint="#DEF2FE">
 
@@ -249,7 +300,7 @@
                     android:layout_marginTop="10dp">
 
                     <ImageView
-                        android:id="@+id/thirdPicture"
+                        android:id="@+id/thirdDetailPicture"
                         android:layout_width="100dp"
                         android:layout_height="120dp"
                         android:layout_alignParentStart="true"
@@ -261,8 +312,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_toLeftOf="@id/thirdPicture"
-                        android:layout_toEndOf="@id/thirdPicture"
+                        android:layout_toLeftOf="@id/thirdDetailPicture"
+                        android:layout_toEndOf="@id/thirdDetailPicture"
                         android:background="@drawable/all_rounded_button_shape"
                         android:backgroundTint="#DEF2FE">
 
@@ -301,7 +352,7 @@
                     android:layout_marginTop="10dp">
 
                     <ImageView
-                        android:id="@+id/fourthPicture"
+                        android:id="@+id/fourthDetailPicture"
                         android:layout_width="100dp"
                         android:layout_height="120dp"
                         android:layout_alignParentStart="true"
@@ -313,8 +364,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_toLeftOf="@id/fourthPicture"
-                        android:layout_toEndOf="@id/fourthPicture"
+                        android:layout_toLeftOf="@id/fourthDetailPicture"
+                        android:layout_toEndOf="@id/fourthDetailPicture"
                         android:background="@drawable/all_rounded_button_shape"
                         android:backgroundTint="#DEF2FE">
 
@@ -347,71 +398,9 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/summaryAdviceLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/detailAdvicesLayout"
-                android:layout_margin="20dp"
-                android:background="@drawable/all_rounded_button_shape"
-                android:backgroundTint="#DEF2FE">
-
-                <TextView
-                    android:id="@+id/summaryAdviceTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:text="Yêu cầu của nha sĩ"
-                    android:textColor="@color/primary_blue"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/summaryAdviceTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_below="@id/summaryAdviceTitle"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:backgroundTint="@color/primary_blue"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:text="Em đang mọc răng khôn, cần tới phòng khám gấp để nha sĩ xử lí, tránh tình trạng răng mọc lệch. "
-                    android:textColor="#808080"
-                    android:textSize="13sp" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/rateButton"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/small_green_button_shape"
-                android:gravity="center"
-                android:paddingStart="10dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="10dp"
-                android:paddingBottom="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="Đánh giá"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_below="@id/summaryAdviceLayout"
-                android:layout_marginBottom="20dp"/>
-
-
         </RelativeLayout>
 
 
     </ScrollView>
-
 
 </FrameLayout>

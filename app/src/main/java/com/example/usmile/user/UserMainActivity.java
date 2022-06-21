@@ -72,6 +72,7 @@ public class UserMainActivity extends AppCompatActivity {
                     else if (R.id.action_settings == id) {
 
                         Bundle bundle = new Bundle();
+                        bundle.putString("TYPE", AccountFactory.USERSTRING);
                         bundle.putSerializable(AccountFactory.USERSTRING, user);
 
                         fragment = new SettingFragment();
@@ -81,8 +82,6 @@ public class UserMainActivity extends AppCompatActivity {
                     if (fragment != null) {
                         fragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, fragment).commit();
                     }
-
-
                     return true;
         });
     }

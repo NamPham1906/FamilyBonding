@@ -112,7 +112,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void updateUI(FirebaseUser user){
         if (user!=null) {
             String email = user.getEmail();
-            accountType = AccountFactory.USERSTRING;
+            //accountType = AccountFactory.USERSTRING;
+            accountType = preferenceManager.getString(Constants.KEY_ACCOUNT_TYPE);
+
             Intent intent = new Intent(getApplicationContext(), AccountFactory.createAccountClass(accountType));
             Account account = AccountFactory.createAccount(accountType);
             account.setEmail(email);
@@ -149,12 +151,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     && task.getResult().getDocuments().size() > 0) {
                                 DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
                                 String email = documentSnapshot.getString(Constants.KEY_ACCOUNT_EMAIL);
+
                                 mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         progressBar.setVisibility(View.INVISIBLE);
                                         if (task.isSuccessful()){
                                             FirebaseUser user = mAuth.getCurrentUser();
+
+                                            // ....
+                                            preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_ID, documentSnapshot.getId());
+
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_AVATAR, documentSnapshot.getString(Constants.KEY_ACCOUNT_AVATAR));
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_FULL_NAME, documentSnapshot.getString(Constants.KEY_ACCOUNT_FULL_NAME));
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_DOB, documentSnapshot.getString(Constants.KEY_ACCOUNT_DOB));
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_GENDER, documentSnapshot.getString(Constants.KEY_ACCOUNT_GENDER));
+
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, documentSnapshot.getString(Constants.KEY_ACCOUNT_ACCOUNT));
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, documentSnapshot.getString(Constants.KEY_ACCOUNT_PASSWORD));
+                                            preferenceManager.putString(Constants.KEY_ACCOUNT_TYPE, documentSnapshot.getString(Constants.KEY_ACCOUNT_TYPE));
+
+                                            if (documentSnapshot.get(Constants.KEY_ACCOUNT_TYPE).equals(AccountFactory.DOCTORSTRING)) {
+                                                preferenceManager.putString(Constants.KEY_ACCOUNT_WORKPLACE, documentSnapshot.getString(Constants.KEY_ACCOUNT_WORKPLACE));
+                                            }
+                                            //if (documentSnapshot.getString())
+                                            // ....
                                             updateUI(user);
                                         } else{
                                             showToast("Wrong password");

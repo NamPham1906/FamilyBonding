@@ -1,10 +1,10 @@
-package com.example.usmile.user.fragment;
+package com.example.usmile.doctor.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,60 +15,58 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
 import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
+import com.example.usmile.doctor.DoctorMainActivity;
 import com.example.usmile.user.UserMainActivity;
+import com.example.usmile.user.fragment.SettingChangePasswordFragment;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import org.w3c.dom.Text;
-
-
-import android.util.Base64;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 
-
-public class SettingAccountInfoFragment extends Fragment implements View.OnClickListener {
-
+public class SettingDoctorAccountInfoFragment extends Fragment implements View.OnClickListener {
     TextView changePasswordTextView;
     TextView confirmButton;
     TextView cancelButton;
 
     //ImageView avatarImageView;
+
     RoundedImageView avatarImageView;
     EditText userNameEditText;
     EditText fullNameEditText;
     EditText dobEditText;
     EditText genderEditText;
     EditText accountEditText;
+    EditText workPlaceEditText;
 
     PreferenceManager preferenceManager;
 
     String encodedImage = "";
 
-    User user;
+    Doctor doctor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting_account_info, container, false);
+        return inflater.inflate(R.layout.fragment_setting_doctor_account_info, container, false);
     }
 
     @Override
@@ -97,25 +95,23 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
         Bundle bundle = getArguments();
 
         if (bundle != null)
-            user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
+            doctor = (Doctor) bundle.getSerializable(AccountFactory.DOCTORSTRING);
     }
 
-
-
-
     private void bindingView(@NonNull View view) {
-        changePasswordTextView = (TextView) view.findViewById(R.id.changePasswordTextView);
-        confirmButton = (TextView) view.findViewById(R.id.confirmButton);
-        cancelButton = (TextView) view.findViewById(R.id.cancelButton);
+        changePasswordTextView = (TextView) view.findViewById(R.id.docChangePasswordTextView);
+        confirmButton = (TextView) view.findViewById(R.id.docConfirmButton);
+        cancelButton = (TextView) view.findViewById(R.id.docCancelButton);
 
         //avatarImageView = (ImageView) view.findViewById(R.id.avatarImageView);
-        avatarImageView = (RoundedImageView) view.findViewById(R.id.avatarImageView);
+        avatarImageView = (RoundedImageView) view.findViewById(R.id.docAvatarImageView);
 
-        userNameEditText = (EditText) view.findViewById(R.id.userNameEditText);
-        fullNameEditText = (EditText) view.findViewById(R.id.fullNameEditText) ;
-        dobEditText = (EditText) view.findViewById(R.id.dobEditText);
-        genderEditText = (EditText) view.findViewById(R.id.genderEditText);
-        accountEditText = (EditText) view.findViewById(R.id.accountEditText);
+
+        fullNameEditText = (EditText) view.findViewById(R.id.doctorNameEditText) ;
+        dobEditText = (EditText) view.findViewById(R.id.doctorDOBEditText);
+        genderEditText = (EditText) view.findViewById(R.id.doctorGenderEditText);
+        accountEditText = (EditText) view.findViewById(R.id.doctorAccountEditText);
+        workPlaceEditText = (EditText) view.findViewById(R.id.workPlaceText);
     }
 
     private Bitmap decodeImage(String encodedImage) {
@@ -125,50 +121,51 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
     }
 
     private void loadAccountDetails() {
-        Bitmap bitmap = decodeImage(user.getAvatar());
+        Bitmap bitmap = decodeImage(doctor.getAvatar());
         avatarImageView.setImageBitmap(bitmap);
 
 
-        fullNameEditText.setText(user.getFullName());
-        dobEditText.setText(user.getDOB());
-        genderEditText.setText(user.getGender());
-        accountEditText.setText(user.getAccount());
+        fullNameEditText.setText(doctor.getFullName());
+        dobEditText.setText(doctor.getDOB());
+        genderEditText.setText(doctor.getGender());
+        accountEditText.setText(doctor.getAccount());
+
+        workPlaceEditText.setText(doctor.getWorkPlace());
     }
 
-
-
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
+
         int id = view.getId();
 
         Fragment nextFragment = null;
 
         switch (id) {
-            case R.id.changePasswordTextView:
+            case R.id.docCancelButton:
+                showToast("Cancel");
+                break;
+            case R.id.docConfirmButton:
+                updateInfo();
+                break;
+            case R.id.docChangePasswordTextView:
                 Bundle bundle = new Bundle();
-                bundle.putString("TYPE", AccountFactory.USERSTRING);
+                bundle.putString("TYPE", AccountFactory.DOCTORSTRING);
 
-                bundle.putSerializable(AccountFactory.USERSTRING, user);
+                bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
 
                 nextFragment = new SettingChangePasswordFragment();
                 nextFragment.setArguments(bundle);
-
                 break;
-            case R.id.cancelButton:
-                showToast("Cancel");
-                break;
-            case R.id.confirmButton:
-                updateInfo();
-                break;
-            case R.id.avatarImageView:
+            case R.id.docAvatarImageView:
                 selectImage();
                 break;
         }
 
-        if (id == R.id.changePasswordTextView) {
-            if (nextFragment != null)
-                openNewFragment(nextFragment);
+        if (id == R.id.docChangePasswordTextView) {
+            openNewFragment(nextFragment);
         }
+
     }
 
     private void updateInfo() {
@@ -177,6 +174,7 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
         String dob = dobEditText.getText().toString();
         String gender = genderEditText.getText().toString();
         String accountStr = accountEditText.getText().toString();
+        String workPlace = workPlaceEditText.getText().toString();
 
 
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -193,6 +191,7 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
         updates.put(Constants.KEY_ACCOUNT_DOB, dob);
         updates.put(Constants.KEY_ACCOUNT_GENDER, gender);
         updates.put(Constants.KEY_ACCOUNT_ACCOUNT, accountStr);
+        updates.put(Constants.KEY_ACCOUNT_WORKPLACE, workPlace);
 
         documentReference.update(updates)
                 .addOnSuccessListener(unused -> {
@@ -204,10 +203,11 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
                     preferenceManager.putString(Constants.KEY_ACCOUNT_DOB, dob);
                     preferenceManager.putString(Constants.KEY_ACCOUNT_GENDER, gender);
                     preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, accountStr);
+                    preferenceManager.putString(Constants.KEY_ACCOUNT_WORKPLACE, workPlace);
 
                     showToast("Updated successfully");
 
-                    Intent intent = new Intent(getContext(), UserMainActivity.class);
+                    Intent intent = new Intent(getContext(), DoctorMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
 

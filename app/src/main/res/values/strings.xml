@@ -19,6 +19,7 @@
     <string name="continueTV">Tiếp tục</string>
     <string name="goBackToLogin">Quay về trang đăng nhập</string>
     <string name="resetPasswordInfo">Mật khẩu mới đã được gửi qua Email bạn đăng kí, vui lòng kiểm tra Email để đặt lại mật khẩu.</string>
+    <string name="clinicTV">Phòng khám</string>
     <!-- TODO: Remove or change this placeholder text -->
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

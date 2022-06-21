@@ -95,20 +95,20 @@ public class ReceivedHealthRecordListFragment extends Fragment {
                     }
                 });
     }
-    public void initFakeData() {
-
-        healthRecords = new ArrayList<>();
-
-        HealthRecord fake = new HealthRecord();
-        fake.setSentDate("Ngày 20/06/2022");
-        fake.setDescription("Có phải cháu đang mọc răng ...");
-
-        for (int i = 0; i < 5; i++) {
-            fake.setAdvised(false);
-
-            healthRecords.add(fake);
-        }
-    }
+//    public void initFakeData() {
+//
+//        healthRecords = new ArrayList<>();
+//
+//        HealthRecord fake = new HealthRecord();
+//        fake.setSentDate("Ngày 20/06/2022");
+//        fake.setDescription("Có phải cháu đang mọc răng ...");
+//
+//        for (int i = 0; i < 5; i++) {
+//            fake.setAdvised(false);
+//
+//            healthRecords.add(fake);
+//        }
+//    }
 
     public void initRecyclerView() {
 

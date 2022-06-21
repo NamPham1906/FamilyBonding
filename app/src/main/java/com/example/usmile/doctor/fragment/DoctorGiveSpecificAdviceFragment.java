@@ -225,7 +225,7 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
         });
     }
 
-    private boolean isFillEditText(EditText editText) {
+    private boolean warningFillEditText(EditText editText) {
         String input = editText.getText().toString().trim();
 
         if (input.isEmpty()) {
@@ -236,8 +236,17 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
             return true;
         }
     }
+    private boolean isFillEditText(EditText editText) {
+        String input = editText.getText().toString().trim();
+
+        if (input.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     private boolean isCompleted() {
-        if (!isFillEditText(doctorRequirementTextView))
+        if (!warningFillEditText(doctorRequirementTextView))
             return false;
         return true;
     }

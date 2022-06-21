@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.doctor.DoctorMainActivity;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.user.fragment.HealthRecordFragment;
 import com.example.usmile.utilities.Constants;
@@ -31,17 +32,26 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class DoctorDetailWaitingHealthRecordFragment extends Fragment {
-    UserMainActivity main;
+    DoctorMainActivity main;
 
     TextView senderGender;
     TextView sendRecordDate;
@@ -50,17 +60,7 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment {
     TextView senderName;
 
     Button acceptButton;
-    Button cancelButton
-
-    final int CAPTURE_FIRST_IMAGE = 1;
-    final int CAPTURE_SECOND_IMAGE = 2;
-    final int CAPTURE_THIRD_IMAGE = 3;
-    final int CAPTURE_FOURTH_IMAGE = 4;
-
-    final int LOAD_FIRST_IMAGE = 5;
-    final int LOAD_SECOND_IMAGE = 6;
-    final int LOAD_THIRD_IMAGE = 7;
-    final int LOAD_FOURTH_IMAGE = 8;
+    Button cancelButton;
 
     String encodeImage1 = "";
     String encodeImage2 = "";
@@ -89,7 +89,7 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         preferenceManager = new PreferenceManager(getContext());
 
-        main = (UserMainActivity) getActivity();
+        main = (DoctorMainActivity) getActivity();
 
         senderGender = (TextView) view.findViewById(R.id.senderGender);
         sendRecordDate = (TextView) view.findViewById(R.id.sendRecordDate);
@@ -106,13 +106,67 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment {
         fourthImageView = (ImageView) view.findViewById(R.id.fourthPicture);
 
         loadWaitingHealthRecordDetails();
+        try{
+            loadUserInfor();
+
+        }
+        catch (Exception e) {
+            Log.d("ERR", e.getMessage());
+        }
 
     }
 
+    private int calculateAge(String date) throws ParseException {
+
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        SimpleDateFormat strFormat1 = new   SimpleDateFormat("dd/MM/yyyy");
+        Date dateObj1 = strFormat1.parse(date);
+        int birth = dateObj1.getYear() + 1900;
+        int age = year - birth;
+        Log.d("DOB", dateObj1.toString());
+        return  age;
+    }
+
+    private void loadUserInfor()
+    {
+        String userId = preferenceManager.getString(Constants.KEY_GET_USER_ID);
+        Log.d("USERID", userId);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        DocumentReference documentReference =
+                db.collection(Constants.KEY_COLLECTION_ACCOUNT).document(userId);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        senderGender.setText(doc.getString(Constants.KEY_ACCOUNT_GENDER));
+                        senderName.setText(doc.getString(Constants.KEY_ACCOUNT_FULL_NAME));
+                        String birthday = doc.getString(Constants.KEY_ACCOUNT_DOB);
+                        try {
+                            int age = calculateAge(birthday);
+
+                            senderAge.setText(String.valueOf(age));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    } else {
+                        Log.d("DETA-W-HR", "No such document");
+                    }
+                } else {
+                    Log.d("DETA-W-HR", "get failed with ", task.getException());
+                }
+            }
+        });
+
+    }
     private void loadWaitingHealthRecordDetails()
     {
         String healthRecordId = preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID);
-        Log.d("HR ID", healthRecordId );
+//        Log.d("HR ID", healthRecordId );
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
                 .whereEqualTo(Constants.KEY_HEALTH_RECORD_ID, healthRecordId)
@@ -122,9 +176,9 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment {
                     public void onComplete(Task<QuerySnapshot> task) {
                         DocumentSnapshot doc = task.getResult().getDocuments().get(0);
 
-                        List<String> healthPictures = (ArrayList) doc.get("healthPictures");
-                        String description = doc.getString("description");
-                        String sendDate = doc.getString("sendDate");
+                        List<String> healthPictures = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_PICTURES);
+                        String description = doc.getString(Constants.KEY_HEALTH_RECORD_DESCRIPTION);
+                        String sendDate = doc.getString(Constants.KEY_HEALTH_RECORD_DATE);
 
                         encodeImage1 = healthPictures.get(0);
                         encodeImage2 = healthPictures.get(1);
@@ -136,9 +190,8 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment {
                         thirdImageView.setImageBitmap(decodeImage(encodeImage3));
                         fourthImageView.setImageBitmap(decodeImage(encodeImage4));
 
-                        timeDetailTextView.setText("Hồ sơ ngày " + sendDate);
+                        sendRecordDate.setText(sendDate);
                         askForAdviceEditText.setText(description);
-                        editButton.setEnabled(false);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

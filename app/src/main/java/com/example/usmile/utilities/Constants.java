@@ -39,6 +39,7 @@ public class Constants {
     public static final String KEY_GET_DENTIST_NAME  = "dentistName";
     public static final String KEY_GET_DENTIST_WORKPLACE  = "dentistWorkPlace";
     public static final String KEY_GET_USER_NAME  = "userName";
+    public static final String KEY_GET_USER_ID  = "userId";
     public static final String KEY_GET_USER_AVATAR  = "userAvatar";
 
     public static final String KEY_DENTIST_WORKPLACE  = "workPlace";

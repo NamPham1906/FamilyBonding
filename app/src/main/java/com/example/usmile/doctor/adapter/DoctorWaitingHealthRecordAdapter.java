@@ -151,9 +151,15 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
         TextView checkHealthRecordButton;
         TextView skipButton;
 
+        PreferenceManager preferenceManager;
+        Context context;
+
 
         public DoctorWaitingHealthRecordViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            context = itemView.getContext();
+            preferenceManager = new PreferenceManager(context);
 
             senderAvatar = (ImageView) itemView.findViewById(R.id.senderAvatar);
             sendDate = (TextView) itemView.findViewById(R.id.sendDate);
@@ -182,6 +188,8 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
 
             switch (id) {
                 case R.id.checkHealthRecordButton:
+                    preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
+                    preferenceManager.putString(Constants.KEY_GET_USER_ID, item.getAccountId());
 
                     Fragment fragment = new DoctorDetailWaitingHealthRecordFragment();
                     openNewFragment(view, fragment);

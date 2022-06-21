@@ -1,9 +1,47 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/map"
-    tools:context=".user.fragment.MapFragment"
-    android:name="com.google.android.gms.maps.SupportMapFragment" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/gradient_background"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".user.fragment.MapFragment">
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/clinicTV"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        />
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/recordSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/header"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/all_rounded_search_view_shape" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recordSearchView"
+        android:background="@drawable/top_rounded_background"
+        app:cardCornerRadius="12dp">
+
+        <fragment
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+           >
+            </fragment>
+
+    </RelativeLayout>
+</RelativeLayout>
     <?xml version="1.0" encoding="utf-8"?>

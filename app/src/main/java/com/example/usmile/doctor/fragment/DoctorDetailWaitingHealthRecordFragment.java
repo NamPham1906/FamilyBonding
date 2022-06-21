@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.usmile.R;
 import com.example.usmile.doctor.DoctorMainActivity;
 import com.example.usmile.user.UserMainActivity;
+import com.example.usmile.user.adapters.MultiHealthRecordAdapter;
 import com.example.usmile.user.fragment.HealthRecordFragment;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
@@ -125,6 +126,15 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
         int id = view.getId();
         switch (id) {
             case R.id.acceptButton:
+            {
+                try{
+                    createAcceptDialog();
+                }
+                catch (Exception e)
+                {
+                    Log.e("CANCEL DIALOG",e.getMessage());
+                }
+            }
 //                fragment = new HealthRecordFragment();
 //                openNewFragment(view, fragment);
                 break;
@@ -224,6 +234,59 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+    private void acceptHealthRecord() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference documentReference
+                = db.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
+                .document(preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
+
+//        String dentistId = preferenceManager.getString(Constants.KEY_HEALTH_RECORD_DELETED);
+//        del.add(preferenceManager.getString(Constants.KEY_ACCOUNT_ID));
+        HashMap<String, Object> updates = new HashMap<>();
+        updates.put(Constants.KEY_HEALTH_RECORD_DENTIST_ID, preferenceManager.getString(Constants.KEY_ACCOUNT_ID));
+
+        documentReference.update(updates)
+                .addOnSuccessListener(unused -> {
+                    showToast("Updated successfully");
+
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("update health record", e.getMessage());
+                });
+    }
+
+    public void createAcceptDialog(){
+        dialogBuilder = new AlertDialog.Builder(main);
+        final View quitPopup = getLayoutInflater().inflate(R.layout.popup_doctor_accept_health_record, null);
+
+        Button quitBtn = (Button) quitPopup.findViewById(R.id.btnQuit);
+        Button cancelBtn = (Button) quitPopup.findViewById(R.id.btnCancel);
+        dialogBuilder.setView(quitPopup);
+        cancelDialog = dialogBuilder.create();
+        cancelDialog.show();
+        cancelDialog.setCanceledOnTouchOutside(false);
+        cancelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        quitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //dimiss dialog
+                acceptHealthRecord();
+                cancelDialog.dismiss();
+                fragment = new ReceivedHealthRecordListFragment();
+                openNewFragment(view, fragment);
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //dimiss dialog
+                cancelDialog.dismiss();
+            }
+        });
     }
 
     private void cancelHealthRecord() {

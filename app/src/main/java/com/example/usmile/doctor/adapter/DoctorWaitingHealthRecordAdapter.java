@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.usmile.R;
 import com.example.usmile.doctor.fragment.DoctorDetailWaitingHealthRecordFragment;
+import com.example.usmile.doctor.fragment.ReceivedHealthRecordListFragment;
 import com.example.usmile.doctor.fragment.WaitingHealthRecordListFragment;
 import com.example.usmile.user.fragment.DetailWaitingHealthRecordFragment;
 import com.example.usmile.user.fragment.HealthRecordFragment;

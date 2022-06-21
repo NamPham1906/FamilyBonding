@@ -89,10 +89,10 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
 //        holder.patientAvatar.setImageResource(R.drawable.example_avatar);
 //        holder.patientName.setText("Nam 7749");
 
-        if (item.isAccepted() == true || !item.getDentistId().equals("")) {
+        if (item.isAccepted() == true && !item.getDentistId().equals("")) {
             holder.statusTextView.setText("Đã tư vấn");
             holder.statusTextView.setTextColor(ContextCompat.getColor(context, R.color.primary_green));
-        } else if (!item.isAccepted() || !item.getDentistId().equals("")) {
+        } else if (!item.isAccepted() && !item.getDentistId().equals("")) {
             holder.statusTextView.setText("Chờ tư vấn");
             holder.statusTextView.setTextColor(ContextCompat.getColor(context, R.color.primary_yellow));
         }

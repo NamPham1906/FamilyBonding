@@ -3,7 +3,12 @@ package com.example.usmile.doctor.fragment;
 import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
@@ -219,10 +224,16 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
                         encodeImage3 = healthPictures.get(2);
                         encodeImage4 = healthPictures.get(3);
 
-                        firstImageView.setImageBitmap(decodeImage(encodeImage1));
-                        secondImageView.setImageBitmap(decodeImage(encodeImage2));
-                        thirdImageView.setImageBitmap(decodeImage(encodeImage3));
-                        fourthImageView.setImageBitmap(decodeImage(encodeImage4));
+                        firstImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage1)));
+                        secondImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage2)));
+                        thirdImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage3)));
+                        fourthImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage4)));
+
+
+                        firstImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        secondImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
                         sendRecordDate.setText(sendDate);
                         askForAdviceEditText.setText(description);
@@ -347,6 +358,21 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
         AppCompatActivity activity = (AppCompatActivity) view.getContext();
         activity.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.mainFragmentHolder, nextFragment).addToBackStack(null).commit();
+    }
+
+    public Bitmap getRoundBitmap(Bitmap bitmap) {
+
+        int min = Math.min(bitmap.getWidth(), bitmap.getHeight());
+
+        Bitmap bitmapRounded = Bitmap.createBitmap(min, min, bitmap.getConfig());
+
+        Canvas canvas = new Canvas(bitmapRounded);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        canvas.drawRoundRect((new RectF(0.0f, 0.0f, min, min)), min/8, min/8, paint);
+
+        return bitmapRounded;
     }
 
     private Bitmap decodeImage(String encodedImage) {

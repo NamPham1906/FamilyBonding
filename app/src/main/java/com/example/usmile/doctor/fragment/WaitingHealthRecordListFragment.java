@@ -120,6 +120,8 @@ public class WaitingHealthRecordListFragment extends Fragment {
                 });
 
     }
+
+
 //    public void initFakeData() {
 //
 //        healthRecords = new ArrayList<>();

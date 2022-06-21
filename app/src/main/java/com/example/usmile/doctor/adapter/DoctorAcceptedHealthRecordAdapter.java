@@ -3,6 +3,11 @@ package com.example.usmile.doctor.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.util.Base64;
@@ -77,7 +82,7 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
         {
             String ava = preferenceManager.getString(Constants.KEY_GET_USER_AVATAR);
             Bitmap bitmap = decodeImage(ava);
-            holder.patientAvatar.setImageBitmap(bitmap);
+            holder.patientAvatar.setImageBitmap(getRoundBitmap(bitmap));
         }
         catch (Exception e)
         {
@@ -135,6 +140,21 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
         byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         return bitmap;
+    }
+
+    public Bitmap getRoundBitmap(Bitmap bitmap) {
+
+        int min = Math.min(bitmap.getWidth(), bitmap.getHeight());
+
+        Bitmap bitmapRounded = Bitmap.createBitmap(min, min, bitmap.getConfig());
+
+        Canvas canvas = new Canvas(bitmapRounded);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        canvas.drawRoundRect((new RectF(0.0f, 0.0f, min, min)), min/8, min/8, paint);
+
+        return bitmapRounded;
     }
 
     @Override

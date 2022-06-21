@@ -2,6 +2,11 @@ package com.example.usmile.doctor.fragment;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -142,7 +147,9 @@ public class DoctorDetailReceivedHealthRecordFragment extends Fragment implement
                     if (doc.exists()) {
                         patientGender.setText(doc.getString(Constants.KEY_ACCOUNT_GENDER));
                         patientName.setText(doc.getString(Constants.KEY_ACCOUNT_FULL_NAME));
-                        patientImage.setImageBitmap(decodeImage(doc.getString(Constants.KEY_ACCOUNT_AVATAR)));
+                        Bitmap bitmap = decodeImage(doc.getString(Constants.KEY_ACCOUNT_AVATAR));
+                        bitmap = getRoundBitmap(bitmap);
+                        patientImage.setImageBitmap(bitmap);
                         String birthday = doc.getString(Constants.KEY_ACCOUNT_DOB);
                         try {
                             int age = calculateAge(birthday);
@@ -162,6 +169,21 @@ public class DoctorDetailReceivedHealthRecordFragment extends Fragment implement
             }
         });
 
+    }
+
+    public Bitmap getRoundBitmap(Bitmap bitmap) {
+
+        int min = Math.min(bitmap.getWidth(), bitmap.getHeight());
+
+        Bitmap bitmapRounded = Bitmap.createBitmap(min, min, bitmap.getConfig());
+
+        Canvas canvas = new Canvas(bitmapRounded);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        canvas.drawRoundRect((new RectF(0.0f, 0.0f, min, min)), min/8, min/8, paint);
+
+        return bitmapRounded;
     }
 
     private void loadReceivedHealthRecordDetails() {
@@ -186,10 +208,18 @@ public class DoctorDetailReceivedHealthRecordFragment extends Fragment implement
                         encodeImage3 = healthPictures.get(2);
                         encodeImage4 = healthPictures.get(3);
 
-                        firstImageView.setImageBitmap(decodeImage(encodeImage1));
-                        secondImageView.setImageBitmap(decodeImage(encodeImage2));
-                        thirdImageView.setImageBitmap(decodeImage(encodeImage3));
-                        fourthImageView.setImageBitmap(decodeImage(encodeImage4));
+                        firstImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage1)));
+                        secondImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage2)));
+                        thirdImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage3)));
+                        fourthImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage4)));
+
+
+                        firstImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        secondImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+
 
                         healhRecordSendDate.setText(sendDate);
                         patientSentMessageTextView.setText(description);

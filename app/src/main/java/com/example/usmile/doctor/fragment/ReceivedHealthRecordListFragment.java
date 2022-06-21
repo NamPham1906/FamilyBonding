@@ -1,5 +1,11 @@
 package com.example.usmile.doctor.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -121,4 +127,6 @@ public class ReceivedHealthRecordListFragment extends Fragment {
         receivedHeathRecordRecyclerView.setHasFixedSize(true);
 
     }
+
+
 }

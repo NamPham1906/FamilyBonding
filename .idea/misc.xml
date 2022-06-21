@@ -105,6 +105,7 @@
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/fragment_register_1.xml" value="0.2015625" />
         <entry key="app/src/main/res/layout/fragment_register_3.xml" value="0.1592041785652029" />
+        <entry key="app/src/main/res/layout/fragment_register_doctor_second.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/fragment_register_first.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/fragment_register_second.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/fragment_register_third.xml" value="0.2171875" />
@@ -116,6 +117,10 @@
         <entry key="app/src/main/res/layout/fragment_setting_intructions.xml" value="0.24728260869565216" />
         <entry key="app/src/main/res/layout/fragment_tips.xml" value="0.1578125" />
         <entry key="app/src/main/res/layout/fragment_welcome.xml" value="0.14919806273316552" />
+        <entry key="app/src/main/res/layout/health_record_accepted_item_layout.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/health_record_waiting_item_layout.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/item_gender_selected.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/map.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/settings_instruction_item_layout.xml" value="0.1578125" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.221875" />

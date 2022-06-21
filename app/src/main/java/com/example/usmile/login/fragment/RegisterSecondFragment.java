@@ -28,7 +28,6 @@ import android.widget.Toast;
 
 import com.example.usmile.R;
 import com.example.usmile.account.Account;
-import com.example.usmile.account.models.User;
 import com.example.usmile.user.adapters.GenderSpinnerAdapter;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -121,7 +120,7 @@ public class RegisterSecondFragment extends Fragment implements AdapterView.OnIt
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register_second, container, false);
+        return inflater.inflate(R.layout.fragment_register_user_second, container, false);
     }
 
     @Override

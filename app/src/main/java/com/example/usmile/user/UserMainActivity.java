@@ -16,6 +16,7 @@ import com.example.usmile.user.adapters.MultiHealthRecordAdapter;
 import com.example.usmile.user.fragment.CollectPictureFragment;
 import com.example.usmile.user.fragment.DetailAcceptedHealthRecordFragment;
 import com.example.usmile.user.fragment.HealthRecordFragment;
+import com.example.usmile.user.fragment.MapFragment;
 import com.example.usmile.user.fragment.SettingFragment;
 import com.example.usmile.user.fragment.TipsFragment;
 import com.example.usmile.utilities.Constants;
@@ -65,6 +66,7 @@ public class UserMainActivity extends AppCompatActivity {
 
                     else if (R.id.action_find_clinic == id) {
                         Toast.makeText(UserMainActivity.this, "Clinic", Toast.LENGTH_SHORT).show();
+                        fragment = new MapFragment();
                     }
 
                     else if (R.id.action_settings == id) {

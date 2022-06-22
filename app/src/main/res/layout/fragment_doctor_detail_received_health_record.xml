@@ -39,11 +39,10 @@
 
                 <TextView
                     android:id="@+id/healhRecordSendDate"
-                    android:layout_toEndOf="@id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="20/06/2022"
+                    android:layout_toEndOf="@id/title"
                     android:textColor="@color/primary_blue"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -58,34 +57,34 @@
 
                 <ImageView
                     android:id="@+id/patientImage"
-                    android:layout_marginStart="30dp"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@drawable/example_avatar"
-                    android:scaleType="centerCrop"/>
+                    android:layout_marginStart="30dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/example_avatar" />
 
                 <LinearLayout
                     android:id="@+id/detailInfoLayout"
-                    android:layout_toEndOf="@id/patientImage"
-                    android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toEndOf="@id/patientImage"
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_marginTop="5dp"
+                        android:id="@+id/patientName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nam 7749"
+                        android:layout_marginTop="5dp"
                         android:textColor="@color/primary_blue"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -100,7 +99,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text="Nam"
                             android:textColor="@color/primary_blue"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -124,11 +122,10 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/patiendAge"
+                            android:id="@+id/patientAge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text="20"
                             android:textColor="@color/primary_blue"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -394,9 +391,52 @@
                             android:textSize="13sp" />
                     </RelativeLayout>
 
+                </RelativeLayout>ư
+                <RelativeLayout
+                    android:id="@+id/doctorSpecificAdvice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fourthLayout"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/all_rounded_button_shape"
+                    android:backgroundTint="#DEF2FE">
+
+                    <TextView
+                        android:id="@+id/doctorAdviceTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/primary_blue"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:text="Ý kiến của nha sĩ"
+                        android:textColor="@color/primary_blue"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/doctorAdviceDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:backgroundTint="@color/primary_blue"
+                        android:paddingStart="15dp"
+                        android:paddingLeft="20dp"
+                        android:paddingEnd="10dp"
+                        android:textColor="#808080"
+                        android:textSize="13sp" />
                 </RelativeLayout>
 
             </RelativeLayout>
+
 
         </RelativeLayout>
 

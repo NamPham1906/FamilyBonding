@@ -8,17 +8,15 @@ public class HealthRecord {
     private String description;
     private List<String> healthPictures;
     private List<String> advices;
-    private boolean deleted;
+    private List<String> deleted;
     private String sentDate;
     private boolean accepted;
-
-    private boolean isAdvised;
-    //    private String dentistId;
+    private String dentistId;
 
 
 
 
-    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean deleted, String sentDate) {
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, List<String>  deleted, String sentDate, String dentistId) {
         this.id = id;
         this.accountId = accountId;
         this.description = description;
@@ -26,9 +24,10 @@ public class HealthRecord {
         this.advices = advices;
         this.deleted = deleted;
         this.sentDate = sentDate;
+        this.dentistId = dentistId;
     }
 
-    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean accepted, boolean deleted, String sentDate) {
+    public HealthRecord(String id, String accountId, String description, List<String> healthPictures, List<String> advices, boolean accepted, List<String>  deleted, String sentDate, String dentistId) {
         this.id = id;
         this.accountId = accountId;
         this.description = description;
@@ -37,19 +36,21 @@ public class HealthRecord {
         this.deleted = deleted;
         this.sentDate = sentDate;
         this.accepted = accepted;
+        this.dentistId = dentistId;
+
     }
 
     public HealthRecord() {
 
     }
 
-    public boolean isAdvised() {
-        return isAdvised;
-    }
-
-    public void setAdvised(boolean advised) {
-        isAdvised = advised;
-    }
+//    public boolean isAdvised() {
+//        return isAdvised;
+//    }
+//
+//    public void setAdvised(boolean advised) {
+//        isAdvised = advised;
+//    }
 
     public String getId() { return this.id;}
 
@@ -103,11 +104,19 @@ public class HealthRecord {
         this.advices = advices;
     }
 
-    public boolean isDeleted() {
+    public List<String>  getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(List<String>  deleted) {
         this.deleted = deleted;
+    }
+
+    public String getDentistId() {
+        return dentistId;
+    }
+
+    public void setDentistId(String dentistId) {
+        this.dentistId = dentistId;
     }
 }

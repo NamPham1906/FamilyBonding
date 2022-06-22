@@ -25,8 +25,8 @@
                 android:id="@+id/headerLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/title"
@@ -44,7 +44,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:layout_toEndOf="@id/title"
-                    android:text="Nam 7749"
                     android:textColor="@color/primary_blue"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -83,7 +82,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="Nam"
                         android:textSize="14sp"
                         android:textColor="@color/primary_gray"/>
 
@@ -110,7 +108,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="20"
                         android:textSize="14sp"
                         android:textColor="@color/primary_gray"/>
                 </LinearLayout>
@@ -143,7 +140,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="20/06/2022"
                     android:textSize="14sp"
                     android:textColor="@color/primary_gray"/>
             </LinearLayout>
@@ -176,8 +172,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/blue_border_rounded_shape"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/example_avatar" />
+                    android:scaleType="centerInside"/>
 
                 <ImageView
                     android:id="@+id/secondPicture"
@@ -186,8 +181,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/blue_border_rounded_shape"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/example_avatar" />
+                    android:scaleType="centerInside"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -206,8 +200,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/blue_border_rounded_shape"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/example_avatar" />
+                    android:scaleType="centerInside"/>
 
                 <ImageView
                     android:id="@+id/fourthPicture"
@@ -216,8 +209,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/blue_border_rounded_shape"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/example_avatar" />
+                    android:scaleType="centerInside"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -246,18 +238,17 @@
                     android:textColor="@color/primary_blue"
                     android:textSize="15sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/askForAdviceEditText"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="25dp"
                     android:backgroundTint="@color/primary_blue"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
-                    android:text="Cháu đang mọc răng khôn đúng không ạ ? Mong bác sĩ tư vấn cho cháu"
                     android:textColor="#808080"
                     android:textSize="13sp" />
             </RelativeLayout>
@@ -272,11 +263,11 @@
                 android:layout_below="@id/askForAdviceLayout">
 
                 <Button
-                    android:id="@+id/cancelButton"
+                    android:id="@+id/acceptButton"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginEnd="10dp"
                     android:background="@drawable/small_green_button_shape"
                     android:gravity="center"
@@ -285,8 +276,26 @@
                     android:paddingEnd="10dp"
                     android:paddingBottom="5dp"
                     android:text="Nhận tư vấn"
-                    android:textColor="@color/white"
                     android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/small_pink_button_shape"
+                    android:gravity="center"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="5dp"
+                    android:text="Bỏ qua"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
                     app:backgroundTint="@null" />
 
             </RelativeLayout>

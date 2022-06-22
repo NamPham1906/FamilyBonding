@@ -4,7 +4,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,11 +35,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.user.models.HealthRecord;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -110,6 +117,33 @@ public class DetailAcceptedHealthRecordFragment extends Fragment {
 
     }
 
+    private void getDentistInfo(String dentistId)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference documentReference = db.collection(Constants.KEY_COLLECTION_ACCOUNT)
+                .document(dentistId);
+        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        preferenceManager.putString(Constants.KEY_GET_DENTIST_NAME,
+                                doc.getString(Constants.KEY_ACCOUNT_FULL_NAME));
+                        preferenceManager.putString(Constants.KEY_GET_DENTIST_WORKPLACE,
+                                doc.getString(Constants.KEY_DENTIST_WORKPLACE));
+
+                    } else {
+                        Log.d("DEN-ID", "No such document");
+                    }
+                } else {
+                    Log.d("DEN-ID", "get failed with ", task.getException());
+                }
+            }
+        });
+
+    }
+
     private void loadHealthRecordDetails() {
         String healthRecordId = preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID);
 
@@ -123,8 +157,16 @@ public class DetailAcceptedHealthRecordFragment extends Fragment {
                         DocumentSnapshot doc = task.getResult().getDocuments().get(0);
 
                         List<String> healthPictures = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_PICTURES);
-                        String description = doc.getString("description");
-                        String sendDate = doc.getString("sendDate");
+                        String description = doc.getString(Constants.KEY_HEALTH_RECORD_DESCRIPTION);
+                        String sendDate = doc.getString(Constants.KEY_HEALTH_RECORD_DATE);
+                        String dentistID = doc.getString(Constants.KEY_HEALTH_RECORD_DENTIST_ID);
+                        getDentistInfo(dentistID);
+                        String dentistName = preferenceManager.getString(Constants.KEY_GET_DENTIST_NAME);
+                        String dentistWorkPlace = preferenceManager.getString(Constants.KEY_GET_DENTIST_WORKPLACE);
+
+
+                        doctorFullNameTextView.setText("Bác sĩ " + dentistName);
+                        doctorWorkPlaceTextView.setText("Phòng khám nha khoa " + dentistWorkPlace);
 
                         recordTimeTextView.setText("Hồ sơ ngày" + sendDate);
 
@@ -135,10 +177,16 @@ public class DetailAcceptedHealthRecordFragment extends Fragment {
                         encodeImage3 = healthPictures.get(2);
                         encodeImage4 = healthPictures.get(3);
 
-                        firstImageView.setImageBitmap(decodeImage(encodeImage1));
-                        secondImageView.setImageBitmap(decodeImage(encodeImage2));
-                        thirdImageView.setImageBitmap(decodeImage(encodeImage3));
-                        fourthImageView.setImageBitmap(decodeImage(encodeImage4));
+                        firstImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage1)));
+                        secondImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage2)));
+                        thirdImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage3)));
+                        fourthImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage4)));
+
+
+                        firstImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        secondImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
                         List<String> advices = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_ADVICES);
 
@@ -186,6 +234,21 @@ public class DetailAcceptedHealthRecordFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) view.getContext();
         activity.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.mainFragmentHolder, nextFragment).addToBackStack(null).commit();
+    }
+
+    public Bitmap getRoundBitmap(Bitmap bitmap) {
+
+        int min = Math.min(bitmap.getWidth(), bitmap.getHeight());
+
+        Bitmap bitmapRounded = Bitmap.createBitmap(min, min, bitmap.getConfig());
+
+        Canvas canvas = new Canvas(bitmapRounded);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        canvas.drawRoundRect((new RectF(0.0f, 0.0f, min, min)), min/8, min/8, paint);
+
+        return bitmapRounded;
     }
 
     private Bitmap decodeImage(String encodedImage) {

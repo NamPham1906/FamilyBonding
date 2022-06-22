@@ -4,7 +4,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -127,7 +132,9 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         healthPictures.add(encodeImage4);
 
         List<String> advices = new ArrayList<>();
-        advices.add("");
+        List<String> delete = new ArrayList<>();
+
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String sendDate = sdf.format(new Date());
 
@@ -138,9 +145,10 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DESCRIPTION, description);
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_PICTURES, healthPictures);
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_ADVICES, advices);
-        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DELETED, false);
+        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DELETED, delete);
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_ACCEPTED, false);
         newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DATE, sendDate);
+        newHealthRecord.put(Constants.KEY_HEALTH_RECORD_DENTIST_ID, "");
 
         database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
                 .document(id)
@@ -225,6 +233,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
     }
 
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -238,25 +247,25 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                 case CAPTURE_FIRST_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage1 = encodeImage(bp);
-                    firstImageView.setImageBitmap(bp);
+                    firstImageView.setImageBitmap(getRoundBitmap(bp));
                     firstImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case CAPTURE_SECOND_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage2 = encodeImage(bp);
-                    secondImageView.setImageBitmap(bp);
+                    secondImageView.setImageBitmap(getRoundBitmap(bp));
                     secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case CAPTURE_THIRD_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage3 = encodeImage(bp);
-                    thirdImageView.setImageBitmap(bp);
+                    thirdImageView.setImageBitmap(getRoundBitmap(bp));
                     thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
                 case CAPTURE_FOURTH_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage4 = encodeImage(bp);
-                    fourthImageView.setImageBitmap(bp);
+                    fourthImageView.setImageBitmap(getRoundBitmap(bp));
                     fourthImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     break;
             }
@@ -284,7 +293,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
             switch (requestCode) {
                 case LOAD_FIRST_IMAGE:
                     encodeImage1 = encodeImage(bp);
-                    firstImageView.setImageBitmap(bp);
+                    firstImageView.setImageBitmap(getRoundBitmap(bp));
 //                    firstImageView.setImageBitmap(BitmapFactory
 //                            .decodeFile(imgDecodableString));
                     firstImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -292,7 +301,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                 case LOAD_SECOND_IMAGE:
                     encodeImage2 = encodeImage(bp);
 
-                    secondImageView.setImageBitmap(bp);
+                    secondImageView.setImageBitmap(getRoundBitmap(bp));
 //                    secondImageView.setImageBitmap(BitmapFactory
 //                            .decodeFile(imgDecodableString));
                     secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -300,7 +309,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                 case LOAD_THIRD_IMAGE:
                     encodeImage3 = encodeImage(bp);
 
-                    thirdImageView.setImageBitmap(bp);
+                    thirdImageView.setImageBitmap(getRoundBitmap(bp));
 //                    thirdImageView.setImageBitmap(BitmapFactory
 //                            .decodeFile(imgDecodableString));
                     thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -308,7 +317,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                 case LOAD_FOURTH_IMAGE:
                     encodeImage4 = encodeImage(bp);
 
-                    fourthImageView.setImageBitmap(bp);
+                    fourthImageView.setImageBitmap(getRoundBitmap(bp));
 //                    fourthImageView.setImageBitmap(BitmapFactory
 //                            .decodeFile(imgDecodableString));
                     fourthImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -334,6 +343,21 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         int order = view.getId();
         openChooseSourceOfPictureDialog(order);
 
+    }
+
+    public Bitmap getRoundBitmap(Bitmap bitmap) {
+
+        int min = Math.min(bitmap.getWidth(), bitmap.getHeight());
+
+        Bitmap bitmapRounded = Bitmap.createBitmap(min, min, bitmap.getConfig());
+
+        Canvas canvas = new Canvas(bitmapRounded);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        canvas.drawRoundRect((new RectF(0.0f, 0.0f, min, min)), min/8, min/8, paint);
+
+        return bitmapRounded;
     }
 
     private String encodeImage(Bitmap bitmap) {

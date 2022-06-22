@@ -5,7 +5,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -166,10 +171,16 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                         encodeImage3 = healthPictures.get(2);
                         encodeImage4 = healthPictures.get(3);
 
-                        firstImageView.setImageBitmap(decodeImage(encodeImage1));
-                        secondImageView.setImageBitmap(decodeImage(encodeImage2));
-                        thirdImageView.setImageBitmap(decodeImage(encodeImage3));
-                        fourthImageView.setImageBitmap(decodeImage(encodeImage4));
+                        firstImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage1)));
+                        secondImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage2)));
+                        thirdImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage3)));
+                        fourthImageView.setImageBitmap(getRoundBitmap(decodeImage(encodeImage4)));
+
+
+                        firstImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        secondImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                        fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
                         timeDetailTextView.setText("Hồ sơ ngày " + sendDate);
                         askForAdviceEditText.setText(description);
@@ -305,6 +316,20 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
 
         return bitmap;
     }
+    public Bitmap getRoundBitmap(Bitmap bitmap) {
+
+        int min = Math.min(bitmap.getWidth(), bitmap.getHeight());
+
+        Bitmap bitmapRounded = Bitmap.createBitmap(min, min, bitmap.getConfig());
+
+        Canvas canvas = new Canvas(bitmapRounded);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+        canvas.drawRoundRect((new RectF(0.0f, 0.0f, min, min)), min/8, min/8, paint);
+
+        return bitmapRounded;
+    }
 
     private String encodeImage(Bitmap bitmap) {
         int previewWidth = 150;
@@ -344,7 +369,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                 case CAPTURE_FIRST_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage1 = encodeImage(bp);
-                    firstImageView.setImageBitmap(bp);
+                    firstImageView.setImageBitmap(getRoundBitmap(bp));
                     firstImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     enableEditButton();
 
@@ -352,7 +377,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                 case CAPTURE_SECOND_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage2 = encodeImage(bp);
-                    secondImageView.setImageBitmap(bp);
+                    secondImageView.setImageBitmap(getRoundBitmap(bp));
                     secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     enableEditButton();
 
@@ -360,7 +385,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                 case CAPTURE_THIRD_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage3 = encodeImage(bp);
-                    thirdImageView.setImageBitmap(bp);
+                    thirdImageView.setImageBitmap(getRoundBitmap(bp));
                     thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     enableEditButton();
 
@@ -368,7 +393,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                 case CAPTURE_FOURTH_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage4 = encodeImage(bp);
-                    fourthImageView.setImageBitmap(bp);
+                    fourthImageView.setImageBitmap(getRoundBitmap(bp));
                     fourthImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     enableEditButton();
 
@@ -387,28 +412,28 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
             switch (requestCode) {
                 case LOAD_FIRST_IMAGE:
                     encodeImage1 = encodeImage(bp);
-                    firstImageView.setImageBitmap(bp);
+                    firstImageView.setImageBitmap(getRoundBitmap(bp));
                     firstImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     enableEditButton();
 
                     break;
                 case LOAD_SECOND_IMAGE:
                     encodeImage2 = encodeImage(bp);
-                    secondImageView.setImageBitmap(bp);
+                    secondImageView.setImageBitmap(getRoundBitmap(bp));
                     secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     enableEditButton();
 
                     break;
                 case LOAD_THIRD_IMAGE:
                     encodeImage3 = encodeImage(bp);
-                    thirdImageView.setImageBitmap(bp);
+                    thirdImageView.setImageBitmap(getRoundBitmap(bp));
                     thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     enableEditButton();
 
                     break;
                 case LOAD_FOURTH_IMAGE:
                     encodeImage4 = encodeImage(bp);
-                    fourthImageView.setImageBitmap(bp);
+                    fourthImageView.setImageBitmap(getRoundBitmap(bp));
                     fourthImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     enableEditButton();
 

@@ -34,6 +34,15 @@ public class Constants {
     public static final String KEY_HEALTH_RECORD_DATE  = "sendDate";
     public static final String KEY_HEALTH_RECORD_DELETED  = "deleted";
     public static final String KEY_HEALTH_RECORD_ACCEPTED  = "accepted";
+    public static final String KEY_HEALTH_RECORD_DENTIST_ID  = "dentistId";
+
+    public static final String KEY_GET_DENTIST_NAME  = "dentistName";
+    public static final String KEY_GET_DENTIST_WORKPLACE  = "dentistWorkPlace";
+    public static final String KEY_GET_USER_NAME  = "userName";
+    public static final String KEY_GET_USER_ID  = "userId";
+    public static final String KEY_GET_USER_AVATAR  = "userAvatar";
+
+    public static final String KEY_DENTIST_WORKPLACE  = "workPlace";
 
     // for tips
     public static final String KEY_COLLECTION_TIP = "tips";

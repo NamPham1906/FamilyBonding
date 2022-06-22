@@ -70,7 +70,6 @@ public class UserMainActivity extends AppCompatActivity {
                     }
 
                     else if (R.id.action_settings == id) {
-
                         Bundle bundle = new Bundle();
                         bundle.putString("TYPE", AccountFactory.USERSTRING);
                         bundle.putSerializable(AccountFactory.USERSTRING, user);
@@ -88,16 +87,12 @@ public class UserMainActivity extends AppCompatActivity {
 
     private void loadUserInformation() {
         user = new User();
+        user = (User) getIntent().getSerializableExtra(AccountFactory.USERSTRING);
 
-        user.setAccount(preferenceManager.getString(Constants.KEY_ACCOUNT_ACCOUNT));
-        user.setPassword(preferenceManager.getString(Constants.KEY_ACCOUNT_PASSWORD));
+    }
 
-        user.setFullName(preferenceManager.getString(Constants.KEY_ACCOUNT_FULL_NAME));
-        user.setDOB(preferenceManager.getString(Constants.KEY_ACCOUNT_DOB));
-        user.setPhone(preferenceManager.getString(Constants.KEY_ACCOUNT_PHONE));
-        user.setGender(preferenceManager.getString(Constants.KEY_ACCOUNT_GENDER));
-
-        user.setAvatar(preferenceManager.getString(Constants.KEY_ACCOUNT_AVATAR));
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
     }
 

@@ -77,7 +77,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private void getBundle() {
         Bundle bundle = getArguments();
-
         if (bundle != null) {
             type = bundle.getString("TYPE");
 

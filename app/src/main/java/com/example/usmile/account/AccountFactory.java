@@ -31,7 +31,7 @@ public class AccountFactory {
     }
 
     public static Class<?> createAccountClass(String accountType) {
-
+        if (accountType == null) return null;
         switch(accountType) {
             case USERSTRING:
                 return UserMainActivity.class;

@@ -88,18 +88,6 @@ public class DoctorMainActivity extends AppCompatActivity {
 
     private void loadDoctorInformation() {
         doctor = new Doctor();
-
-        doctor.setAccount(preferenceManager.getString(Constants.KEY_ACCOUNT_ACCOUNT));
-        doctor.setPassword(preferenceManager.getString(Constants.KEY_ACCOUNT_PASSWORD));
-
-        doctor.setFullName(preferenceManager.getString(Constants.KEY_ACCOUNT_FULL_NAME));
-        doctor.setDOB(preferenceManager.getString(Constants.KEY_ACCOUNT_DOB));
-        doctor.setPhone(preferenceManager.getString(Constants.KEY_ACCOUNT_PHONE));
-        doctor.setGender(preferenceManager.getString(Constants.KEY_ACCOUNT_GENDER));
-
-        doctor.setAvatar(preferenceManager.getString(Constants.KEY_ACCOUNT_AVATAR));
-
-        doctor.setWorkPlace(preferenceManager.getString(Constants.KEY_ACCOUNT_WORKPLACE));
-
+        doctor = (Doctor) getIntent().getSerializableExtra(AccountFactory.DOCTORSTRING);
     }
 }

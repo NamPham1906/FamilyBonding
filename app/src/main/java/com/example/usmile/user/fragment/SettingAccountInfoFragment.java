@@ -119,6 +119,7 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
     }
 
     private Bitmap decodeImage(String encodedImage) {
+        if (encodedImage == null) return null;
         byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         return bitmap;

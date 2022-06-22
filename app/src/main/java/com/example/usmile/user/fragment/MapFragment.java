@@ -23,10 +23,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.usmile.R;
 
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Clinic;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -34,6 +37,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -47,7 +51,8 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private FusedLocationProviderClient fusedLocationClient;
     private Location defaultLocation = new Location("Vietnam");
     private LocationManager locationManager;
-    private LocationListener locationListener;
+    private List<Clinic> ClinicList = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,8 +61,10 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
         View view= inflater.inflate(R.layout.map, container, false);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.getActivity());
+
         SupportMapFragment mapFragment=(SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.map);
+
         mapFragment.getMapAsync(this);
         return view;
     }
@@ -160,6 +167,10 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                             // Set the map's camera position to the current location of the device.
                             lastKnownLocation = task.getResult();
                             showToast("Your location");
+
+                            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                            addClinicsToFireBase();
+                            updateClinics();
                             LatLng sydneynow = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
                             mMap.addMarker(new MarkerOptions()
                                      .position(sydneynow)
@@ -168,6 +179,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
                         } else {
                             showToast("default location");
+                            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                             LatLng sydney = new LatLng(-34, 151);
                             mMap.addMarker(new MarkerOptions()
                                     .position(sydney)
@@ -181,6 +193,43 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
             Log.e("Exception: %s", e.getMessage(), e);
         }
     }
+
+    private void addClinicsToFireBase(){
+        Clinic newClinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
+        newClinic.setName("Nha Khoa Nhat Tri");
+        newClinic.setLatitude(10.870F);
+        newClinic.setLongitude(106.626F);
+        ClinicList.add(newClinic);
+
+        Clinic new2Clinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
+        new2Clinic.setName("Nha Khoa Tay Do");
+        new2Clinic.setLatitude(10.865F);
+        new2Clinic.setLongitude(106.627F);
+        ClinicList.add(new2Clinic);
+
+        Clinic new3Clinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
+        new3Clinic.setName("Nha Khoa Hoang Thanh");
+        new3Clinic.setLatitude(10.863F);
+        new3Clinic.setLongitude(106.623F);
+        ClinicList.add(new3Clinic);
+        //add to firebase
+    }
+
+
+    private void updateClinics(){
+        for (int i = 0; i<ClinicList.size(); i++){
+            addMarker(ClinicList.get(i));
+        }
+
+    }
+
+
+    private void addMarker(Clinic newClinic){
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(newClinic.getLatitude(), newClinic.getLongitude()))
+                .title(newClinic.getName()));
+    }
+
     private void showToast(String msg) {
         Toast.makeText(this.getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }

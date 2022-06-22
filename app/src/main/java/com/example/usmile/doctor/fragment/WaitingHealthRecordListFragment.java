@@ -99,10 +99,11 @@ public class WaitingHealthRecordListFragment extends Fragment {
                             {
                                 for(String str:del)
                                 {
-                                    Log.d("delete id", str);
-                                    if(str.equals(preferenceManager.getString(Constants.KEY_ACCOUNT_ID)))
-                                    {
-                                        healthRecords.remove(i);
+                                    //Log.d("delete id", str);
+                                    if (str!=null) {
+                                        if (str.equals(preferenceManager.getString(Constants.KEY_ACCOUNT_ID))) {
+                                            healthRecords.remove(i);
+                                        }
                                     }
 
                                 }

@@ -32,8 +32,6 @@ public class DoctorMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_main);
 
-        doctor = (Doctor) getIntent().getSerializableExtra(AccountFactory.DOCTORSTRING);
-
         preferenceManager = new PreferenceManager(getApplicationContext());
 
         loadDoctorInformation();

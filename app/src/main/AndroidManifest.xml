@@ -20,7 +20,7 @@
         android:theme="@style/Theme.USmile" >
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAWQl75kk4yeMSz1IpSZ5aq-J_978D1Tog" />
+            android:value="AIzaSyCTF2S_KelLTRJPyj0yAacqAbM9bFA2m4I" />
         <activity
             android:name=".doctor.DoctorMainActivity"
             android:exported="true" />

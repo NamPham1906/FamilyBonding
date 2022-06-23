@@ -112,6 +112,8 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
 
                 sendHealthRecord();
 //                updateIdHealthRecord();
+                Fragment fragment = new HealthRecordFragment();
+                openNewFragment(fragment);
             }
         });
     }
@@ -444,6 +446,13 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
 
         dialog.show();
 
+    }
+
+    private void openNewFragment(Fragment nextFragment) {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), nextFragment, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 
 }

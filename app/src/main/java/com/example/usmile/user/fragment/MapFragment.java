@@ -32,7 +32,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -217,17 +219,32 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
 
     private void updateClinics(){
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                if (marker.getTag()!=null) {
+                    int pos = (int) (marker.getTag());
+                    if (pos >= 0 || pos < ClinicList.size()) {
+                        showToast(ClinicList.get(pos).getName());
+                    }
+                }
+                return false;
+            }
+        });
+
         for (int i = 0; i<ClinicList.size(); i++){
-            addMarker(ClinicList.get(i));
+            addMarker(ClinicList.get(i), i);
         }
 
     }
 
 
-    private void addMarker(Clinic newClinic){
-        mMap.addMarker(new MarkerOptions()
+    private void addMarker(Clinic newClinic, int index){
+       Marker marker =  mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(newClinic.getLatitude(), newClinic.getLongitude()))
-                .title(newClinic.getName()));
+                .title(newClinic.getName()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+        );
+       marker.setTag(index);
     }
 
     private void showToast(String msg) {
@@ -263,4 +280,5 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     public void onProviderDisabled(@NonNull String provider) {
 
     }
+
 }

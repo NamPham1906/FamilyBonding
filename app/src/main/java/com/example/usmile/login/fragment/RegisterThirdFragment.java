@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -165,42 +166,13 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
                     if (account.type() == AccountFactory.DOCTORSTRING)
                         newAccount.put(Constants.KEY_ACCOUNT_WORKPLACE, "Chưa cập nhật");
 
-                   // newAccount.put(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
+
 
                     database.collection(Constants.KEY_COLLECTION_ACCOUNT)
                             .add(newAccount)
                             .addOnSuccessListener(documentReference -> {
-
+                                updateUI(account);
                                 progressBar.setVisibility(View.INVISIBLE);
-                                preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                                preferenceManager.putString(Constants.KEY_ACCOUNT_ID, documentReference.getId());
-                                preferenceManager.putString(Constants.KEY_ACCOUNT_TYPE, account.type());
-
-                                preferenceManager.putString(Constants.KEY_ACCOUNT_AVATAR, account.getAvatar());
-                                preferenceManager.putString(Constants.KEY_ACCOUNT_FULL_NAME, account.getFullName());
-                                preferenceManager.putString(Constants.KEY_ACCOUNT_DOB,  account.getDOB());
-                                preferenceManager.putString(Constants.KEY_ACCOUNT_GENDER, account.getAccount());
-
-                                preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, account.getAccount());
-                                preferenceManager.putString(Constants.KEY_ACCOUNT_EMAIL, account.email());
-                                preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, account.getPassword());
-
-
-
-
-                                if (account.type().equals(AccountFactory.USERSTRING)) {
-                                    Intent intent = new Intent(getContext(), UserMainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-                                }
-                                else if (account.type().equals(AccountFactory.DOCTORSTRING)) {
-
-                                    preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, "Chưa cập nhật");
-
-                                    Intent intent = new Intent(getContext(), DoctorMainActivity.class);
-                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
-                                }
 
                             })
                             .addOnFailureListener(exception -> {
@@ -214,6 +186,11 @@ public class RegisterThirdFragment extends Fragment implements View.OnClickListe
             }
         });
 
+    }
+    public void updateUI( Account account){
+            Intent intent = new Intent(this.getActivity(), AccountFactory.createAccountClass(account.type()));
+            intent.putExtra(account.type(), account);
+            startActivity(intent);
     }
 
     private void showToast(String msg) {

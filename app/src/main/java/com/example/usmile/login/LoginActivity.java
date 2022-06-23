@@ -84,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private Account setInformation(DocumentSnapshot documentSnapshot){
         Account newAccount = AccountFactory.createAccount(documentSnapshot.getString(Constants.KEY_ACCOUNT_TYPE));
+        newAccount.setId(documentSnapshot.getId());
         newAccount.setAvatar(documentSnapshot.getString(Constants.KEY_ACCOUNT_AVATAR));
         newAccount.setFullName(documentSnapshot.getString(Constants.KEY_ACCOUNT_FULL_NAME));
         newAccount.setDOB(documentSnapshot.getString(Constants.KEY_ACCOUNT_DOB));

@@ -7,7 +7,7 @@ import com.example.usmile.account.AccountFactory;
 
 public class Clinic implements Account {
 
-
+    private String id;
     private float latitude;
     private float longitude;
     private String address;
@@ -22,6 +22,11 @@ public class Clinic implements Account {
     private boolean deleted;
     private boolean locked;
 
+
+    @Override
+    public String id() {
+        return this.id;
+    }
 
     @Override
     public String type() {
@@ -101,6 +106,11 @@ public class Clinic implements Account {
     }
 
     @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
     public String getFullName() {
         return fullname;
     }
@@ -121,6 +131,11 @@ public class Clinic implements Account {
     @Override
     public String getAvatar() {
         return avatar;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

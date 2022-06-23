@@ -4,6 +4,7 @@ import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
 
 public class Admin implements Account  {
+    private String id;
     private String email;
     private String account;
     private String password;
@@ -15,6 +16,12 @@ public class Admin implements Account  {
     private String gender;
     private String phone;
     private String avatar;
+
+    @Override
+    public String id() {
+        return this.id;
+    }
+
     @Override
     public String type() {
         return AccountFactory.ADMINSTRING;
@@ -35,6 +42,7 @@ public class Admin implements Account  {
     public Admin(){
 
     }
+
 
     @Override
     public String getAccount() {
@@ -80,6 +88,11 @@ public class Admin implements Account  {
     }
 
     @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
     public String getFullName() {
         return fullname;
     }
@@ -102,6 +115,11 @@ public class Admin implements Account  {
     @Override
     public String getAvatar() {
         return avatar;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

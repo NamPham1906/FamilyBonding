@@ -4,6 +4,7 @@ import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
 
 public class Doctor implements Account {
+    private String id;
     private String email;
     private String account;
     private String password;
@@ -19,7 +20,10 @@ public class Doctor implements Account {
     private String workPlace;
 
 
-
+    @Override
+    public String id() {
+        return this.id;
+    }
 
     @Override
     public String type() {
@@ -93,6 +97,11 @@ public class Doctor implements Account {
     }
 
     @Override
+    public String getId() {
+        return this.id;
+    }
+
+    @Override
     public String getFullName() {
         return fullname;
     }
@@ -115,6 +124,11 @@ public class Doctor implements Account {
     @Override
     public String getAvatar() {
         return avatar;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

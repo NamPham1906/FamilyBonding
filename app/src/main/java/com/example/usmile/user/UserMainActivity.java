@@ -51,22 +51,23 @@ public class UserMainActivity extends AppCompatActivity {
                     int id = item.getItemId();
 
                     if (R.id.action_tips == id) {
-                        Toast.makeText(UserMainActivity.this, "Tips", Toast.LENGTH_SHORT).show();
                         fragment = new TipsFragment();
                     }
                     else if (R.id.action_document == id) {
-                        Toast.makeText(UserMainActivity.this, "Docs", Toast.LENGTH_SHORT).show();
                         fragment = new HealthRecordFragment();
                     }
 
                     else if (R.id.action_take_picture == id) {
-                        Toast.makeText(UserMainActivity.this, "Cam", Toast.LENGTH_SHORT).show();
                         fragment = new CollectPictureFragment();
                     }
 
                     else if (R.id.action_find_clinic == id) {
-                        Toast.makeText(UserMainActivity.this, "Clinic", Toast.LENGTH_SHORT).show();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("TYPE", AccountFactory.USERSTRING);
+                        bundle.putSerializable(AccountFactory.USERSTRING, user);
+
                         fragment = new MapFragment();
+                        fragment.setArguments(bundle);
                     }
 
                     else if (R.id.action_settings == id) {

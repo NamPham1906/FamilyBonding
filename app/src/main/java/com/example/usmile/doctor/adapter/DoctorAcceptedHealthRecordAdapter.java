@@ -10,6 +10,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Doctor;
 import com.example.usmile.doctor.fragment.DoctorDetailReceivedHealthRecordFragment;
 import com.example.usmile.doctor.fragment.DoctorDetailWaitingHealthRecordFragment;
 import com.example.usmile.doctor.fragment.DoctorGiveSpecificAdviceFragment;
@@ -47,6 +50,15 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
     private List<HealthRecord> healthRecords;
     private Context context;
     PreferenceManager preferenceManager;
+    Doctor doctor;
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public Doctor getDoctor(){
+        return this.doctor;
+    }
 
     public DoctorAcceptedHealthRecordAdapter(List<HealthRecord> healthRecords) {
         this.healthRecords = healthRecords;
@@ -220,12 +232,20 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
                     if (item.isAccepted() == true && !item.getDentistId().equals("")) {
                         preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
                         preferenceManager.putString(Constants.KEY_GET_USER_ID, item.getAccountId());
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
                         fragment = new DoctorDetailReceivedHealthRecordFragment();
+                        fragment.setArguments(bundle);
                         openNewFragment(view, fragment);
                     } else if (!item.isAccepted() && !item.getDentistId().equals("")) {
                         preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+
                         fragment = new DoctorGiveSpecificAdviceFragment();
+                        fragment.setArguments(bundle);
                         openNewFragment(view, fragment);
+
                     }
 
                     break;

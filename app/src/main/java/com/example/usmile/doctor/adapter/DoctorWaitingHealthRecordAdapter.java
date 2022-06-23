@@ -12,6 +12,7 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
+import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Doctor;
 import com.example.usmile.doctor.fragment.DoctorDetailWaitingHealthRecordFragment;
 import com.example.usmile.doctor.fragment.ReceivedHealthRecordListFragment;
 import com.example.usmile.doctor.fragment.WaitingHealthRecordListFragment;
@@ -54,6 +57,15 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
     private List<HealthRecord> healthRecords;
     private Context context;
     PreferenceManager preferenceManager;
+    Doctor doctor;
+
+    public Doctor getDoctor (){
+        return this.doctor;
+    }
+
+    public void setDoctor(Doctor doctor){
+        this.doctor = doctor;
+    }
 
     public DoctorWaitingHealthRecordAdapter(List<HealthRecord> list) {
         this.healthRecords = list;
@@ -225,13 +237,18 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
                     preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
                     preferenceManager.putString(Constants.KEY_GET_USER_ID, item.getAccountId());
                     preferenceManager.putListString(Constants.KEY_HEALTH_RECORD_DELETED, item.getDeleted());
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+
                     Fragment fragment = new DoctorDetailWaitingHealthRecordFragment();
+                    fragment.setArguments(bundle);
                     openNewFragment(view, fragment);
+
 
 
                     break;
                 case R.id.skipButton:
-                    preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());                    preferenceManager.putListString(Constants.KEY_HEALTH_RECORD_DELETED, item.getDeleted());
+                    preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
                     preferenceManager.putListString(Constants.KEY_HEALTH_RECORD_DELETED, item.getDeleted());
 
                     try{
@@ -252,7 +269,7 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
                     .document(preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
 
             List<String> del = preferenceManager.getListString(Constants.KEY_HEALTH_RECORD_DELETED);
-            del.add(preferenceManager.getString(Constants.KEY_ACCOUNT_ID));
+            del.add(doctor.getId());
             HashMap<String, Object> updates = new HashMap<>();
             updates.put(Constants.KEY_HEALTH_RECORD_DELETED, del);
 
@@ -271,7 +288,7 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
             LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
             final View cancelPopup = inflater.inflate( R.layout.popup_doctor_cancel_health_record, null );
 
-            Button quitBtn = (Button) cancelPopup.findViewById(R.id.btnQuit);
+            Button acceptBtn = (Button) cancelPopup.findViewById(R.id.btnQuit);
             Button cancelBtn = (Button) cancelPopup.findViewById(R.id.btnCancel);
             dialogBuilder.setView(cancelPopup);
             cancelDialog = dialogBuilder.create();
@@ -279,15 +296,20 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
             cancelDialog.setCanceledOnTouchOutside(false);
             cancelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-            quitBtn.setOnClickListener(new View.OnClickListener() {
+            acceptBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //dimiss dialog
                     cancelHealthRecord();
                     cancelDialog.dismiss();
                     //reload fragment
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+
                     Fragment fragment = new WaitingHealthRecordListFragment();
+                    fragment.setArguments(bundle);
                     openNewFragment(view, fragment);
+
 
                 }
             });

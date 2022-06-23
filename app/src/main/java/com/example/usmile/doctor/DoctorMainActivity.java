@@ -45,7 +45,7 @@ public class DoctorMainActivity extends AppCompatActivity {
 
         navigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
-
+            Bundle bundle = new Bundle();
             switch (id) {
                 case R.id.doc_action_tips:
 
@@ -53,16 +53,20 @@ public class DoctorMainActivity extends AppCompatActivity {
                     break;
                 case R.id.action_check_history:
                     showToast("Received HealthRecord");
+                    bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+
                     fragment = new ReceivedHealthRecordListFragment();
+                    fragment.setArguments(bundle);
                     break;
                 case R.id.action_give_advices:
                     showToast("Waiting HealthRecord");
+                    bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
                     fragment = new WaitingHealthRecordListFragment();
-
+                    fragment.setArguments(bundle);
                     break;
                 case R.id.doc_action_settings:
 
-                    Bundle bundle = new Bundle();
+
                     bundle.putString("TYPE", AccountFactory.DOCTORSTRING);
                     bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
 

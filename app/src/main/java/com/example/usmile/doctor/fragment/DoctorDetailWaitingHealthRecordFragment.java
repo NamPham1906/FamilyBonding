@@ -28,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Doctor;
 import com.example.usmile.doctor.DoctorMainActivity;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.user.adapters.MultiHealthRecordAdapter;
@@ -86,14 +88,25 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
     AlertDialog.Builder dialogBuilder;
 
     Fragment fragment;
+
+    Doctor doctor;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_doctor_detail_waiting_health_record, container, false);
     }
+    private void getBundle() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            doctor = (Doctor) bundle.getSerializable(AccountFactory.DOCTORSTRING);
+        }
+    }
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getBundle();
         preferenceManager = new PreferenceManager(getContext());
 
         main = (DoctorMainActivity) getActivity();
@@ -256,7 +269,7 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
 //        String dentistId = preferenceManager.getString(Constants.KEY_HEALTH_RECORD_DELETED);
 //        del.add(preferenceManager.getString(Constants.KEY_ACCOUNT_ID));
         HashMap<String, Object> updates = new HashMap<>();
-        updates.put(Constants.KEY_HEALTH_RECORD_DENTIST_ID, preferenceManager.getString(Constants.KEY_ACCOUNT_ID));
+        updates.put(Constants.KEY_HEALTH_RECORD_DENTIST_ID, doctor.getId());
 
         documentReference.update(updates)
                 .addOnSuccessListener(unused -> {
@@ -286,7 +299,11 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
                 //dimiss dialog
                 acceptHealthRecord();
                 cancelDialog.dismiss();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+
                 fragment = new ReceivedHealthRecordListFragment();
+                fragment.setArguments(bundle);
                 openNewFragment(view, fragment);
             }
         });
@@ -340,8 +357,15 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
                 //dimiss dialog
                 cancelHealthRecord();
                 cancelDialog.dismiss();
-                fragment = new WaitingHealthRecordListFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+
+                Fragment fragment = new WaitingHealthRecordListFragment();
+                fragment.setArguments(bundle);
                 openNewFragment(view, fragment);
+
+
             }
         });
 

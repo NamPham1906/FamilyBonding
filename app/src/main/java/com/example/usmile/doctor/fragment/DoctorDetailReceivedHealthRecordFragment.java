@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Doctor;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -69,7 +71,7 @@ public class DoctorDetailReceivedHealthRecordFragment extends Fragment implement
     TextView patientName;
     TextView patientGender;
     TextView patientAge;
-
+    Doctor doctor;
 
     PreferenceManager preferenceManager;
 
@@ -80,10 +82,19 @@ public class DoctorDetailReceivedHealthRecordFragment extends Fragment implement
         return inflater.inflate(R.layout.fragment_doctor_detail_received_health_record, container, false);
     }
 
+    private void getBundle() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            doctor = (Doctor) bundle.getSerializable(AccountFactory.DOCTORSTRING);
+        } else {
+            showToast("null too");
+        }
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        getBundle();
         preferenceManager = new PreferenceManager(getContext());
 
         firstDetailAdvice = (TextView) view.findViewById(R.id.firstDetailAdvice);
@@ -270,8 +281,11 @@ public class DoctorDetailReceivedHealthRecordFragment extends Fragment implement
 
     @Override
     public void onClick(View view) {
+       Bundle bundle = new Bundle();
+        bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
 
         Fragment fragment = new DoctorGiveSpecificAdviceFragment();
+        fragment.setArguments(bundle);
 
         switch (view.getId()) {
             case R.id.firstDetailPicture:

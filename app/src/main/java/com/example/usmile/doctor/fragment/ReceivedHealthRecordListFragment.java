@@ -20,6 +20,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Doctor;
+import com.example.usmile.account.models.User;
 import com.example.usmile.doctor.adapter.DoctorAcceptedHealthRecordAdapter;
 import com.example.usmile.doctor.adapter.DoctorWaitingHealthRecordAdapter;
 import com.example.usmile.user.models.HealthRecord;
@@ -42,7 +45,7 @@ public class ReceivedHealthRecordListFragment extends Fragment {
     List<HealthRecord> healthRecords;
     DoctorAcceptedHealthRecordAdapter adapter;
 
-    PreferenceManager preferenceManager;
+    Doctor doctor;
 
 
     @Override
@@ -51,14 +54,18 @@ public class ReceivedHealthRecordListFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_received_health_record, container, false);
     }
+    private void getBundle() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            doctor = (Doctor) bundle.getSerializable(AccountFactory.DOCTORSTRING);
+        }
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        getBundle();
         receivedHeathRecordRecyclerView = (RecyclerView) view.findViewById(R.id.receivedHealthRecordView);
-        preferenceManager = new PreferenceManager(getContext());
-//        initFakeData();
         initData();
         initRecyclerView();
     }
@@ -68,7 +75,7 @@ public class ReceivedHealthRecordListFragment extends Fragment {
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
                 .whereEqualTo(Constants.KEY_HEALTH_RECORD_DENTIST_ID,
-                        preferenceManager.getString(Constants.KEY_ACCOUNT_ID))
+                       doctor.getId())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -101,23 +108,8 @@ public class ReceivedHealthRecordListFragment extends Fragment {
                     }
                 });
     }
-//    public void initFakeData() {
-//
-//        healthRecords = new ArrayList<>();
-//
-//        HealthRecord fake = new HealthRecord();
-//        fake.setSentDate("Ngày 20/06/2022");
-//        fake.setDescription("Có phải cháu đang mọc răng ...");
-//
-//        for (int i = 0; i < 5; i++) {
-//            fake.setAdvised(false);
-//
-//            healthRecords.add(fake);
-//        }
-//    }
 
     public void initRecyclerView() {
-
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
 

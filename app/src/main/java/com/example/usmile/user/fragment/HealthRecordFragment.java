@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.User;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.user.adapters.HealthRecordAdapter;
 import com.example.usmile.user.adapters.MultiHealthRecordAdapter;
@@ -42,10 +44,8 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
     List<HealthRecord> healthRecords = new ArrayList<>();
     HealthRecordAdapter adapter;
     MultiHealthRecordAdapter multiAdapter;
-
     FloatingActionButton newHealthRecordButton;
-
-    PreferenceManager preferenceManager;
+    User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,21 +54,21 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
         return inflater.inflate(R.layout.fragment_health_record, container, false);
     }
 
+    private void getBundle() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
+
+        }
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        getBundle();
         recordRecyclerView = (RecyclerView) view.findViewById(R.id.recordRecyclerView);
         newHealthRecordButton = (FloatingActionButton) view.findViewById(R.id.newHealthRecordButton);
-
         newHealthRecordButton.setOnClickListener(this);
-
-        preferenceManager = new PreferenceManager(getContext());
-
-
-        //initData();
-        //initRecordRecyclerView();
-
         initDataForMultiAdapter();
         initRecordRecyclerViewMulti();
     }
@@ -83,11 +83,10 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
     }
 
 
-
     private void initDataForMultiAdapter() {
 
-        String user_id = preferenceManager.getString(Constants.KEY_ACCOUNT_ID);
-
+        String user_id = user.id();
+        if (user==null) return;
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
                 .whereEqualTo(Constants.KEY_ACCOUNT_ID, user_id)
@@ -126,11 +125,6 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-//        healthRecords.add(new HealthRecord("1","",null,"",false,false,"Ngày 02/06/2022"));
-//        healthRecords.add(new HealthRecord("1","",null,"",true,false,"Ngày 04/05/2022"));
-//        healthRecords.add(new HealthRecord("1","",null,"",true,false,"Ngày 12/04/2022"));
-//        healthRecords.add(new HealthRecord("1","",null,"",false,false,"Ngày 03/04/2022"));
-//        healthRecords.add(new HealthRecord("1","",null,"",true,false,"Ngày 02/02/2022"));
     }
 
 
@@ -153,20 +147,4 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
                 .addToBackStack(null)
                 .commit();
     }
-
-//    private void initRecordRecyclerView() {
-//        LinearLayoutManager layoutManager
-//                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-//        recordRecyclerView.setLayoutManager(layoutManager);
-//        adapter = new HealthRecordAdapter(healthRecords);
-//        recordRecyclerView.setAdapter(adapter);
-//        recordRecyclerView.setHasFixedSize(true);
-//    }
-//
-//    private void initData() {
-//        healthRecords = new ArrayList<>();
-//        healthRecords.add(new HealthRecord("1","",null,"",false,"Ngày 02/06/2022"));
-//        healthRecords.add(new HealthRecord("1","",null,"",false,"Ngày 04/05/2022"));
-//        healthRecords.add(new HealthRecord("1","",null,"",false,"Ngày 12/04/2022"));
-//    }
 }

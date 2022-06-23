@@ -115,6 +115,7 @@ public class ReceivedHealthRecordListFragment extends Fragment {
 
         receivedHeathRecordRecyclerView.setLayoutManager(layoutManager);
         adapter = new DoctorAcceptedHealthRecordAdapter(healthRecords);
+        adapter.setDoctor(doctor);
         receivedHeathRecordRecyclerView.setAdapter(adapter);
         receivedHeathRecordRecyclerView.setHasFixedSize(true);
 

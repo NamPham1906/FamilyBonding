@@ -29,6 +29,7 @@ public class UserMainActivity extends AppCompatActivity {
     Fragment fragment = null;
     User user;
     PreferenceManager preferenceManager;
+    int current_id = R.id.action_tips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class UserMainActivity extends AppCompatActivity {
         navigationView.setOnItemSelectedListener(item -> {
 
                     int id = item.getItemId();
+                    if (id==current_id) return true;
 
                     if (R.id.action_tips == id) {
                         fragment = new TipsFragment();
@@ -88,8 +90,10 @@ public class UserMainActivity extends AppCompatActivity {
                     }
 
                     if (fragment != null) {
+                        current_id = id;
                         fragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, fragment).commit();
                     }
+
                     return true;
         });
     }

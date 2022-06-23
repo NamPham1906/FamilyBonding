@@ -178,6 +178,8 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
     }
 
     private void sendAdvices() {
+        showToast(preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference documentReference
                 = db.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
@@ -238,15 +240,20 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
                 //dimiss dialog
                 showToast("sent");
                 sendAdvices();
-
-
-                showToast(doctor.getFullName());
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
-                fragment = new ReceivedHealthRecordListFragment();
-                fragment.setArguments(bundle);
-                openNewFragment(view, fragment);
+                showToast("sent 2");
                 cancelDialog.dismiss();
+
+
+                if (doctor!=null){
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+                    Fragment fragment = new ReceivedHealthRecordListFragment();
+                    fragment.setArguments(bundle);
+                    openNewFragment(view, fragment);
+
+
+                }
+
             }
         });
 

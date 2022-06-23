@@ -26,6 +26,7 @@ public class DoctorMainActivity extends AppCompatActivity {
 
     Doctor doctor;
     PreferenceManager preferenceManager;
+    int current_id =  R.id.doc_action_tips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class DoctorMainActivity extends AppCompatActivity {
 
         navigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
+            if (id==current_id) return true;
             Bundle bundle = new Bundle();
             switch (id) {
                 case R.id.doc_action_tips:
@@ -76,6 +78,7 @@ public class DoctorMainActivity extends AppCompatActivity {
             }
 
             if (fragment != null) {
+                current_id = id;
                 fragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, fragment).commit();
             }
 

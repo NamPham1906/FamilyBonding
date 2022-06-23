@@ -281,12 +281,6 @@ public class DoctorDetailReceivedHealthRecordFragment extends Fragment implement
 
     @Override
     public void onClick(View view) {
-       Bundle bundle = new Bundle();
-        bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
-
-        Fragment fragment = new DoctorGiveSpecificAdviceFragment();
-        fragment.setArguments(bundle);
-
         switch (view.getId()) {
             case R.id.firstDetailPicture:
                 showToast("First");
@@ -302,7 +296,6 @@ public class DoctorDetailReceivedHealthRecordFragment extends Fragment implement
                 break;
         }
 
-        openNewFragment(view, fragment);
 
     }
 

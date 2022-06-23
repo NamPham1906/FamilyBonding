@@ -183,7 +183,7 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference
                 = database.collection(Constants.KEY_COLLECTION_ACCOUNT)
-                .document(preferenceManager.getString(Constants.KEY_ACCOUNT_ID));
+                .document(user.getId());
 
         HashMap<String, Object> updates = new HashMap<>();
 

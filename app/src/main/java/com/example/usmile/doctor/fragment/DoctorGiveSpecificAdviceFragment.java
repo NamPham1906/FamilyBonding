@@ -29,6 +29,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Doctor;
 import com.example.usmile.doctor.DoctorMainActivity;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
@@ -72,6 +74,9 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
     Fragment fragment;
 
     DoctorMainActivity main;
+
+    Doctor doctor;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,8 +84,19 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
         return inflater.inflate(R.layout.fragment_doctor_give_specific_advice, container, false);
     }
 
+    private void getBundle() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            doctor = (Doctor) bundle.getSerializable(AccountFactory.DOCTORSTRING);
+        }
+        else{
+            showToast("null bundle");
+        }
+    }
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getBundle();
         preferenceManager = new PreferenceManager(getContext());
 
         main = (DoctorMainActivity) getActivity();
@@ -162,6 +178,8 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
     }
 
     private void sendAdvices() {
+        showToast(preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference documentReference
                 = db.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
@@ -200,7 +218,7 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
 
                 })
                 .addOnFailureListener(e -> {
-                    Log.e("update health record", e.getMessage());
+                    showToast("Updated unsuccessfully");
                 });
     }
 
@@ -220,10 +238,22 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
             @Override
             public void onClick(View view) {
                 //dimiss dialog
+                showToast("sent");
                 sendAdvices();
+                showToast("sent 2");
                 cancelDialog.dismiss();
-                fragment = new ReceivedHealthRecordListFragment();
-                openNewFragment(view, fragment);
+
+
+                if (doctor!=null){
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+                    Fragment fragment = new ReceivedHealthRecordListFragment();
+                    fragment.setArguments(bundle);
+                    openNewFragment(view, fragment);
+
+
+                }
+
             }
         });
 

@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Doctor;
 import com.example.usmile.doctor.adapter.DoctorWaitingHealthRecordAdapter;
 import com.example.usmile.user.models.HealthRecord;
 import com.example.usmile.utilities.Constants;
@@ -37,8 +39,7 @@ public class WaitingHealthRecordListFragment extends Fragment {
     List<HealthRecord> healthRecords;
     DoctorWaitingHealthRecordAdapter adapter;
 
-    PreferenceManager preferenceManager;
-
+    Doctor doctor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,13 +48,18 @@ public class WaitingHealthRecordListFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_waiting_health_record_list, container, false);
     }
 
+    private void getBundle() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            doctor = (Doctor) bundle.getSerializable(AccountFactory.DOCTORSTRING);
+        }
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        preferenceManager = new PreferenceManager(getContext());
+        getBundle();
         waitingHealthRecordRecyclerView = (RecyclerView) view.findViewById(R.id.waitingHealthRecordView);
-
-//        initFakeData();
         initData();
         initRecyclerView();
     }
@@ -101,7 +107,7 @@ public class WaitingHealthRecordListFragment extends Fragment {
                                 {
                                     //Log.d("delete id", str);
                                     if (str!=null) {
-                                        if (str.equals(preferenceManager.getString(Constants.KEY_ACCOUNT_ID))) {
+                                        if (str.equals(doctor.getId())) {
                                             healthRecords.remove(i);
                                         }
                                     }
@@ -143,6 +149,7 @@ public class WaitingHealthRecordListFragment extends Fragment {
 
         waitingHealthRecordRecyclerView.setLayoutManager(layoutManager);
         adapter = new DoctorWaitingHealthRecordAdapter(healthRecords);
+        adapter.setDoctor(doctor);
         waitingHealthRecordRecyclerView.setAdapter(adapter);
         waitingHealthRecordRecyclerView.setHasFixedSize(true);
 

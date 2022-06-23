@@ -92,7 +92,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         Bundle bundle = getArguments();
         if (bundle != null){
             user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
-            showToast(user.getFullName());
+            showToast(user.id());
         }
     }
 
@@ -122,8 +122,11 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                     return;
 
                 sendHealthRecord();
-//                updateIdHealthRecord();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountFactory.USERSTRING, user);
+
                 Fragment fragment = new HealthRecordFragment();
+                fragment.setArguments(bundle);
                 openNewFragment(fragment);
             }
         });

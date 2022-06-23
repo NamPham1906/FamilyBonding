@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.User;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.user.fragment.DetailAcceptedHealthRecordFragment;
 import com.example.usmile.user.fragment.DetailWaitingHealthRecordFragment;
@@ -51,6 +54,8 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
 
     PreferenceManager preferenceManager;
 
+    User user;
+
 
 
 
@@ -58,6 +63,14 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
     public MultiHealthRecordAdapter(List<HealthRecord> healthRecords) {
         this.healthRecords = healthRecords;
 
+    }
+
+    public User getUser(){
+        return this.user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
     }
 
     public MultiHealthRecordAdapter() {
@@ -260,8 +273,12 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
                     try{
                         preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
                         Log.d("PM", preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(AccountFactory.USERSTRING, user);
+
                         Fragment fragment = new DetailWaitingHealthRecordFragment();
-                        openNewFragment(view, fragment);
+                        fragment.setArguments(bundle);
+                        openNewFragment(view,fragment);
                     }
                     catch(Exception e)
                     {
@@ -324,8 +341,12 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
                     cancelHealthRecord();
                     cancelDialog.dismiss();
                     //reload fragment
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(AccountFactory.USERSTRING, user);
+
                     Fragment fragment = new HealthRecordFragment();
-                    openNewFragment(view, fragment);
+                    fragment.setArguments(bundle);
+                    openNewFragment(view,fragment);
 
                 }
             });

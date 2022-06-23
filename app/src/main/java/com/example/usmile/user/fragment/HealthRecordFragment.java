@@ -78,6 +78,7 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         recordRecyclerView.setLayoutManager(layoutManager);
         multiAdapter = new MultiHealthRecordAdapter(healthRecords);
+        multiAdapter.setUser(user);
         recordRecyclerView.setAdapter(multiAdapter);
         recordRecyclerView.setHasFixedSize(true);
     }

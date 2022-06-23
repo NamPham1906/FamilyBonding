@@ -41,6 +41,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
+import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.User;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.user.models.HealthRecord;
 import com.example.usmile.utilities.Constants;
@@ -102,7 +104,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
     AlertDialog.Builder dialogBuilder;
 
     Fragment fragment;
-
+    User user;
 
     public DetailWaitingHealthRecordFragment(HealthRecord healthRecord) {
 
@@ -111,8 +113,19 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
     public DetailWaitingHealthRecordFragment() {
 
     }
+
+    private void getBundle() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
+
+        }
+    }
+
+
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getBundle();
         main = (UserMainActivity) getActivity();
         preferenceManager = new PreferenceManager(getContext());
 
@@ -206,8 +219,12 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
         switch (id) {
             case R.id.editButton:
                 updateHealthRecord();
-                fragment = new HealthRecordFragment();
-                openNewFragment(view, fragment);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountFactory.USERSTRING, user);
+
+                Fragment fragment = new HealthRecordFragment();
+                fragment.setArguments(bundle);
+                openNewFragment(view,fragment);
                 break;
             case R.id.cancelButton:
                 try{
@@ -290,8 +307,13 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                 //dimiss dialog
                 cancelHealthRecord();
                 cancelDialog.dismiss();
-                fragment = new HealthRecordFragment();
-                openNewFragment(view, fragment);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountFactory.USERSTRING, user);
+
+                Fragment fragment = new HealthRecordFragment();
+                fragment.setArguments(bundle);
+                openNewFragment(view,fragment);
+
             }
         });
 

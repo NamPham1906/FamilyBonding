@@ -58,6 +58,7 @@ public class UserMainActivity extends AppCompatActivity {
                         bundle.putSerializable(AccountFactory.USERSTRING, user);
 
                         fragment = new HealthRecordFragment();
+                        fragment.setArguments(bundle);
                     }
 
                     else if (R.id.action_take_picture == id) {
@@ -65,6 +66,7 @@ public class UserMainActivity extends AppCompatActivity {
                         bundle.putSerializable(AccountFactory.USERSTRING, user);
 
                         fragment = new CollectPictureFragment();
+                        fragment.setArguments(bundle);
                     }
 
                     else if (R.id.action_find_clinic == id) {

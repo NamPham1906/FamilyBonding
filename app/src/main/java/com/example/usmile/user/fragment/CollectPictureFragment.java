@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.example.usmile.R;
 import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.User;
 import com.example.usmile.login.fragment.RegisterFirstFragment;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.user.models.HealthRecord;
@@ -67,7 +68,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
     Button sendBtn;
     EditText descriptionEditText;
 
-    PreferenceManager preferenceManager;
+
     ProgressDialog pd;
 
     final int CAPTURE_FIRST_IMAGE = 1;
@@ -85,9 +86,20 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
     String encodeImage3 = "";
     String encodeImage4 = "";
 
+    User user;
+
+    private void getBundle() {
+        Bundle bundle = getArguments();
+        if (bundle != null){
+            user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
+            showToast(user.id());
+        }
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getBundle();
         firstImageView = (ImageView) view.findViewById(R.id.firstImageView);
         secondImageView = (ImageView) view.findViewById(R.id.secondImageView);
         thirdImageView = (ImageView) view.findViewById(R.id.thirdImageView);
@@ -100,7 +112,6 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
 
         pd = new ProgressDialog(getContext());
 
-        preferenceManager = new PreferenceManager(getContext());
 
         descriptionEditText = (EditText) view.findViewById(R.id.descriptionEditText);
         sendBtn = (Button) view.findViewById(R.id.sendBtn);
@@ -111,8 +122,11 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                     return;
 
                 sendHealthRecord();
-//                updateIdHealthRecord();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AccountFactory.USERSTRING, user);
+
                 Fragment fragment = new HealthRecordFragment();
+                fragment.setArguments(bundle);
                 openNewFragment(fragment);
             }
         });
@@ -125,7 +139,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, Object> newHealthRecord = new HashMap<>();
 
-        String userID = preferenceManager.getString(Constants.KEY_ACCOUNT_ID);
+        String userID = user.getId();
         String description = descriptionEditText.getText().toString().trim();
         List<String> healthPictures = new ArrayList<>();
         healthPictures.add(encodeImage1);
@@ -168,27 +182,6 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                 });
     }
 
-    private void updateIdHealthRecord() {
-        // update -> health record id = document id
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-
-        DocumentReference documentReference
-                = database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
-                .document(preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
-
-        HashMap<String, Object> updateId = new HashMap<>();
-        updateId.put(Constants.KEY_HEALTH_RECORD_ID,
-                preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
-
-        documentReference.update(updateId)
-                .addOnSuccessListener(unused -> {
-                    Log.d("update record id", preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("error update record id", e.getMessage());
-                });
-
-    }
 
     private boolean isCompleted(){
         if (!isFillEditText(descriptionEditText))
@@ -453,6 +446,11 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                 .replace(((ViewGroup)getView().getParent()).getId(), nextFragment, "findThisFragment")
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+
     }
 
 }

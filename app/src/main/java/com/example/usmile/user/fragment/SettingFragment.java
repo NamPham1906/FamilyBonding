@@ -39,7 +39,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     Button logOutButton;
     PreferenceManager preferenceManager;
 
-    User user;
     Account account;
     String type;
 

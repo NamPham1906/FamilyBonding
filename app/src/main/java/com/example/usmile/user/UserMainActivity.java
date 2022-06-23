@@ -54,11 +54,19 @@ public class UserMainActivity extends AppCompatActivity {
                         fragment = new TipsFragment();
                     }
                     else if (R.id.action_document == id) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(AccountFactory.USERSTRING, user);
+
                         fragment = new HealthRecordFragment();
+                        fragment.setArguments(bundle);
                     }
 
                     else if (R.id.action_take_picture == id) {
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(AccountFactory.USERSTRING, user);
+
                         fragment = new CollectPictureFragment();
+                        fragment.setArguments(bundle);
                     }
 
                     else if (R.id.action_find_clinic == id) {

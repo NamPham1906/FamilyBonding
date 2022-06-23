@@ -14,17 +14,15 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/clinicPicture"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/blue_border_rounded_shape"
                 android:scaleType="centerInside"
-                android:src="@drawable/example_avatar" />
+                android:src="@color/primary_blue" />
 
             <TextView
                 android:id="@+id/clinicNameTextView"

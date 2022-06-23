@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".user.fragment.DetailAcceptedHealthRecordFragment">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/top_rounded_background">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp">
+
+            <ImageView
+                android:id="@+id/clinicPicture"
+                android:layout_width="100dp"
+                android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/blue_border_rounded_shape"
+                android:scaleType="centerInside"
+                android:src="@drawable/example_avatar" />
+
+            <TextView
+                android:id="@+id/clinicNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/clinicPicture"
+                android:text="Nha Khoa Nam Anh"
+                android:textColor="@color/primary_blue"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/addressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/clinicNameTextView"
+                android:layout_centerHorizontal="true"
+                android:text="Địa chỉ"
+                android:textSize="20sp"
+                android:textColor="@color/primary_green"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/phoneNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/addressTextView"
+                android:layout_centerHorizontal="true"
+                android:text="Số điện thoại"
+                android:textSize="20sp"
+                android:textColor="@color/primary_green"
+                android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+
+
+    </ScrollView>
+
+
+</FrameLayout>

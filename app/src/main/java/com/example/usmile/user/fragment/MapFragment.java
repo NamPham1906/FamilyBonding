@@ -25,6 +25,8 @@ import com.example.usmile.R;
 
 import com.example.usmile.account.AccountFactory;
 import com.example.usmile.account.models.Clinic;
+import com.example.usmile.account.models.Doctor;
+import com.example.usmile.account.models.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -54,7 +56,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private Location defaultLocation = new Location("Vietnam");
     private LocationManager locationManager;
     private List<Clinic> ClinicList = new ArrayList<>();
-
+    private User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,6 +79,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         super.onViewCreated(view, savedInstanceState);
+        getBundle();
     }
 
     @Override
@@ -147,7 +150,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         }
     }
     private void getDeviceLocation() {
-        int DEFAULT_ZOOM = 14;
+        int DEFAULT_ZOOM = 16;
         try {
             if (locationPermissionGranted) {
                 locationManager = (LocationManager) this.getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -157,8 +160,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                 crta.setBearingRequired(true);
                 crta.setCostAllowed(true);
                 crta.setPowerRequirement(Criteria.POWER_LOW);
-
-                locationManager.requestLocationUpdates( locationManager.getBestProvider(crta, true), 0, 0, this);
+                locationManager.requestLocationUpdates( locationManager.getBestProvider(crta, false), 0, 0, this);
 
                 Task<Location> locationResult = fusedLocationClient.getLastLocation();
                 locationResult.addOnCompleteListener((Activity) getContext(), new OnCompleteListener<Location>() {
@@ -173,11 +175,9 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                             addClinicsToFireBase();
                             updateClinics();
-                            LatLng sydneynow = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-                            mMap.addMarker(new MarkerOptions()
-                                     .position(sydneynow)
-                                    .title("You are here"));
-                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydneynow,16));
+                            LatLng yourLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+                            mMap.addMarker(new MarkerOptions().position(yourLocation).title("You are here"));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(yourLocation,DEFAULT_ZOOM));
 
                         } else {
                             showToast("default location");
@@ -198,37 +198,62 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
     private void addClinicsToFireBase(){
         Clinic newClinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
-        newClinic.setName("Nha Khoa Nhat Tri");
+        newClinic.setFullName("Nha Khoa Nhật Trí");
         newClinic.setLatitude(10.870F);
         newClinic.setLongitude(106.626F);
+        newClinic.setAddress("23/15 TCH 10, Quận 12, HCM");
+        newClinic.setPhone("0987654321");
         ClinicList.add(newClinic);
 
         Clinic new2Clinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
-        new2Clinic.setName("Nha Khoa Tay Do");
+        new2Clinic.setFullName("Nha Khoa Tay Do");
         new2Clinic.setLatitude(10.865F);
         new2Clinic.setLongitude(106.627F);
+        new2Clinic.setAddress("23/15 TCH 10, Quận 12, HCM");
+        new2Clinic.setPhone("0987654321");
         ClinicList.add(new2Clinic);
 
         Clinic new3Clinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
-        new3Clinic.setName("Nha Khoa Hoang Thanh");
+        new3Clinic.setFullName("Nha Khoa Hoang Thanh");
         new3Clinic.setLatitude(10.863F);
         new3Clinic.setLongitude(106.623F);
+        new3Clinic.setAddress("23/15 TCH 10, Quận 12, HCM");
+        new3Clinic.setPhone("0987654321");
         ClinicList.add(new3Clinic);
+
+        Clinic new4Clinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
+        new4Clinic.setFullName("Nha Khoa Viet A");
+        new4Clinic.setLatitude(10.864F);
+        new4Clinic.setLongitude(106.628F);
+        new4Clinic.setAddress("23/15 TCH 10, Quận 12, HCM");
+        new4Clinic.setPhone("0987654321");
+        ClinicList.add(new4Clinic);
         //add to firebase
     }
 
+    private void getBundle() {
+        Bundle bundle = getArguments();
+        if (bundle != null)
+            user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
+    }
 
     private void updateClinics(){
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
+            public void onInfoWindowClick(Marker marker) {
                 if (marker.getTag()!=null) {
                     int pos = (int) (marker.getTag());
                     if (pos >= 0 || pos < ClinicList.size()) {
-                        showToast(ClinicList.get(pos).getName());
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(AccountFactory.USERSTRING, user);
+                        bundle.putSerializable(AccountFactory.CLINICSTRING, ClinicList.get(pos));
+
+                        Fragment fragment = new ClinicInfoFragment();
+                        fragment.setArguments(bundle);
+                        openNewFragment(fragment);
+
                     }
                 }
-                return false;
             }
         });
 
@@ -242,7 +267,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private void addMarker(Clinic newClinic, int index){
        Marker marker =  mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(newClinic.getLatitude(), newClinic.getLongitude()))
-                .title(newClinic.getName()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                .title(newClinic.getFullName()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
         );
        marker.setTag(index);
     }
@@ -279,6 +304,13 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     @Override
     public void onProviderDisabled(@NonNull String provider) {
 
+    }
+
+    private void openNewFragment(Fragment nextFragment) {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), nextFragment, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 
 }

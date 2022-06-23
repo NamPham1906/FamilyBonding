@@ -180,7 +180,7 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference
                 = database.collection(Constants.KEY_COLLECTION_ACCOUNT)
-                .document(preferenceManager.getString(Constants.KEY_ACCOUNT_ID));
+                .document(doctor.getId());
 
         HashMap<String, Object> updates = new HashMap<>();
 
@@ -209,6 +209,7 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
 
                     Intent intent = new Intent(getContext(), DoctorMainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra(AccountFactory.DOCTORSTRING, doctor);
                     startActivity(intent);
 
                 })

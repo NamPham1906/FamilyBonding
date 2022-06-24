@@ -153,10 +153,15 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
 
                 nextFragment = new SettingChangePasswordFragment();
                 nextFragment.setArguments(bundle);
+                openNewFragment(nextFragment);
 
                 break;
             case R.id.cancelButton:
-
+                Bundle newbundle = new Bundle();
+                newbundle.putSerializable(AccountFactory.USERSTRING, user);
+                Fragment newFragment = new SettingAccountInfoFragment();
+                newFragment.setArguments(newbundle);
+                openNewFragment(newFragment);
                 break;
             case R.id.confirmButton:
                 updateInfo();
@@ -164,11 +169,6 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
             case R.id.avatarImageView:
                 selectImage();
                 break;
-        }
-
-        if (id == R.id.changePasswordTextView) {
-            if (nextFragment != null)
-                openNewFragment(nextFragment);
         }
     }
 
@@ -179,6 +179,11 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
         String gender = genderEditText.getText().toString();
         String accountStr = accountEditText.getText().toString();
 
+        user.setFullName(fullname);
+        user.setDOB(dob);
+        user.setGender(gender);
+        user.setAccount(accountStr);
+
 
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference
@@ -187,8 +192,10 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
 
         HashMap<String, Object> updates = new HashMap<>();
 
-        if (!encodedImage.equals(""))
+        if (!encodedImage.equals("")) {
             updates.put(Constants.KEY_ACCOUNT_AVATAR, encodedImage);
+            user.setAvatar(encodedImage);
+        }
 
         updates.put(Constants.KEY_ACCOUNT_FULL_NAME, fullname);
         updates.put(Constants.KEY_ACCOUNT_DOB, dob);
@@ -208,9 +215,14 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
 
                     showToast("Updated successfully");
 
-                    Intent intent = new Intent(getContext(), UserMainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    Bundle bundle= new Bundle();
+                    bundle.putSerializable(AccountFactory.USERSTRING, user);
+                    Fragment nextFragment = new SettingAccountInfoFragment();
+                    nextFragment.setArguments(bundle);
+                    openNewFragment(nextFragment);
+                    //Intent intent = new Intent(getContext(), UserMainActivity.class);
+                    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    //startActivity(intent);
 
                 })
                 .addOnFailureListener(e -> {

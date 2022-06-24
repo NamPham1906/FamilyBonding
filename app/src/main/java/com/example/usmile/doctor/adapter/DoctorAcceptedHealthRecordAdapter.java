@@ -319,6 +319,7 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
 
                     Fragment fragment = new ReceivedHealthRecordListFragment();
                     fragment.setArguments(bundle);
+
                     openNewFragment(view, fragment);
 
 

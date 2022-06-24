@@ -29,6 +29,7 @@ import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
 import com.example.usmile.doctor.DoctorMainActivity;
 import com.example.usmile.user.UserMainActivity;
+import com.example.usmile.user.fragment.SettingAccountInfoFragment;
 import com.example.usmile.user.fragment.SettingChangePasswordFragment;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
@@ -143,7 +144,11 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
 
         switch (id) {
             case R.id.docCancelButton:
-                showToast("Cancel");
+                Bundle newbundle = new Bundle();
+                newbundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+                Fragment newFragment = new SettingDoctorAccountInfoFragment();
+                newFragment.setArguments(newbundle);
+                openNewFragment(newFragment);
                 break;
             case R.id.docConfirmButton:
                 updateInfo();
@@ -176,6 +181,12 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
         String accountStr = accountEditText.getText().toString();
         String workPlace = workPlaceEditText.getText().toString();
 
+        doctor.setFullName(fullname);
+        doctor.setDOB(dob);
+        doctor.setGender(gender);
+        doctor.setAccount(accountStr);
+        doctor.setWorkPlace(workPlace);
+
 
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         DocumentReference documentReference
@@ -184,8 +195,10 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
 
         HashMap<String, Object> updates = new HashMap<>();
 
-        if (!encodedImage.equals(""))
+        if (!encodedImage.equals("")) {
             updates.put(Constants.KEY_ACCOUNT_AVATAR, encodedImage);
+            doctor.setAvatar(encodedImage);
+        }
 
         updates.put(Constants.KEY_ACCOUNT_FULL_NAME, fullname);
         updates.put(Constants.KEY_ACCOUNT_DOB, dob);
@@ -207,10 +220,11 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
 
                     showToast("Updated successfully");
 
-                    Intent intent = new Intent(getContext(), DoctorMainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra(AccountFactory.DOCTORSTRING, doctor);
-                    startActivity(intent);
+                    Bundle bundle= new Bundle();
+                    bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+                    Fragment nextFragment = new SettingDoctorAccountInfoFragment();
+                    nextFragment.setArguments(bundle);
+                    openNewFragment(nextFragment);
 
                 })
                 .addOnFailureListener(e -> {

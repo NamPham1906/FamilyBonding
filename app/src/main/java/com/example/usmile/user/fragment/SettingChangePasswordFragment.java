@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,11 +21,14 @@ import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
 import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
+import com.example.usmile.doctor.fragment.SettingDoctorAccountInfoFragment;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -34,21 +38,21 @@ import java.util.HashMap;
 
 public class SettingChangePasswordFragment extends Fragment implements View.OnClickListener{
 
-    User user;
     Account account;
     EditText currentPasswordEditText;
     EditText newPasswordEditText;
     EditText confirmPasswordEditText;
-
+    ProgressBar progressBar;
     Button changeButton;
     Button forgetPasswordButton;
+    private FirebaseAuth mAuth;
 
     PreferenceManager preferenceManager;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        mAuth = FirebaseAuth.getInstance();
         preferenceManager = new PreferenceManager(getContext());
 
         getBundle();
@@ -67,7 +71,7 @@ public class SettingChangePasswordFragment extends Fragment implements View.OnCl
         currentPasswordEditText = (EditText) view.findViewById(R.id.currentPasswordEditText);
         newPasswordEditText = (EditText) view.findViewById(R.id.newPasswordEditText);
         confirmPasswordEditText = (EditText) view.findViewById(R.id.confirmPasswordEditText);
-
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         changeButton = (Button) view.findViewById(R.id.changeButton);
         forgetPasswordButton = (Button) view.findViewById(R.id.forgetPasswordBtn);
     }
@@ -106,14 +110,31 @@ public class SettingChangePasswordFragment extends Fragment implements View.OnCl
                 if (!isAllFilled())
                     return;
 
-                if (!checkCurrentPassword())
-                    return;
+                progressBar.setVisibility(View.VISIBLE);
+                String inputPass = currentPasswordEditText.getText().toString().trim();
 
-                if (!checkNewPasswordMatch())
-                    return;
 
-                updatePassword();
+                AuthCredential credential = EmailAuthProvider
+                        .getCredential(account.email(), inputPass);
 
+                mAuth.getCurrentUser().reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            currentPasswordEditText.setError(null);
+                            if (checkNewPasswordMatch()){
+                                updatePassword();
+
+                            }else{
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+                        } else {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            currentPasswordEditText.setError("Mật khẩu không đúng");
+                            return;
+                        }
+                    }
+                });
                 break;
             case R.id.forgetPasswordBtn:
                 break;
@@ -147,18 +168,9 @@ public class SettingChangePasswordFragment extends Fragment implements View.OnCl
         return filled;
     }
 
-    private boolean checkCurrentPassword() {
-        String inputPass = currentPasswordEditText.getText().toString().trim();
+    //private boolean checkCurrentPassword() {
 
-        if (inputPass.equals(account.getPassword())) {
-            currentPasswordEditText.setError(null);
-            return true;
-        }
-
-
-        currentPasswordEditText.setError("Mật khẩu không đúng");
-        return false;
-    }
+   // }
 
     private boolean checkNewPasswordMatch() {
         String pass = newPasswordEditText.getText().toString().trim();
@@ -184,7 +196,18 @@ public class SettingChangePasswordFragment extends Fragment implements View.OnCl
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        progressBar.setVisibility(View.INVISIBLE);
                         if (task.isSuccessful()) {
+                            Bundle newbundle = new Bundle();
+                            newbundle.putSerializable(account.type(), account);
+                            Fragment newFragment;
+                            if (account.type().equals(AccountFactory.DOCTORSTRING)) {
+                                newFragment = new SettingDoctorAccountInfoFragment();
+                            } else{
+                                newFragment = new SettingAccountInfoFragment();
+                            }
+                            newFragment.setArguments(newbundle);
+                            openNewFragment(newFragment);
                             showToast("Updated password successfully");
                         } else {
                             showToast("Unable to update password");
@@ -219,6 +242,14 @@ public class SettingChangePasswordFragment extends Fragment implements View.OnCl
     }
 
     private void showToast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+        if (msg!=null)
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private void openNewFragment(Fragment nextFragment) {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), nextFragment, "findThisFragment")
+                .addToBackStack(null)
+                .commit();
     }
 }

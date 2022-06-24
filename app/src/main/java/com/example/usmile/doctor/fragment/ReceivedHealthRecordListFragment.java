@@ -176,7 +176,7 @@ public class ReceivedHealthRecordListFragment extends Fragment implements View.O
                                     healthPictures, advices, accepted, deleted, sendDate, dentistId));
 
                         }
-                        Toast.makeText(getContext(), "read db successed", Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getContext(), "read db successed", Toast.LENGTH_LONG).show();
                         for (int i = healthRecords.size() - 1; i >= 0; i--)
                         {
                             List<String> del = healthRecords.get(i).getDeleted();
@@ -189,8 +189,8 @@ public class ReceivedHealthRecordListFragment extends Fragment implements View.O
                                     //Log.d("delete id", str);
                                     if (str!=null) {
                                         if (str.equals(doctor.getId())) {
-                                            healthRecords.remove(i);
-                                            tempHR.remove(i);
+                                            if (healthRecords.size()>0) healthRecords.remove(i);
+                                            if (tempHR.size()>0) tempHR.remove(i);
                                         }
                                     }
                                 }

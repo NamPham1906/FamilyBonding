@@ -252,25 +252,32 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage1 = encodeImage(bp);
                     firstImageView.setImageBitmap(getRoundBitmap(bp));
-                    firstImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    firstImageView.setScaleType(ImageView.ScaleType.FIT_XY);                    secondImageView.setBackgroundResource(0);
+                    firstImageView.setBackgroundResource(0);
+
                     break;
                 case CAPTURE_SECOND_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage2 = encodeImage(bp);
                     secondImageView.setImageBitmap(getRoundBitmap(bp));
-                    secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    secondImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    secondImageView.setBackgroundResource(0);
                     break;
                 case CAPTURE_THIRD_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage3 = encodeImage(bp);
                     thirdImageView.setImageBitmap(getRoundBitmap(bp));
-                    thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);                    secondImageView.setBackgroundResource(0);
+                    thirdImageView.setBackgroundResource(0);
+
                     break;
                 case CAPTURE_FOURTH_IMAGE:
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage4 = encodeImage(bp);
                     fourthImageView.setImageBitmap(getRoundBitmap(bp));
-                    fourthImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);                    secondImageView.setBackgroundResource(0);
+                    fourthImageView.setBackgroundResource(0);
+
                     break;
             }
         }
@@ -282,53 +289,41 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
             } catch (IOException e) {
                 Log.i("GALERY", "Some exception " + e);
             }
-//            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//
-//            // Get the cursor
-//            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-//                    filePathColumn, null, null, null);
-//            // Move to first row
-//            cursor.moveToFirst();
-//
-//            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//            String imgDecodableString = cursor.getString(columnIndex);
-//            cursor.close();
 
             switch (requestCode) {
                 case LOAD_FIRST_IMAGE:
                     encodeImage1 = encodeImage(bp);
                     firstImageView.setImageBitmap(getRoundBitmap(bp));
-//                    firstImageView.setImageBitmap(BitmapFactory
-//                            .decodeFile(imgDecodableString));
-                    firstImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    firstImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    firstImageView.setBackgroundResource(0);
+
                     break;
                 case LOAD_SECOND_IMAGE:
                     encodeImage2 = encodeImage(bp);
-
                     secondImageView.setImageBitmap(getRoundBitmap(bp));
-//                    secondImageView.setImageBitmap(BitmapFactory
-//                            .decodeFile(imgDecodableString));
-                    secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    secondImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    secondImageView.setBackgroundResource(0);
+
                     break;
                 case LOAD_THIRD_IMAGE:
                     encodeImage3 = encodeImage(bp);
-
                     thirdImageView.setImageBitmap(getRoundBitmap(bp));
-//                    thirdImageView.setImageBitmap(BitmapFactory
-//                            .decodeFile(imgDecodableString));
-                    thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    thirdImageView.setBackgroundResource(0);
+
                     break;
                 case LOAD_FOURTH_IMAGE:
                     encodeImage4 = encodeImage(bp);
-
                     fourthImageView.setImageBitmap(getRoundBitmap(bp));
-//                    fourthImageView.setImageBitmap(BitmapFactory
-//                            .decodeFile(imgDecodableString));
-                    fourthImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    fourthImageView.setBackgroundResource(0);
+
                     break;
             }
         }
     }
+
+
 
 
 

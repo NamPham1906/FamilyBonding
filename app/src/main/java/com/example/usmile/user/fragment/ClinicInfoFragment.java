@@ -75,7 +75,7 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
     }
 
     private void setListeners() {
-
+        clinicImage.setOnClickListener(this);
     }
 
     private void getBundle() {
@@ -92,7 +92,7 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
         clinicNameTextView = (TextView) view.findViewById(R.id.clinicNameTextView);
         addressTextView = (TextView) view.findViewById(R.id.addressTextView);
         phoneNumberTextView = (TextView) view.findViewById(R.id.phoneNumberTextView);
-       // clinicImage = (ImageView) view.findViewById(R.id.clinicPicture);
+         clinicImage = (ImageView) view.findViewById(R.id.clinicPicture);
     }
 
     private Bitmap decodeImage(String encodedImage) {
@@ -102,17 +102,20 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
     }
 
     private void loadClinicDetails() {
-       // Bitmap bitmap = decodeImage(clinic.getAvatar());
-       // clinicImage.setImageBitmap(bitmap);
+        Bitmap bitmap = decodeImage(clinic.getAvatar());
+        clinicImage.setImageBitmap(bitmap);
         clinicNameTextView.setText(clinic.getFullName());
         addressTextView.setText(clinic.getAddress());
         phoneNumberTextView.setText(clinic.getPhone());
+        //showToast(clinic.getAvatar());
+       // Bitmap bitmap = decodeImage(clinic.getAvatar());
+        //clinicImage.setImageBitmap(bitmap);
     }
 
 
 
     private String encodeImage(Bitmap bitmap) {
-        int previewWidth = 150;
+        int previewWidth = 600;
         int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
 
         Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
@@ -135,6 +138,46 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        int id = v.getId();
 
+        switch (id) {
+            case R.id.clinicPicture:
+                selectImage();
+                break;
+        }
     }
+
+    private void selectImage() {
+        // open gallery
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+
+        // handle everything after picking
+        pickImage.launch(intent);
+    }
+
+    private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    if (result.getData() != null) {
+                        Uri imageUri = result.getData().getData();
+                        showToast(imageUri.toString());
+                        try {
+
+                            InputStream inputStream = getContext().getContentResolver().openInputStream(imageUri);
+                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                            clinicImage.setImageBitmap(bitmap);
+                            clinic.setAvatar(encodeImage(bitmap));
+                            FirebaseFirestore database = FirebaseFirestore.getInstance();
+                            database.collection(Constants.KEY_COLLECTION_CLINIC).add(clinic);
+
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+    );
 }

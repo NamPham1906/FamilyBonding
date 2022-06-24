@@ -234,6 +234,7 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     if (result.getData() != null) {
                         Uri imageUri = result.getData().getData();
+                        showToast(imageUri.toString());
                         try {
 
                             InputStream inputStream = getContext().getContentResolver().openInputStream(imageUri);

@@ -25,13 +25,12 @@ import com.example.usmile.R;
 
 import com.example.usmile.account.AccountFactory;
 import com.example.usmile.account.models.Clinic;
-import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
+import com.example.usmile.utilities.Constants;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -43,8 +42,10 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import com.google.android.gms.location.FusedLocationProviderClient;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MapFragment extends Fragment implements LocationListener, OnMapReadyCallback, View.OnClickListener {
 
@@ -95,8 +96,8 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         googleMap.setIndoorEnabled(true);
         googleMap.setBuildingsEnabled(true);
         googleMap.getUiSettings().setZoomControlsEnabled(true);
-        updateLocation();
-        getDeviceLocation();
+        loadMapData();
+
     }
 
     private void getLocationPermission() {
@@ -171,10 +172,8 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                             // Set the map's camera position to the current location of the device.
                             lastKnownLocation = task.getResult();
                             showToast("Your location");
-
                             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                            addClinicsToFireBase();
-                            updateClinics();
+                            updateClinicsMaker();
                             LatLng yourLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
                             mMap.addMarker(new MarkerOptions().position(yourLocation).title("You are here"));
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(yourLocation,DEFAULT_ZOOM));
@@ -182,6 +181,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                         } else {
                             showToast("default location");
                             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                            updateClinicsMaker();
                             LatLng sydney = new LatLng(-34, 151);
                             mMap.addMarker(new MarkerOptions()
                                     .position(sydney)
@@ -196,39 +196,29 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         }
     }
 
-    private void addClinicsToFireBase(){
-        Clinic newClinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
-        newClinic.setFullName("Nha Khoa Nhật Trí");
-        newClinic.setLatitude(10.870F);
-        newClinic.setLongitude(106.626F);
-        newClinic.setAddress("23/15 TCH 10, Quận 12, HCM");
-        newClinic.setPhone("0987654321");
-        ClinicList.add(newClinic);
+    private void loadMapData(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(Constants.KEY_COLLECTION_CLINIC)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(Task<QuerySnapshot> task) {
+                        List<DocumentSnapshot> docList = task.getResult().getDocuments();
+                        for (DocumentSnapshot doc:docList ){
+                            Clinic newClinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
+                            newClinic.setFullName((String)doc.get(Constants.KEY_CLINIC_FULL_NAME));
+                            newClinic.setAvatar((String)doc.get(Constants.KEY_CLINIC_AVATAR));
+                            newClinic.setLatitude(Float.parseFloat(String. valueOf(doc.get(Constants.KEY_CLINIC_LATITUDE))));
+                            newClinic.setLongitude(Float.parseFloat(String. valueOf(doc.get(Constants.KEY_CLINIC_LONGITUDE))));
+                            newClinic.setAddress((String)doc.get(Constants.KEY_CLINIC_ADDRESS));
+                            newClinic.setPhone((String)doc.get(Constants.KEY_CLINIC_PHONE));
+                            ClinicList.add(newClinic);
 
-        Clinic new2Clinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
-        new2Clinic.setFullName("Nha Khoa Tay Do");
-        new2Clinic.setLatitude(10.865F);
-        new2Clinic.setLongitude(106.627F);
-        new2Clinic.setAddress("23/15 TCH 10, Quận 12, HCM");
-        new2Clinic.setPhone("0987654321");
-        ClinicList.add(new2Clinic);
+                        }
+                        updateLocation();
+                        getDeviceLocation();
+                    }});
 
-        Clinic new3Clinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
-        new3Clinic.setFullName("Nha Khoa Hoang Thanh");
-        new3Clinic.setLatitude(10.863F);
-        new3Clinic.setLongitude(106.623F);
-        new3Clinic.setAddress("23/15 TCH 10, Quận 12, HCM");
-        new3Clinic.setPhone("0987654321");
-        ClinicList.add(new3Clinic);
-
-        Clinic new4Clinic = (Clinic) AccountFactory.createAccount(AccountFactory.CLINICSTRING);
-        new4Clinic.setFullName("Nha Khoa Viet A");
-        new4Clinic.setLatitude(10.864F);
-        new4Clinic.setLongitude(106.628F);
-        new4Clinic.setAddress("23/15 TCH 10, Quận 12, HCM");
-        new4Clinic.setPhone("0987654321");
-        ClinicList.add(new4Clinic);
-        //add to firebase
     }
 
     private void getBundle() {
@@ -237,8 +227,13 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
             user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
     }
 
-    private void updateClinics(){
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+    private void updateClinicsMaker(){
+       for (int i = 0; i<ClinicList.size(); i++){
+            addMarker(ClinicList.get(i), i);
+
+        }
+
+       mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
                 if (marker.getTag()!=null) {
@@ -247,7 +242,6 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                         Bundle bundle = new Bundle();
                         bundle.putSerializable(AccountFactory.USERSTRING, user);
                         bundle.putSerializable(AccountFactory.CLINICSTRING, ClinicList.get(pos));
-
                         Fragment fragment = new ClinicInfoFragment();
                         fragment.setArguments(bundle);
                         openNewFragment(fragment);
@@ -256,11 +250,6 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                 }
             }
         });
-
-        for (int i = 0; i<ClinicList.size(); i++){
-            addMarker(ClinicList.get(i), i);
-        }
-
     }
 
 

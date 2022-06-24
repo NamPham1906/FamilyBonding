@@ -19,9 +19,10 @@
             <ImageView
                 android:id="@+id/clinicPicture"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:scaleType="centerInside"
+                android:scaleType="fitStart"
+                android:adjustViewBounds="true"
                 android:src="@color/primary_blue" />
 
             <TextView

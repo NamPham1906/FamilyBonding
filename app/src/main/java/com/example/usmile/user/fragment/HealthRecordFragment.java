@@ -116,7 +116,6 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
 //                            Log.d("accepted", accepted.toString());
 
                         }
-                        Toast.makeText(getContext(), "read db successed", Toast.LENGTH_LONG).show();
                         multiAdapter.notifyDataSetChanged();
                     }
                 })

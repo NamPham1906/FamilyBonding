@@ -92,7 +92,6 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
         Bundle bundle = getArguments();
         if (bundle != null){
             user = (User) bundle.getSerializable(AccountFactory.USERSTRING);
-            showToast(user.id());
         }
     }
 

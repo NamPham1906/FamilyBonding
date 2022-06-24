@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient_background"
     tools:context=".user.fragment.DetailAcceptedHealthRecordFragment">
 
@@ -19,9 +20,10 @@
             <ImageView
                 android:id="@+id/clinicPicture"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:scaleType="centerInside"
+                android:scaleType="fitStart"
+                android:adjustViewBounds="true"
                 android:src="@color/primary_blue" />
 
             <TextView
@@ -34,30 +36,78 @@
                 android:textColor="@color/primary_blue"
                 android:textSize="28sp"
                 android:textStyle="bold" />
+        <RelativeLayout
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clinicNameTextView"
+            android:layout_centerHorizontal="true"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/addressNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Địa chỉ: "
+                android:textSize="14sp"
+                android:textColor="@color/primary_green"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/addressTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/clinicNameTextView"
-                android:layout_centerHorizontal="true"
+                android:layout_toRightOf="@+id/addressNameTextView"
                 android:text="Địa chỉ"
-                android:textSize="20sp"
-                android:textColor="@color/primary_green"
+                android:textSize="14sp"
+                android:textColor="@color/primary_blue"
                 android:textStyle="bold" />
+            </RelativeLayout>
+             <RelativeLayout
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/address"
+            android:gravity="center">
+
+                 <TextView
+                     android:id="@+id/phoneNumberNameTextView"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Số điện thoại: "
+                     android:textColor="@color/primary_green"
+                     android:textSize="14sp"
+                     android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/phoneNumberTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/addressTextView"
-                android:layout_centerHorizontal="true"
+                android:layout_toRightOf="@+id/phoneNumberNameTextView"
                 android:text="Số điện thoại"
-                android:textSize="20sp"
-                android:textColor="@color/primary_green"
+                android:textSize="14sp"
+                android:textColor="@color/primary_blue"
                 android:textStyle="bold" />
-
-
+             </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/contactName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone"
+            android:gravity="center"
+            android:layout_marginTop="100sp">
+            <Button
+                android:id="@+id/callBtn"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/all_rounded_button_shape_blue"
+                android:gravity="center"
+                android:text="Liên hệ ngay"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:backgroundTint="@null" />
+            </RelativeLayout>
             </RelativeLayout>
 
 

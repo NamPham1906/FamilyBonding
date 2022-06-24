@@ -12,6 +12,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,7 +47,7 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
     TextView addressTextView;
     TextView phoneNumberTextView;
     ImageView clinicImage;
-
+    Button contactBtn;
     String encodedImage = "";
 
     User user;
@@ -75,7 +76,8 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
     }
 
     private void setListeners() {
-
+        clinicImage.setOnClickListener(this);
+        contactBtn.setOnClickListener(this);
     }
 
     private void getBundle() {
@@ -92,7 +94,9 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
         clinicNameTextView = (TextView) view.findViewById(R.id.clinicNameTextView);
         addressTextView = (TextView) view.findViewById(R.id.addressTextView);
         phoneNumberTextView = (TextView) view.findViewById(R.id.phoneNumberTextView);
-       // clinicImage = (ImageView) view.findViewById(R.id.clinicPicture);
+         clinicImage = (ImageView) view.findViewById(R.id.clinicPicture);
+         contactBtn = (Button) view.findViewById(R.id.callBtn);
+
     }
 
     private Bitmap decodeImage(String encodedImage) {
@@ -102,8 +106,8 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
     }
 
     private void loadClinicDetails() {
-       // Bitmap bitmap = decodeImage(clinic.getAvatar());
-       // clinicImage.setImageBitmap(bitmap);
+        Bitmap bitmap = decodeImage(clinic.getAvatar());
+        clinicImage.setImageBitmap(bitmap);
         clinicNameTextView.setText(clinic.getFullName());
         addressTextView.setText(clinic.getAddress());
         phoneNumberTextView.setText(clinic.getPhone());
@@ -112,7 +116,7 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
 
 
     private String encodeImage(Bitmap bitmap) {
-        int previewWidth = 150;
+        int previewWidth = 600;
         int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();
 
         Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
@@ -135,6 +139,51 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        int id = v.getId();
 
+        switch (id) {
+            case R.id.clinicPicture:
+                selectImage();
+                break;
+            case R.id.callBtn:
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setData(Uri.parse("tel:" + clinic.getPhone()));
+                getActivity().startActivity(intent);
+                break;
+        }
     }
+
+    private void selectImage() {
+        // open gallery
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+
+        // handle everything after picking
+        pickImage.launch(intent);
+    }
+
+    private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    if (result.getData() != null) {
+                        Uri imageUri = result.getData().getData();
+                        try {
+
+                            InputStream inputStream = getContext().getContentResolver().openInputStream(imageUri);
+                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                            clinicImage.setImageBitmap(bitmap);
+                            clinic.setAvatar(encodeImage(bitmap));
+                            FirebaseFirestore database = FirebaseFirestore.getInstance();
+                            database.collection(Constants.KEY_COLLECTION_CLINIC).add(clinic);
+
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+    );
 }

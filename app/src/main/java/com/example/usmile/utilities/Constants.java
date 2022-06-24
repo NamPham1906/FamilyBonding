@@ -59,5 +59,11 @@ public class Constants {
     public static final String KEY_ACCOUNT_WORKPLACE = "workPlace";
 
 
-
+    public static final String KEY_COLLECTION_CLINIC = "clinics";
+    public static final String KEY_CLINIC_AVATAR = "avatar";
+    public static final String KEY_CLINIC_FULL_NAME = "fullName";
+    public static final String KEY_CLINIC_LATITUDE = "latitude";
+    public static final String KEY_CLINIC_LONGITUDE = "longitude";
+    public static final String KEY_CLINIC_PHONE = "phone";
+    public static final String KEY_CLINIC_ADDRESS = "address";
 }

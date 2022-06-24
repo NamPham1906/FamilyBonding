@@ -16,6 +16,7 @@
         android:textColor="@color/white"
         android:textSize="22sp"
         android:textStyle="bold"
+        android:layout_marginTop="10sp"
         />
 
     <androidx.appcompat.widget.SearchView

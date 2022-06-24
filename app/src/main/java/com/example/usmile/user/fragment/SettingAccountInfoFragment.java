@@ -156,7 +156,7 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
 
                 break;
             case R.id.cancelButton:
-                showToast("Cancel");
+
                 break;
             case R.id.confirmButton:
                 updateInfo();
@@ -234,6 +234,7 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     if (result.getData() != null) {
                         Uri imageUri = result.getData().getData();
+                        showToast(imageUri.toString());
                         try {
 
                             InputStream inputStream = getContext().getContentResolver().openInputStream(imageUri);

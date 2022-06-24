@@ -55,7 +55,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
         preferenceManager = new PreferenceManager(getContext());
         getBundle();
-        showToast(account.type());
+
 
         accInfoButton = (TextView) view.findViewById(R.id.accInfoTextView);
         generalSettingButton = (TextView) view.findViewById(R.id.generalSettingTextView);
@@ -124,20 +124,20 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.generalSettingTextView:
-                showToast("General Settings");
+
                 nextFragment = new SettingGeneralFragment();
                 break;
             case R.id.instructionTextView:
-                showToast("Instruction");
+
                 nextFragment = new SettingIntructionsFragment();
                 break;
             case R.id.appInfoTextView:
-                showToast("Application Info");
+
                 nextFragment = new SettingApplicationInfoFragment();
 
                 break;
             case R.id.logOutBtn:
-                showToast("Log Out");
+
                  logOut();
                 //signOut();
                 break;
@@ -169,7 +169,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
 
     private void signOut() {
-        showToast("Signing out....");
+
 
         preferenceManager.clear();
         getActivity().moveTaskToBack(true);

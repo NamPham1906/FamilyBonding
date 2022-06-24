@@ -63,7 +63,7 @@
         <entry key="app/src/main/res/layout/choose_source_of_picture_layout.xml" value="0.24728260869565216" />
         <entry key="app/src/main/res/layout/doctor_accepted_health_record.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/doctor_waiting_health_record.xml" value="0.2203125" />
-        <entry key="app/src/main/res/layout/fragment_collect_picture.xml" value="0.24728260869565216" />
+        <entry key="app/src/main/res/layout/fragment_collect_picture.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_detail_accepted_health_record.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/fragment_detail_clinic.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/fragment_detail_waiting_health_record.xml" value="0.2171875" />

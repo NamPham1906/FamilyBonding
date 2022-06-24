@@ -45,11 +45,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class DetailAcceptedHealthRecordFragment extends Fragment {
@@ -73,6 +76,8 @@ public class DetailAcceptedHealthRecordFragment extends Fragment {
     ImageView secondImageView;
     ImageView thirdImageView;
     ImageView fourthImageView;
+
+    CircleImageView doctorImage;
 
     TextView firstDetailAdvice;
     TextView secondDetailAdvice;
@@ -113,6 +118,8 @@ public class DetailAcceptedHealthRecordFragment extends Fragment {
         thirdImageView = (ImageView) view.findViewById(R.id.thirdPicture);
         fourthImageView = (ImageView) view.findViewById(R.id.fourthPicture);
 
+        doctorImage = (CircleImageView) view.findViewById(R.id.doctorImage);
+
         loadHealthRecordDetails();
 
     }
@@ -132,6 +139,10 @@ public class DetailAcceptedHealthRecordFragment extends Fragment {
                                 doc.getString(Constants.KEY_ACCOUNT_FULL_NAME));
                         preferenceManager.putString(Constants.KEY_GET_DENTIST_WORKPLACE,
                                 doc.getString(Constants.KEY_DENTIST_WORKPLACE));
+//                        String d = doc.getString(Constants.KEY_ACCOUNT_AVATAR);
+//                        Log.d("143",d);
+                        preferenceManager.putString(Constants.KEY_GET_DENTIST_AVATAR,
+                                doc.getString(Constants.KEY_ACCOUNT_AVATAR));
 
                     } else {
                         Log.d("DEN-ID", "No such document");
@@ -163,13 +174,16 @@ public class DetailAcceptedHealthRecordFragment extends Fragment {
                         getDentistInfo(dentistID);
                         String dentistName = preferenceManager.getString(Constants.KEY_GET_DENTIST_NAME);
                         String dentistWorkPlace = preferenceManager.getString(Constants.KEY_GET_DENTIST_WORKPLACE);
-
-
+                        String dentistImg = preferenceManager.getString(Constants.KEY_GET_DENTIST_AVATAR);
+//                        Log.d("177", dentistImg);
                         doctorFullNameTextView.setText("Bác sĩ " + dentistName);
                         doctorWorkPlaceTextView.setText("Phòng khám nha khoa " + dentistWorkPlace);
-
-                        recordTimeTextView.setText("Hồ sơ ngày" + sendDate);
-
+                        if(dentistImg != null)
+                        {
+                            Bitmap bm = decodeImage(dentistImg);
+                            doctorImage.setImageBitmap(bm);
+                        }
+                        recordTimeTextView.setText("Hồ sơ ngày " + sendDate);
                         patientMessageTextView.setText(description);
 
                         encodeImage1 = healthPictures.get(0);
@@ -187,6 +201,12 @@ public class DetailAcceptedHealthRecordFragment extends Fragment {
                         secondImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+
+                        firstImageView.setBackgroundResource(0);
+                        secondImageView.setBackgroundResource(0);
+                        thirdImageView.setBackgroundResource(0);
+                        fourthImageView.setBackgroundResource(0);
+
 
                         List<String> advices = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_ADVICES);
 

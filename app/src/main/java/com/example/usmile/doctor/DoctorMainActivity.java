@@ -26,7 +26,8 @@ public class DoctorMainActivity extends AppCompatActivity {
 
     Doctor doctor;
     PreferenceManager preferenceManager;
-    int current_id =  R.id.doc_action_tips;
+    public int current_id =  R.id.doc_action_tips;
+    public BottomNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class DoctorMainActivity extends AppCompatActivity {
 
         fragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, new TipsFragment()).commit();
 
-        BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.doc_bottom_nav);
+        navigationView = (BottomNavigationView) findViewById(R.id.doc_bottom_nav);
 
         navigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();

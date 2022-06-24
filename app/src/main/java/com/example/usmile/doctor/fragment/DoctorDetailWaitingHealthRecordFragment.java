@@ -248,6 +248,11 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
                         thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
+                        firstImageView.setBackgroundResource(0);
+                        secondImageView.setBackgroundResource(0);
+                        thirdImageView.setBackgroundResource(0);
+                        fourthImageView.setBackgroundResource(0);
+
                         sendRecordDate.setText(sendDate);
                         askForAdviceEditText.setText(description);
                     }
@@ -299,6 +304,13 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
                 //dimiss dialog
                 acceptHealthRecord();
                 cancelDialog.dismiss();
+                try{
+                    main.navigationView.getMenu().getItem(2).setChecked(true);
+                    main.current_id = main.navigationView.getMenu().getItem(2).getItemId();
+                }catch (Exception e)
+                {
+                    Log.e("135",e.getMessage());
+                }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
 

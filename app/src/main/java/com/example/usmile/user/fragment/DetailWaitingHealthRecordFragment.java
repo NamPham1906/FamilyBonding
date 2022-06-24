@@ -36,6 +36,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,7 +88,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
     String encodeImage4 = "";
 
     TextView timeDetailTextView;
-    TextView askForAdviceEditText;
+    EditText askForAdviceEditText;
 
     Button editButton;
     Button cancelButton;
@@ -130,7 +131,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
         preferenceManager = new PreferenceManager(getContext());
 
         timeDetailTextView = (TextView) view.findViewById(R.id.timeDetailTextView);
-        askForAdviceEditText = (TextView) view.findViewById(R.id.askForAdviceEditText);
+        askForAdviceEditText = (EditText) view.findViewById(R.id.askForAdviceEditText);
         // text is changed -> enable edit button
         askForAdviceEditText.addTextChangedListener(textWatcher);
 
@@ -195,6 +196,11 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                         thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
+                        firstImageView.setBackgroundResource(0);
+                        secondImageView.setBackgroundResource(0);
+                        thirdImageView.setBackgroundResource(0);
+                        fourthImageView.setBackgroundResource(0);
+
                         timeDetailTextView.setText("Hồ sơ ngày " + sendDate);
                         askForAdviceEditText.setText(description);
                         editButton.setEnabled(false);
@@ -212,12 +218,14 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.firstPicture || id == R.id.secondPicture
-                || id == R.id.thirdPicture || id == R.id.secondPicture)
+                || id == R.id.thirdPicture || id == R.id.fourthPicture)
         {
             openChooseSourceOfPictureDialog(id);
         }
         switch (id) {
             case R.id.editButton:
+                if(!isCompleted())
+                    return;
                 updateHealthRecord();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountFactory.USERSTRING, user);
@@ -239,6 +247,8 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
     }
 
     private void updateHealthRecord() {
+
+
         String newDescription = askForAdviceEditText.getText().toString().trim();
         List<String> newHealthPictures = new ArrayList<>();
         newHealthPictures.add(encodeImage1);
@@ -392,7 +402,8 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage1 = encodeImage(bp);
                     firstImageView.setImageBitmap(getRoundBitmap(bp));
-                    firstImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    firstImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    firstImageView.setBackgroundResource(0);
                     enableEditButton();
 
                     break;
@@ -400,7 +411,8 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage2 = encodeImage(bp);
                     secondImageView.setImageBitmap(getRoundBitmap(bp));
-                    secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    secondImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    secondImageView.setBackgroundResource(0);
                     enableEditButton();
 
                     break;
@@ -408,7 +420,8 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage3 = encodeImage(bp);
                     thirdImageView.setImageBitmap(getRoundBitmap(bp));
-                    thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    thirdImageView.setBackgroundResource(0);
                     enableEditButton();
 
                     break;
@@ -416,7 +429,8 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                     bp = (Bitmap) data.getExtras().get("data");
                     encodeImage4 = encodeImage(bp);
                     fourthImageView.setImageBitmap(getRoundBitmap(bp));
-                    fourthImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    fourthImageView.setBackgroundResource(0);
                     enableEditButton();
 
                     break;
@@ -435,28 +449,32 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
                 case LOAD_FIRST_IMAGE:
                     encodeImage1 = encodeImage(bp);
                     firstImageView.setImageBitmap(getRoundBitmap(bp));
-                    firstImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    firstImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    firstImageView.setBackgroundResource(0);
                     enableEditButton();
 
                     break;
                 case LOAD_SECOND_IMAGE:
                     encodeImage2 = encodeImage(bp);
                     secondImageView.setImageBitmap(getRoundBitmap(bp));
-                    secondImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    secondImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    secondImageView.setBackgroundResource(0);
                     enableEditButton();
 
                     break;
                 case LOAD_THIRD_IMAGE:
                     encodeImage3 = encodeImage(bp);
                     thirdImageView.setImageBitmap(getRoundBitmap(bp));
-                    thirdImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    thirdImageView.setBackgroundResource(0);
                     enableEditButton();
 
                     break;
                 case LOAD_FOURTH_IMAGE:
                     encodeImage4 = encodeImage(bp);
                     fourthImageView.setImageBitmap(getRoundBitmap(bp));
-                    fourthImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    fourthImageView.setBackgroundResource(0);
                     enableEditButton();
 
                     break;
@@ -545,12 +563,21 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
-
+        boolean nullString = false;
         public void afterTextChanged(Editable s) {
-//            enableEditButton();
+            if(!nullString)
+                enableEditButton();
         }
 
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            Log.d("560", s.toString());
+            if (s.toString().equals(""))
+            {
+                nullString = true;
+            }
+            else {
+                nullString = false;
+            }
         }
 
         public void onTextChanged(CharSequence s, int start, int before,
@@ -558,6 +585,31 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
 
         }
     };
+
+    private boolean isFillEditText(EditText editText) {
+        String input = editText.getText().toString().trim();
+
+        if (input.isEmpty()) {
+            editText.setError("Không được để trống");
+            return false;
+        } else {
+            editText.setError(null);
+            return true;
+        }
+    }
+
+    private boolean isCompleted(){
+        if (!isFillEditText(askForAdviceEditText))
+            return false;
+        if(encodeImage1.equals("") || encodeImage2.equals("")
+                || encodeImage3.equals("") || encodeImage4.equals(""))
+        {
+            String msg = "Chưa chụp đủ 4 bức ảnh";
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 
     private void showToast(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();

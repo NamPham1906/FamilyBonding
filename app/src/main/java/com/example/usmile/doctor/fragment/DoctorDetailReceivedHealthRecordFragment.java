@@ -230,6 +230,11 @@ public class DoctorDetailReceivedHealthRecordFragment extends Fragment implement
                         thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
+                        firstImageView.setBackgroundResource(0);
+                        secondImageView.setBackgroundResource(0);
+                        thirdImageView.setBackgroundResource(0);
+                        fourthImageView.setBackgroundResource(0);
+
 
 
                         healhRecordSendDate.setText(sendDate);

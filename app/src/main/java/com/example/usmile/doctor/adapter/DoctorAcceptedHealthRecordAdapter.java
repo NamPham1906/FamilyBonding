@@ -1,13 +1,16 @@
 package com.example.usmile.doctor.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
@@ -16,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +36,8 @@ import com.example.usmile.account.models.Doctor;
 import com.example.usmile.doctor.fragment.DoctorDetailReceivedHealthRecordFragment;
 import com.example.usmile.doctor.fragment.DoctorDetailWaitingHealthRecordFragment;
 import com.example.usmile.doctor.fragment.DoctorGiveSpecificAdviceFragment;
+import com.example.usmile.doctor.fragment.ReceivedHealthRecordListFragment;
+import com.example.usmile.doctor.fragment.WaitingHealthRecordListFragment;
 import com.example.usmile.user.models.HealthRecord;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
@@ -41,6 +47,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -191,6 +198,9 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
         TextView checkDetailHealthRecordButton;
         TextView archiveButton;
 
+        AlertDialog cancelDialog;
+        AlertDialog.Builder dialogBuilder;
+
 
 
         public DoctorAcceptedHealthRecordViewHolder(@NonNull View itemView) {
@@ -250,8 +260,81 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
 
                     break;
                 case R.id.archiveButton:
+                    preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
+                    preferenceManager.putListString(Constants.KEY_HEALTH_RECORD_DELETED, item.getDeleted());
+                    try{
+                        createArchiveDialog(view.getContext());
+                    }
+                    catch (Exception e)
+                    {
+                        Log.e("ARCH DIALOG",e.getMessage());
+                    }
                     break;
             }
         }
+
+        private void archiveHealthRecord() {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference documentReference
+                    = db.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
+                    .document(preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID));
+
+            List<String> del = preferenceManager.getListString(Constants.KEY_HEALTH_RECORD_DELETED);
+            del.add(doctor.getId());
+            HashMap<String, Object> updates = new HashMap<>();
+            updates.put(Constants.KEY_HEALTH_RECORD_DELETED, del);
+
+            documentReference.update(updates)
+                    .addOnSuccessListener(unused -> {
+                        showToast("Updated successfully");
+
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("update health record", e.getMessage());
+                    });
+        }
+
+        public void createArchiveDialog(Context context) {
+            dialogBuilder = new AlertDialog.Builder(context);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+            final View cancelPopup = inflater.inflate( R.layout.popup_doctor_archive_health_record, null );
+
+            Button yesBtn = (Button) cancelPopup.findViewById(R.id.btnQuit);
+            Button noBtn = (Button) cancelPopup.findViewById(R.id.btnCancel);
+            dialogBuilder.setView(cancelPopup);
+            cancelDialog = dialogBuilder.create();
+            cancelDialog.show();
+            cancelDialog.setCanceledOnTouchOutside(false);
+            cancelDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            yesBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //dimiss dialog
+                    archiveHealthRecord();
+                    cancelDialog.dismiss();
+                    //reload fragment
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
+
+                    Fragment fragment = new ReceivedHealthRecordListFragment();
+                    fragment.setArguments(bundle);
+                    openNewFragment(view, fragment);
+
+
+                }
+            });
+
+            noBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //dimiss dialog
+                    cancelDialog.dismiss();
+
+                }
+            });
+        }
+
+
     }
 }

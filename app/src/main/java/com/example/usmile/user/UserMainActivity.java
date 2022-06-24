@@ -29,7 +29,8 @@ public class UserMainActivity extends AppCompatActivity {
     Fragment fragment = null;
     User user;
     PreferenceManager preferenceManager;
-    int current_id = R.id.action_tips;
+    public int current_id = R.id.action_tips;
+    public BottomNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class UserMainActivity extends AppCompatActivity {
 
         fragmentManager.beginTransaction().replace(R.id.mainFragmentHolder, new TipsFragment()).commit();
 
-        BottomNavigationView navigationView = findViewById(R.id.bottom_nav);
+        navigationView = findViewById(R.id.bottom_nav);
         navigationView.setOnItemSelectedListener(item -> {
 
                     int id = item.getItemId();

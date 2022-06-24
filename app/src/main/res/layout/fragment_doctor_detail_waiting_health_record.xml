@@ -161,9 +161,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/pictureTextView"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp">
+                android:layout_marginEnd="30dp">
 
                 <ImageView
                     android:id="@+id/firstPicture"
@@ -172,7 +172,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/blue_border_rounded_shape"
-                    android:scaleType="centerInside"/>
+                    android:scaleType="centerInside" />
 
                 <ImageView
                     android:id="@+id/secondPicture"
@@ -181,7 +181,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/blue_border_rounded_shape"
-                    android:scaleType="centerInside"/>
+                    android:scaleType="centerInside" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -189,9 +189,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/firstLinePicturesLayout"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp">
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="30dp">
 
                 <ImageView
                     android:id="@+id/thirdPicture"
@@ -200,7 +200,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/blue_border_rounded_shape"
-                    android:scaleType="centerInside"/>
+                    android:scaleType="centerInside" />
 
                 <ImageView
                     android:id="@+id/fourthPicture"
@@ -209,7 +209,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/blue_border_rounded_shape"
-                    android:scaleType="centerInside"/>
+                    android:scaleType="centerInside" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -217,7 +217,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/secondLinePicturesLayout"
-                android:layout_margin="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/all_rounded_button_shape"
                 android:backgroundTint="#DEF2FE">
 

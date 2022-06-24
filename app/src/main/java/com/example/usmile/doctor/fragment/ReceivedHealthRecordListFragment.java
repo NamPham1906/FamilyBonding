@@ -85,10 +85,11 @@ public class ReceivedHealthRecordListFragment extends Fragment implements View.O
 
     @Override
     public void onClick(View view) {
-        healthRecords = new ArrayList<>();
         int id = view.getId();
         if(current_id != id && id == R.id.selectionAdvisedButton)
         {
+            healthRecords = new ArrayList<>();
+
             current_id = id;
             Log.d("line", "advised " + String.valueOf(tempHR.size()));
             for (int i = tempHR.size() - 1; i >= 0; i--) {
@@ -102,6 +103,8 @@ public class ReceivedHealthRecordListFragment extends Fragment implements View.O
         }
         if(current_id != id && id == R.id.selectionUnadvisedButton)
         {
+            healthRecords = new ArrayList<>();
+
             current_id = id;
             Log.d("line", "unadvised " + String.valueOf(tempHR.size()));
             for (int i = tempHR.size() - 1; i >= 0; i--) {
@@ -115,6 +118,8 @@ public class ReceivedHealthRecordListFragment extends Fragment implements View.O
         }
         if(current_id != id && id == R.id.allButton)
         {
+            healthRecords = new ArrayList<>();
+
             current_id = id;
             Log.d("line", "all " + String.valueOf(tempHR.size()));
             for (int i = 0; i < tempHR.size(); i++) {

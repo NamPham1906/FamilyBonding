@@ -92,7 +92,7 @@ public class WaitingHealthRecordListFragment extends Fragment {
 
 
                         }
-                        Toast.makeText(getContext(), "read db successed", Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getContext(), "read db successed", Toast.LENGTH_LONG).show();
                         for (int i = healthRecords.size() - 1; i >= 0; i--)
                         {
 

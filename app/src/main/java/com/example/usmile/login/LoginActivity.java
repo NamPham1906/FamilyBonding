@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void updateUI(FirebaseUser user, Account account){
 
         if (user!=null) {
-
+            account.setEmail(user.getEmail());
             Intent intent = new Intent(getApplicationContext(), AccountFactory.createAccountClass(account.type()));
             intent.putExtra(account.type(), account);
             startActivity(intent);
@@ -188,6 +188,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         progressBar.setVisibility(View.INVISIBLE);
                                         if (task.isSuccessful()){
                                             FirebaseUser user = mAuth.getCurrentUser();
+
                                             updateUI(user, setInformation(documentSnapshot));
                                         } else{
                                             showToast("Wrong password");

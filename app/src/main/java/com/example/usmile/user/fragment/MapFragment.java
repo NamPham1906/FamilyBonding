@@ -91,7 +91,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         googleMap.setTrafficEnabled(true);
         googleMap.setIndoorEnabled(true);
         googleMap.setBuildingsEnabled(true);
@@ -151,7 +151,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         }
     }
     private void getDeviceLocation() {
-        int DEFAULT_ZOOM = 16;
+        int DEFAULT_ZOOM = 15;
         try {
             if (locationPermissionGranted) {
                 locationManager = (LocationManager) this.getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -171,16 +171,16 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
                             // Set the map's camera position to the current location of the device.
                             lastKnownLocation = task.getResult();
-                            showToast("Your location");
-                            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+                            //mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                             updateClinicsMaker();
                             LatLng yourLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
                             mMap.addMarker(new MarkerOptions().position(yourLocation).title("You are here"));
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(yourLocation,DEFAULT_ZOOM));
 
                         } else {
-                            showToast("default location");
-                            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+                           // mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                             updateClinicsMaker();
                             LatLng sydney = new LatLng(-34, 151);
                             mMap.addMarker(new MarkerOptions()

@@ -156,7 +156,7 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
 
                 break;
             case R.id.cancelButton:
-                showToast("Cancel");
+
                 break;
             case R.id.confirmButton:
                 updateInfo();

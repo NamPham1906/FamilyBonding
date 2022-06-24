@@ -12,6 +12,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,7 +47,7 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
     TextView addressTextView;
     TextView phoneNumberTextView;
     ImageView clinicImage;
-
+    Button contactBtn;
     String encodedImage = "";
 
     User user;
@@ -76,6 +77,7 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
 
     private void setListeners() {
         clinicImage.setOnClickListener(this);
+        contactBtn.setOnClickListener(this);
     }
 
     private void getBundle() {
@@ -93,6 +95,8 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
         addressTextView = (TextView) view.findViewById(R.id.addressTextView);
         phoneNumberTextView = (TextView) view.findViewById(R.id.phoneNumberTextView);
          clinicImage = (ImageView) view.findViewById(R.id.clinicPicture);
+         contactBtn = (Button) view.findViewById(R.id.callBtn);
+
     }
 
     private Bitmap decodeImage(String encodedImage) {
@@ -107,9 +111,6 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
         clinicNameTextView.setText(clinic.getFullName());
         addressTextView.setText(clinic.getAddress());
         phoneNumberTextView.setText(clinic.getPhone());
-        //showToast(clinic.getAvatar());
-       // Bitmap bitmap = decodeImage(clinic.getAvatar());
-        //clinicImage.setImageBitmap(bitmap);
     }
 
 
@@ -144,6 +145,12 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
             case R.id.clinicPicture:
                 selectImage();
                 break;
+            case R.id.callBtn:
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setData(Uri.parse("tel:" + clinic.getPhone()));
+                getActivity().startActivity(intent);
+                break;
         }
     }
 
@@ -163,7 +170,6 @@ public class ClinicInfoFragment extends Fragment implements View.OnClickListener
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     if (result.getData() != null) {
                         Uri imageUri = result.getData().getData();
-                        showToast(imageUri.toString());
                         try {
 
                             InputStream inputStream = getContext().getContentResolver().openInputStream(imageUri);

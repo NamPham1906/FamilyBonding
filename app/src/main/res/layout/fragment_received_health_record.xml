@@ -31,6 +31,7 @@
                     android:id="@+id/titleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawablePadding="8dp"
                     android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:text="Các bệnh án đã nhận"
@@ -38,22 +39,20 @@
                     android:textColor="@color/white"
                     android:textSize="25sp"
                     android:textStyle="bold"
-                    android:drawablePadding="8dp"
                     app:drawableStartCompat="@drawable/file_02" />
             </RelativeLayout>
 
             <androidx.appcompat.widget.SearchView
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_below="@id/header"
                 android:id="@+id/healthRecordSearchView"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                app:queryHint="Tìm hồ sơ bệnh án"
-                app:queryBackground="@android:color/transparent"
-                app:iconifiedByDefault="false"
+                android:layout_below="@id/header"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/all_rounded_search_view_shape"
-                />
+                app:iconifiedByDefault="false"
+                app:queryBackground="@android:color/transparent"
+                app:queryHint="Tìm hồ sơ bệnh án" />
 
             <RelativeLayout
                 android:layout_marginLeft="10dp"
@@ -64,10 +63,26 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/selectionAdvisedButton"
+                    android:id="@+id/allButton"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
+                    android:background="@drawable/small_blue_button_shape"
+                    android:gravity="center"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="5dp"
+                    android:text="Tất cả"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/selectionAdvisedButton"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toEndOf="@+id/allButton"
                     android:background="@drawable/small_green_button_shape"
                     android:gravity="center"
                     android:paddingStart="10dp"
@@ -81,8 +96,8 @@
                 <TextView
                     android:id="@+id/selectionUnadvisedButton"
                     android:layout_width="100dp"
-                    android:layout_marginLeft="30dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:layout_toEndOf="@id/selectionAdvisedButton"
                     android:background="@drawable/small_yellow_button_shape"
                     android:gravity="center"
@@ -92,7 +107,7 @@
                     android:paddingBottom="5dp"
                     android:text="Chờ tư vấn"
                     android:textColor="@color/white"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
 
             </RelativeLayout>

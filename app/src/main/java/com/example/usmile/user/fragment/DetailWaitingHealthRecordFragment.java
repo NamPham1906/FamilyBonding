@@ -36,6 +36,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,7 +88,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
     String encodeImage4 = "";
 
     TextView timeDetailTextView;
-    TextView askForAdviceEditText;
+    EditText askForAdviceEditText;
 
     Button editButton;
     Button cancelButton;
@@ -130,7 +131,7 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
         preferenceManager = new PreferenceManager(getContext());
 
         timeDetailTextView = (TextView) view.findViewById(R.id.timeDetailTextView);
-        askForAdviceEditText = (TextView) view.findViewById(R.id.askForAdviceEditText);
+        askForAdviceEditText = (EditText) view.findViewById(R.id.askForAdviceEditText);
         // text is changed -> enable edit button
         askForAdviceEditText.addTextChangedListener(textWatcher);
 
@@ -218,6 +219,8 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
         }
         switch (id) {
             case R.id.editButton:
+                if(!isCompleted())
+                    return;
                 updateHealthRecord();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountFactory.USERSTRING, user);
@@ -239,6 +242,8 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
     }
 
     private void updateHealthRecord() {
+
+
         String newDescription = askForAdviceEditText.getText().toString().trim();
         List<String> newHealthPictures = new ArrayList<>();
         newHealthPictures.add(encodeImage1);
@@ -545,12 +550,21 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
-
+        boolean nullString = false;
         public void afterTextChanged(Editable s) {
-//            enableEditButton();
+            if(!nullString)
+                enableEditButton();
         }
 
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            Log.d("560", s.toString());
+            if (s.toString().equals(""))
+            {
+                nullString = true;
+            }
+            else {
+                nullString = false;
+            }
         }
 
         public void onTextChanged(CharSequence s, int start, int before,
@@ -558,6 +572,31 @@ public class DetailWaitingHealthRecordFragment extends Fragment implements View.
 
         }
     };
+
+    private boolean isFillEditText(EditText editText) {
+        String input = editText.getText().toString().trim();
+
+        if (input.isEmpty()) {
+            editText.setError("Không được để trống");
+            return false;
+        } else {
+            editText.setError(null);
+            return true;
+        }
+    }
+
+    private boolean isCompleted(){
+        if (!isFillEditText(askForAdviceEditText))
+            return false;
+        if(encodeImage1.equals("") || encodeImage2.equals("")
+                || encodeImage3.equals("") || encodeImage4.equals(""))
+        {
+            String msg = "Chưa chụp đủ 4 bức ảnh";
+            Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 
     private void showToast(String msg) {
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();

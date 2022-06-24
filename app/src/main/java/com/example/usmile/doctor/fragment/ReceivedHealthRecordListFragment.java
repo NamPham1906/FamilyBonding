@@ -14,9 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usmile.R;
@@ -39,15 +41,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class ReceivedHealthRecordListFragment extends Fragment {
+public class ReceivedHealthRecordListFragment extends Fragment implements View.OnClickListener {
 
     RecyclerView receivedHeathRecordRecyclerView;
     List<HealthRecord> healthRecords;
+    List<HealthRecord> tempHR;
     DoctorAcceptedHealthRecordAdapter adapter;
 
     Doctor doctor;
 
-
+    TextView selectionAdvisedButton;
+    TextView selectionUnadvisedButton;
+    TextView allButton;
+    int current_id = R.id.allButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,12 +72,85 @@ public class ReceivedHealthRecordListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getBundle();
         receivedHeathRecordRecyclerView = (RecyclerView) view.findViewById(R.id.receivedHealthRecordView);
+        selectionUnadvisedButton = (TextView) view.findViewById(R.id.selectionUnadvisedButton);
+        selectionAdvisedButton = (TextView) view.findViewById(R.id.selectionAdvisedButton);
+        allButton = (TextView) view.findViewById(R.id.allButton);
+
         initData();
+        selectionUnadvisedButton.setOnClickListener(this);
+        selectionAdvisedButton.setOnClickListener(this);
+        allButton.setOnClickListener(this);
         initRecyclerView();
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if(current_id != id && id == R.id.selectionAdvisedButton)
+        {
+            healthRecords = new ArrayList<>();
+
+            current_id = id;
+            Log.d("line", "advised " + String.valueOf(tempHR.size()));
+            for (int i = tempHR.size() - 1; i >= 0; i--) {
+                boolean accecpt = tempHR.get(i).isAccepted();
+                if (accecpt) {
+                    healthRecords.add(tempHR.get(i));
+                }
+            }
+            Log.d("100", "hr " + String.valueOf(healthRecords.size()));
+
+        }
+        if(current_id != id && id == R.id.selectionUnadvisedButton)
+        {
+            healthRecords = new ArrayList<>();
+
+            current_id = id;
+            Log.d("line", "unadvised " + String.valueOf(tempHR.size()));
+            for (int i = tempHR.size() - 1; i >= 0; i--) {
+                boolean accecpt = tempHR.get(i).isAccepted();
+                if (!accecpt) {
+                    healthRecords.add(tempHR.get(i));
+                }
+            }
+            Log.d("113", "hr " + String.valueOf(healthRecords.size()));
+
+        }
+        if(current_id != id && id == R.id.allButton)
+        {
+            healthRecords = new ArrayList<>();
+
+            current_id = id;
+            Log.d("line", "all " + String.valueOf(tempHR.size()));
+            for (int i = 0; i < tempHR.size(); i++) {
+                healthRecords.add(tempHR.get(i));
+            }
+            Log.d("123", "hr " + String.valueOf(healthRecords.size()));
+
+        }
+        initRecyclerView();
+
+    }
+    private void unadvised(){
+        for (int i = healthRecords.size() - 1; i >= 0; i--) {
+            boolean accecpt = healthRecords.get(i).isAccepted();
+            if (accecpt) {
+                healthRecords.remove(i);
+            }
+        }
+    }
+    private void advised(){
+        for (int i = healthRecords.size() - 1; i >= 0; i--) {
+            boolean accecpt = healthRecords.get(i).isAccepted();
+            if (!accecpt) {
+                healthRecords.remove(i);
+            }
+        }
     }
 
     public void initData() {
         healthRecords = new ArrayList<>();
+        tempHR = new ArrayList<>();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
                 .whereEqualTo(Constants.KEY_HEALTH_RECORD_DENTIST_ID,
@@ -111,11 +190,13 @@ public class ReceivedHealthRecordListFragment extends Fragment {
                                     if (str!=null) {
                                         if (str.equals(doctor.getId())) {
                                             healthRecords.remove(i);
+                                            tempHR.remove(i);
                                         }
                                     }
                                 }
                             }
                         }
+                        tempHR = healthRecords;
                         adapter.notifyDataSetChanged();
                     }
                 })

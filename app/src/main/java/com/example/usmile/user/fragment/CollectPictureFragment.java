@@ -86,6 +86,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
     String encodeImage3 = "";
     String encodeImage4 = "";
 
+    UserMainActivity main;
     User user;
 
     private void getBundle() {
@@ -99,6 +100,7 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        main = (UserMainActivity) getActivity();
         getBundle();
         firstImageView = (ImageView) view.findViewById(R.id.firstImageView);
         secondImageView = (ImageView) view.findViewById(R.id.secondImageView);
@@ -122,6 +124,13 @@ public class CollectPictureFragment extends Fragment implements View.OnClickList
                     return;
 
                 sendHealthRecord();
+                try{
+                    main.navigationView.getMenu().getItem(1).setChecked(true);
+                    main.current_id = main.navigationView.getMenu().getItem(1).getItemId();
+                }catch (Exception e)
+                {
+                    Log.e("135",e.getMessage());
+                }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountFactory.USERSTRING, user);
 

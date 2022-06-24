@@ -299,6 +299,13 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
                 //dimiss dialog
                 acceptHealthRecord();
                 cancelDialog.dismiss();
+                try{
+                    main.navigationView.getMenu().getItem(2).setChecked(true);
+                    main.current_id = main.navigationView.getMenu().getItem(2).getItemId();
+                }catch (Exception e)
+                {
+                    Log.e("135",e.getMessage());
+                }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(AccountFactory.DOCTORSTRING, doctor);
 

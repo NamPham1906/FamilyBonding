@@ -149,6 +149,11 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
                         thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
+                        firstImageView.setBackgroundResource(0);
+                        secondImageView.setBackgroundResource(0);
+                        thirdImageView.setBackgroundResource(0);
+                        fourthImageView.setBackgroundResource(0);
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

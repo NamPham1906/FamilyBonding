@@ -255,7 +255,7 @@
                 android:background="@drawable/all_rounded_button_shape"
                 android:backgroundTint="#DEF2FE">
 
-                <EditText
+                <TextView
                     android:id="@+id/doctorRequirement"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

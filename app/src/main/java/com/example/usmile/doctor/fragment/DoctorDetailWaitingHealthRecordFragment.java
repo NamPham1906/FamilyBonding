@@ -248,6 +248,11 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
                         thirdImageView.setScaleType(ImageView.ScaleType.FIT_XY);
                         fourthImageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
+                        firstImageView.setBackgroundResource(0);
+                        secondImageView.setBackgroundResource(0);
+                        thirdImageView.setBackgroundResource(0);
+                        fourthImageView.setBackgroundResource(0);
+
                         sendRecordDate.setText(sendDate);
                         askForAdviceEditText.setText(description);
                     }

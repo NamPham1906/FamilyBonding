@@ -98,6 +98,24 @@ public class ReceivedHealthRecordListFragment extends Fragment {
 
                         }
                         Toast.makeText(getContext(), "read db successed", Toast.LENGTH_LONG).show();
+                        for (int i = healthRecords.size() - 1; i >= 0; i--)
+                        {
+                            List<String> del = healthRecords.get(i).getDeleted();
+                            if(del.isEmpty())
+                                continue;
+                            else
+                            {
+                                for(String str:del)
+                                {
+                                    //Log.d("delete id", str);
+                                    if (str!=null) {
+                                        if (str.equals(doctor.getId())) {
+                                            healthRecords.remove(i);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         adapter.notifyDataSetChanged();
                     }
                 })

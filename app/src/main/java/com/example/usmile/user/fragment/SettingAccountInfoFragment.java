@@ -124,7 +124,8 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
         genderEditText = (EditText) view.findViewById(R.id.genderEditText);
         accountEditText = (EditText) view.findViewById(R.id.accountEditText);
 
-        dobEditText.addTextChangedListener(textWatcher);
+//        dobEditText.addTextChangedListener(textWatcher);
+        dobEditText.addTextChangedListener(datetimeTextWatcher);
         fullNameEditText.addTextChangedListener(textWatcher);
         genderEditText.addTextChangedListener(textWatcher);
         accountEditText.addTextChangedListener(textWatcher);
@@ -217,7 +218,25 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
         private String ddmmyyyy = "________";
         private Calendar cal = Calendar.getInstance();
 
-        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            if(s.toString().equals("") || s.toString().equals(current))
+            {
+//                Log.d("224", "empty");
+                nullString = true;
+
+            }
+            else
+                nullString = false;
+        }
+
+        public void afterTextChanged(Editable s) {
+            if(!nullString)
+            {
+                enableButton(view);
+                Log.d("236", "enable button");
+            }
+        }
+
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (!s.toString().equals(current)) {
                 String clean = s.toString().replaceAll("[^\\d.]", "");
@@ -243,7 +262,8 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
                     if(mon > 12) mon = 12;
                     cal.set(Calendar.MONTH, mon-1);
 
-                    year = (year<1900)?1900:(year>2100)?2100:year;
+                    int todayYear = Calendar.getInstance().get(Calendar.YEAR);
+                    year = (year<1900)?1900:(year>todayYear)?todayYear:year;
                     cal.set(Calendar.YEAR, year);
                     // ^ first set year for the line below to work correctly
                     //with leap years - otherwise, date e.g. 29/02/2012
@@ -265,23 +285,20 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
 
             }
         }
-
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            if(s.toString().equals(""))
-                nullString = true;
-            else
-                nullString = false;
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            if(!nullString)
-                enableButton(view);
-        }
-
     };
+
+    private boolean isFillDoBEditText(EditText editText) {
+        String input = editText.getText().toString().trim();
+        input = input.replaceAll("[^\\d.]", "");
+        Log.d("316", input + " " + String.valueOf(input.length()));
+        if (input.length() < 8) {
+            editText.setError("Chưa đủ ngày/tháng/năm");
+            return false;
+        } else {
+            editText.setError(null);
+            return true;
+        }
+    }
 
     private boolean isFillEditText(EditText editText) {
         String input = editText.getText().toString().trim();
@@ -298,7 +315,7 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
     private boolean isCompleted(){
         if (!isFillEditText(fullNameEditText))
             return false;
-        if (!isFillEditText(dobEditText))
+        if (!isFillDoBEditText(dobEditText))
             return false;
         if (!isFillEditText(genderEditText))
             return false;

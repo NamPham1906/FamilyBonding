@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +65,8 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
 
     Doctor doctor;
 
+    View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,7 +77,7 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        this.view = view;
         preferenceManager = new PreferenceManager(getContext());
 
         getBundle();
@@ -113,6 +117,11 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
         genderEditText = (EditText) view.findViewById(R.id.doctorGenderEditText);
         accountEditText = (EditText) view.findViewById(R.id.doctorAccountEditText);
         workPlaceEditText = (EditText) view.findViewById(R.id.workPlaceText);
+
+        dobEditText.addTextChangedListener(textWatcher);
+        fullNameEditText.addTextChangedListener(textWatcher);
+        genderEditText.addTextChangedListener(textWatcher);
+        accountEditText.addTextChangedListener(textWatcher);
     }
 
     private Bitmap decodeImage(String encodedImage) {
@@ -132,6 +141,12 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
         accountEditText.setText(doctor.getAccount());
 
         workPlaceEditText.setText(doctor.getWorkPlace());
+
+        fullNameEditText.addTextChangedListener(textWatcher);
+        dobEditText.addTextChangedListener(textWatcher);
+        genderEditText.addTextChangedListener(textWatcher);
+        accountEditText.addTextChangedListener(textWatcher);
+        workPlaceEditText.addTextChangedListener(textWatcher);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -173,7 +188,64 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
 
     }
 
+    private void enableButton(View view){
+        confirmButton.setVisibility(view.VISIBLE);
+        cancelButton.setVisibility(view.VISIBLE);
+    }
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        boolean nullString = false;
+        public void afterTextChanged(Editable s) {
+            if(!nullString)
+                enableButton(view);
+        }
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            Log.d("560", s.toString());
+            if (s.toString().equals(""))
+            {
+                nullString = true;
+            }
+            else {
+                nullString = false;
+            }
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before,
+                                  int count) {
+
+        }
+    };
+
+    private boolean isFillEditText(EditText editText) {
+        String input = editText.getText().toString().trim();
+
+        if (input.isEmpty()) {
+            editText.setError("Không được để trống");
+            return false;
+        } else {
+            editText.setError(null);
+            return true;
+        }
+    }
+
+    private boolean isCompleted(){
+        if (!isFillEditText(fullNameEditText))
+            return false;
+        if (!isFillEditText(dobEditText))
+            return false;
+        if (!isFillEditText(genderEditText))
+            return false;
+        if (!isFillEditText(accountEditText))
+            return false;
+        if (!isFillEditText(workPlaceEditText))
+            return false;
+        return true;
+    }
+
     private void updateInfo() {
+        if(!isCompleted())
+            return;
 
         String fullname = fullNameEditText.getText().toString();
         String dob = dobEditText.getText().toString();
@@ -254,6 +326,7 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
                             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                             avatarImageView.setImageBitmap(bitmap);
                             encodedImage = encodeImage(bitmap);
+                            enableButton(view);
 
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();

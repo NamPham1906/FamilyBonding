@@ -31,8 +31,8 @@
                 android:src="@drawable/example_avatar"
                 app:riv_border_color="#dedede"
                 app:riv_border_width="2dp"
+                android:layout_marginVertical="10dp"
                 app:riv_oval="true" />
-
 
 
             <RelativeLayout
@@ -40,7 +40,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/docAvatarImageView"
-                android:layout_margin="8dp">
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp">
 
                 <TextView
                     android:id="@+id/fullNameTextView"
@@ -58,7 +61,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:background="@null"
-                    android:text="Pham Son Nam"
                     android:textColor="@color/primary_blue"
                     android:textSize="15sp" />
 
@@ -92,7 +94,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:background="@null"
-                    android:text="19/06/2001"
                     android:textColor="@color/primary_blue"
                     android:textSize="15sp" />
 
@@ -126,7 +127,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:background="@null"
-                    android:text="Nam"
                     android:textColor="@color/primary_blue"
                     android:textSize="15sp" />
 
@@ -161,7 +161,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:background="@null"
-                    android:text="nampham0126"
                     android:textColor="@color/primary_blue"
                     android:textSize="15sp" />
 
@@ -178,11 +177,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
+                android:layout_below="@id/emailLayout"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="15dp"
-                android:layout_below="@id/emailLayout">
+                android:layout_marginBottom="15dp">
 
                 <TextView
                     android:id="@+id/workPlaceTextView"
@@ -200,7 +199,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:background="@null"
-                    android:text="Bệnh viện nha khoa Hoàn Mỹ"
                     android:textColor="@color/primary_blue"
                     android:textSize="15sp" />
 
@@ -212,18 +210,15 @@
                     android:src="@drawable/edit_pen" />
 
 
-
             </RelativeLayout>
-
-
 
 
             <RelativeLayout
                 android:id="@+id/buttonLayout"
-                android:layout_marginBottom="15dp"
-                android:layout_below="@id/workPlaceLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/workPlaceLayout"
+                android:layout_marginBottom="15dp">
 
                 <TextView
                     android:id="@+id/docConfirmButton"
@@ -237,9 +232,10 @@
                     android:paddingTop="5dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="5dp"
-                    android:text="Xác nhận"
+                    android:text="Cập nhập"
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:id="@+id/docCancelButton"
@@ -255,10 +251,10 @@
                     android:paddingBottom="5dp"
                     android:text="Hủy"
                     android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="invisible" />
 
             </RelativeLayout>
-
 
 
         </RelativeLayout>

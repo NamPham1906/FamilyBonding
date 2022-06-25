@@ -85,7 +85,7 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
 
 
     private void initDataForMultiAdapter() {
-
+        healthRecords = new ArrayList<>();
         String user_id = user.id();
         if (user==null) return;
         FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -111,9 +111,6 @@ public class HealthRecordFragment extends Fragment implements View.OnClickListen
                             healthRecords.add(new HealthRecord(id, userID, description,
                                             healthPictures, advices, accepted, deleted, sendDate, dentistId));
 
-//                            Log.d("userid",userID );
-//                            Log.d("description",description );
-//                            Log.d("accepted", accepted.toString());
 
                         }
                         multiAdapter.notifyDataSetChanged();

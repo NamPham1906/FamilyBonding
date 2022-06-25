@@ -124,6 +124,11 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
             WaitingHealthRecordViewHolder waitingHealthRecordViewHolder = (WaitingHealthRecordViewHolder) holder;
 
             waitingHealthRecordViewHolder.sentDateTextView.setText(item.getSentDate());
+            String subStr = item.getDescription();
+            if(subStr.length() > 40)
+                subStr = subStr.substring(0,39) + " ...";
+            waitingHealthRecordViewHolder.descriptionText.setText(subStr);
+
         }
 
     }
@@ -234,6 +239,7 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
 
         TextView sentDateTextView;
         TextView editButton;
+        TextView descriptionText;
         TextView cancelButton;
         Context context;
 
@@ -252,6 +258,7 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
             sentDateTextView = (TextView) itemView.findViewById(R.id.sentDateTextView);
             editButton = (TextView) itemView.findViewById(R.id.editButton);
             cancelButton = (TextView) itemView.findViewById(R.id.cancelButton);
+            descriptionText = (TextView) itemView.findViewById(R.id.descriptionText);
 
             // click listener
             editButton.setOnClickListener(this);

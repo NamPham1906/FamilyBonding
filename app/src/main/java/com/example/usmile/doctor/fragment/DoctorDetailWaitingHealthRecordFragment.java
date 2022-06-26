@@ -34,6 +34,7 @@ import com.example.usmile.doctor.DoctorMainActivity;
 import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.user.adapters.MultiHealthRecordAdapter;
 import com.example.usmile.user.fragment.HealthRecordFragment;
+import com.example.usmile.user.fragment.ShowImagesFragment;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -125,6 +126,11 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
         thirdImageView = (ImageView) view.findViewById(R.id.thirdPicture);
         fourthImageView = (ImageView) view.findViewById(R.id.fourthPicture);
 
+        firstImageView.setOnClickListener(this);
+        secondImageView.setOnClickListener(this);
+        thirdImageView.setOnClickListener(this);
+        fourthImageView.setOnClickListener(this);
+
         acceptButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
 
@@ -142,6 +148,7 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
     @Override
     public void onClick(View view) {
         int id = view.getId();
+
         switch (id) {
             case R.id.acceptButton:
             {
@@ -153,8 +160,6 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
                     Log.e("CANCEL DIALOG",e.getMessage());
                 }
             }
-//                fragment = new HealthRecordFragment();
-//                openNewFragment(view, fragment);
                 break;
             case R.id.cancelButton:
                 try{
@@ -165,6 +170,13 @@ public class DoctorDetailWaitingHealthRecordFragment extends Fragment implements
                     Log.e("CANCEL DIALOG",e.getMessage());
                 }
                 break;
+
+        }
+        if (id == R.id.firstPicture || id == R.id.secondPicture
+        || id == R.id.thirdPicture || id == R.id.fourthPicture)
+        {
+            Fragment showImg = new ShowImagesFragment();
+            openNewFragment(view, showImg);
         }
     }
 

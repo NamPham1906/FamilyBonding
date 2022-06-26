@@ -226,15 +226,7 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
                 case R.id.checkPicturesButton:
                     preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
                     Fragment showImg = new ShowImagesFragment();
-                    try
-                    {
-                        openNewFragment(view, showImg);
-
-                    }
-                    catch (Exception e)
-                    {
-                        Log.e("236", e.getMessage());
-                    }
+                    openNewFragment(view, showImg);
                     break;
             }
         }

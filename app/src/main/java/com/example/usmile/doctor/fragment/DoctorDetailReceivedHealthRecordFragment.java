@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.usmile.R;
 import com.example.usmile.account.AccountFactory;
 import com.example.usmile.account.models.Doctor;
+import com.example.usmile.user.fragment.ShowImagesFragment;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -286,22 +287,13 @@ public class DoctorDetailReceivedHealthRecordFragment extends Fragment implement
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.firstDetailPicture:
-                showToast("First");
-                break;
-            case R.id.secondDetailPicture:
-                showToast("Second");
-                break;
-            case R.id.thirdDetailPicture:
-                showToast("Third");
-                break;
-            case R.id.fourthDetailPicture:
-                showToast("Fourth");
-                break;
+        int id = view.getId();
+        if (id == R.id.firstDetailPicture || id == R.id.secondDetailPicture
+                || id == R.id.thirdDetailAdvice || id == R.id.fourthDetailPicture)
+        {
+            Fragment showImg = new ShowImagesFragment();
+            openNewFragment(view, showImg);
         }
-
-
     }
 
 

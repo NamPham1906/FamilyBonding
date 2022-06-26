@@ -32,6 +32,7 @@ import com.example.usmile.R;
 import com.example.usmile.account.AccountFactory;
 import com.example.usmile.account.models.Doctor;
 import com.example.usmile.doctor.DoctorMainActivity;
+import com.example.usmile.user.fragment.ShowImagesFragment;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -112,6 +113,11 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
         thirdImageView = (ImageView) view.findViewById(R.id.patientThirdDetailPicture);
         fourthImageView = (ImageView) view.findViewById(R.id.patientFourthDetailPicture);
 
+        firstImageView.setOnClickListener(this);
+        secondImageView.setOnClickListener(this);
+        thirdImageView.setOnClickListener(this);
+        fourthImageView.setOnClickListener(this);
+
         sendButton = (TextView) view.findViewById(R.id.sendButton);
         sendButton.setOnClickListener(this);
 
@@ -179,6 +185,13 @@ public class DoctorGiveSpecificAdviceFragment extends Fragment implements View.O
                     Log.e("CANCEL DIALOG",e.getMessage());
                 }
                 break;
+        }
+
+        if (id == R.id.patientFirstDetailPicture || id == R.id.patientSecondDetailPicture
+                || id == R.id.patientThirdDetailPicture || id == R.id.patientFourthDetailPicture)
+        {
+            Fragment showImg = new ShowImagesFragment();
+            openNewFragment(view, showImg);
         }
     }
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".user.fragment.CollectPictureFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableStart="@drawable/camera_icon"
+                android:drawablePadding="8dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="Xem ảnh"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/top_rounded_background">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/showImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="80dp"
+            android:layout_marginTop="50dp"
+            />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>
+
+

@@ -435,7 +435,7 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
 
         Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        previewBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] bytes = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }

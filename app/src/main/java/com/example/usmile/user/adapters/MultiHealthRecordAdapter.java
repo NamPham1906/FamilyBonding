@@ -29,6 +29,7 @@ import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.user.fragment.DetailAcceptedHealthRecordFragment;
 import com.example.usmile.user.fragment.DetailWaitingHealthRecordFragment;
 import com.example.usmile.user.fragment.HealthRecordFragment;
+import com.example.usmile.user.fragment.ShowImagesFragment;
 import com.example.usmile.user.models.HealthRecord;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
@@ -223,6 +224,17 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
 
                     break;
                 case R.id.checkPicturesButton:
+                    preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
+                    Fragment showImg = new ShowImagesFragment();
+                    try
+                    {
+                        openNewFragment(view, showImg);
+
+                    }
+                    catch (Exception e)
+                    {
+                        Log.e("236", e.getMessage());
+                    }
                     break;
             }
         }

@@ -52,7 +52,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="20dp"
+                    android:layout_marginVertical="10dp"
                     android:text="Hồ sơ ngày "
                     android:textColor="@color/primary_blue"
                     android:textSize="18sp"
@@ -62,7 +62,7 @@
                     android:id="@+id/showImagesDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="20dp"
+                    android:layout_marginVertical="10dp"
                     android:textColor="@color/primary_blue"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -73,9 +73,9 @@
             <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/showImageView"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="400dp"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             />
 
             <RelativeLayout
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/all_rounded_button_shape"

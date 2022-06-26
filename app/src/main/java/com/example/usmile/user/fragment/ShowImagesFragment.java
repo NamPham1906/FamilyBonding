@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,8 +37,8 @@ public class ShowImagesFragment extends Fragment {
 
     PreferenceManager preferenceManager;
     List<String> imagesList;
-    String sentDate;
-    String sentMessage;
+    TextView patientSentMessageTextView;
+    TextView showImagesDate;
     ShowImagesAdapter adapter;
 
 
@@ -55,9 +56,10 @@ public class ShowImagesFragment extends Fragment {
 
         preferenceManager = new PreferenceManager(getContext());
         imageRecyclerView = (RecyclerView) view.findViewById(R.id.showImageView);
+        showImagesDate = (TextView) view.findViewById(R.id.showImagesDate);
+        patientSentMessageTextView = (TextView) view.findViewById(R.id.patientSentMessageTextView);
 
         initDataForShowImages();
-        Log.d("1003 frag after init", String.valueOf(imagesList.size()) + " - " + sentDate + " - " + sentMessage );
         initRecyclerViewForShowImages();
 
     }
@@ -80,10 +82,10 @@ public class ShowImagesFragment extends Fragment {
                         List<String> healthPictures = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_PICTURES);
                         if(healthPictures != null)
                             imagesList.addAll(healthPictures);
-                        sentDate = doc.getString(Constants.KEY_HEALTH_RECORD_DATE);
-                        sentMessage = doc.getString(Constants.KEY_HEALTH_RECORD_DESCRIPTION);
-                        Log.d("1002 frag initing", String.valueOf(imagesList.size()) + " - " + sentDate + " - " + sentMessage );
-
+                        String sentDate = doc.getString(Constants.KEY_HEALTH_RECORD_DATE);
+                        String sentMessage = doc.getString(Constants.KEY_HEALTH_RECORD_DESCRIPTION);
+                        showImagesDate.setText(sentDate);
+                        patientSentMessageTextView.setText(sentMessage);
                         adapter.notifyDataSetChanged();
                     }
                 })
@@ -101,10 +103,7 @@ public class ShowImagesFragment extends Fragment {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         imageRecyclerView.setLayoutManager(layoutManager);
-        Log.d("1005 nhét data vào adap", String.valueOf(imagesList.size()) + " - " + sentDate + " - " + sentMessage );
-
-        adapter = new ShowImagesAdapter(imagesList, sentDate, sentMessage);
-        Log.d("1007 check adap", adapter.getDate() + " - " + String.valueOf(adapter.getImg()));
+        adapter = new ShowImagesAdapter(imagesList);
         imageRecyclerView.setAdapter(adapter);
         imageRecyclerView.setHasFixedSize(true);
     }

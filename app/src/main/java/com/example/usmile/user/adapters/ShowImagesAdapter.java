@@ -28,17 +28,11 @@ public class ShowImagesAdapter extends RecyclerView.Adapter<ShowImagesAdapter.Sh
 
 //    private List<Tips> newTips;
     private List<String> imagesList;
-    private String sentDate;
-    private String sentMessage;
     private Context context;
 
-    public ShowImagesAdapter(List<String> imageList, String sentDate, String sentMessage) {
-        this.sentDate = sentDate;
-        this.sentMessage = sentMessage;
+    public ShowImagesAdapter(List<String> imageList) {
         this.imagesList = imageList;
     }
-    public String getDate(){return this.sentDate;}
-    public int getImg(){return imagesList.size();}
 
     public ShowImagesAdapter() {
         this.imagesList = new ArrayList<>();
@@ -68,17 +62,6 @@ public class ShowImagesAdapter extends RecyclerView.Adapter<ShowImagesAdapter.Sh
         holder.imageView.setImageBitmap(bm);
         holder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         holder.imageView.setBackgroundResource(0);
-        Log.d("1006 adap", String.valueOf(imagesList.size()) + " - " + sentMessage + " - " + sentDate);
-        try{
-            holder.patientSentMessageTextView.setText(sentMessage);
-            holder.showImagesDate.setText(sentDate);
-        }
-        catch (Exception e)
-        {
-            Log.d("81", e.getMessage());
-        }
-
-
     }
 
     private Bitmap decodeImage(String encodedImage) {
@@ -110,18 +93,10 @@ public class ShowImagesAdapter extends RecyclerView.Adapter<ShowImagesAdapter.Sh
     }
 
     public class ShowImagesViewHolder extends RecyclerView.ViewHolder {
-
         ImageView imageView;
-        TextView patientSentMessageTextView;
-        TextView showImagesDate;
-
-
         public ShowImagesViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
-
-            showImagesDate = (TextView) itemView.findViewById(R.id.showImagesDate);
-            patientSentMessageTextView = (TextView) itemView.findViewById(R.id.patientSentMessageTextView);
         }
     }
 }

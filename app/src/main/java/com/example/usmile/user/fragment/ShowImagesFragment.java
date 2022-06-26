@@ -1,6 +1,7 @@
 package com.example.usmile.user.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +28,16 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.grpc.internal.DnsNameResolver;
+
 public class ShowImagesFragment extends Fragment {
 
     RecyclerView imageRecyclerView;
 
     PreferenceManager preferenceManager;
     List<String> imagesList;
+    String sentDate;
+    String sentMessage;
     ShowImagesAdapter adapter;
 
 
@@ -52,7 +57,9 @@ public class ShowImagesFragment extends Fragment {
         imageRecyclerView = (RecyclerView) view.findViewById(R.id.showImageView);
 
         initDataForShowImages();
+        Log.d("1003 frag after init", String.valueOf(imagesList.size()) + " - " + sentDate + " - " + sentMessage );
         initRecyclerViewForShowImages();
+
     }
 
     private void initDataForShowImages() {
@@ -60,6 +67,7 @@ public class ShowImagesFragment extends Fragment {
         imagesList = new ArrayList<>();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         String healthRecordId = preferenceManager.getString(Constants.KEY_HEALTH_RECORD_ID);
+//        Log.d("1004", healthRecordId);
 
         database.collection(Constants.KEY_COLLECTION_HEALTH_RECORD)
                 .whereEqualTo(Constants.KEY_HEALTH_RECORD_ID, healthRecordId)
@@ -72,8 +80,10 @@ public class ShowImagesFragment extends Fragment {
                         List<String> healthPictures = (ArrayList) doc.get(Constants.KEY_HEALTH_RECORD_PICTURES);
                         if(healthPictures != null)
                             imagesList.addAll(healthPictures);
-                        else
-                            showToast("there are no pictures");
+                        sentDate = doc.getString(Constants.KEY_HEALTH_RECORD_DATE);
+                        sentMessage = doc.getString(Constants.KEY_HEALTH_RECORD_DESCRIPTION);
+                        Log.d("1002 frag initing", String.valueOf(imagesList.size()) + " - " + sentDate + " - " + sentMessage );
+
                         adapter.notifyDataSetChanged();
                     }
                 })
@@ -87,13 +97,14 @@ public class ShowImagesFragment extends Fragment {
 
     }
 
-
-
     private void initRecyclerViewForShowImages() {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         imageRecyclerView.setLayoutManager(layoutManager);
-        adapter = new ShowImagesAdapter(imagesList);
+        Log.d("1005 nhét data vào adap", String.valueOf(imagesList.size()) + " - " + sentDate + " - " + sentMessage );
+
+        adapter = new ShowImagesAdapter(imagesList, sentDate, sentMessage);
+        Log.d("1007 check adap", adapter.getDate() + " - " + String.valueOf(adapter.getImg()));
         imageRecyclerView.setAdapter(adapter);
         imageRecyclerView.setHasFixedSize(true);
     }

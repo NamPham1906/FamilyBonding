@@ -79,7 +79,7 @@ public class DoctorShowImagesAdapter extends RecyclerView.Adapter<DoctorShowImag
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
-        canvas.drawRoundRect((new RectF(0.0f, 0.0f, min, min)), min/10, min/10, paint);
+        canvas.drawRoundRect((new RectF(0.0f, 0.0f, min, min)), min/8, min/8, paint);
 
         return bitmapRounded;
     }

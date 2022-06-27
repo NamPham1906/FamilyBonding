@@ -96,19 +96,8 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
         holder.patientMessage.setText(item.getDescription());
         holder.patientSendDate.setText(item.getSentDate());
 
-        userInfor(item);
-        try
-        {
-            String ava = preferenceManager.getString(Constants.KEY_GET_USER_AVATAR);
-            Bitmap bitmap = decodeImage(ava);
-            holder.patientAvatar.setImageBitmap(getRoundBitmap(bitmap));
-        }
-        catch (Exception e)
-        {
-            Log.e("ERR", e.getMessage());
-        }
+        userInfor(holder, item);
 
-        holder.patientName.setText(preferenceManager.getString(Constants.KEY_GET_USER_NAME));
 
         // from account id -> load user avatar and name from firestore
 //        holder.patientAvatar.setImageResource(R.drawable.example_avatar);
@@ -126,7 +115,7 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
         }
 
     }
-    private void userInfor(HealthRecord hr) {
+    private void userInfor(@NonNull DoctorAcceptedHealthRecordViewHolder holder, HealthRecord hr) {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference documentReference = db.collection(Constants.KEY_COLLECTION_ACCOUNT)
@@ -137,14 +126,20 @@ public class DoctorAcceptedHealthRecordAdapter extends RecyclerView.Adapter<Doct
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     if (doc.exists()) {
-                        preferenceManager.putString(Constants.KEY_GET_USER_NAME,
-                                doc.getString(Constants.KEY_ACCOUNT_FULL_NAME));
-                        preferenceManager.putString(Constants.KEY_GET_USER_AVATAR,
-                                doc.getString(Constants.KEY_ACCOUNT_AVATAR));
-//                        Log.d("AVA", preferenceManager.getString(Constants.KEY_GET_USER_AVATAR));
-//                        Log.d("NAME", preferenceManager.getString(Constants.KEY_GET_USER_NAME));
+                        String userName = doc.getString(Constants.KEY_ACCOUNT_FULL_NAME);
+                        String userAva = doc.getString(Constants.KEY_ACCOUNT_AVATAR);
+                        try
+                        {
+                            Bitmap bitmap = decodeImage(userAva);
+                            holder.patientAvatar.setImageBitmap(getRoundBitmap(bitmap));
+                        }
+                        catch (Exception e)
+                        {
+                            Log.e("ERR", e.getMessage());
+                        }
 
-
+                        holder.patientName.setText(userName);
+                        notifyDataSetChanged();
                     } else {
                         Log.d("DEN-ID", "No such document");
                     }

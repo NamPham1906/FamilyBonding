@@ -131,22 +131,6 @@ public class ReceivedHealthRecordListFragment extends Fragment implements View.O
         initRecyclerView();
 
     }
-    private void unadvised(){
-        for (int i = healthRecords.size() - 1; i >= 0; i--) {
-            boolean accecpt = healthRecords.get(i).isAccepted();
-            if (accecpt) {
-                healthRecords.remove(i);
-            }
-        }
-    }
-    private void advised(){
-        for (int i = healthRecords.size() - 1; i >= 0; i--) {
-            boolean accecpt = healthRecords.get(i).isAccepted();
-            if (!accecpt) {
-                healthRecords.remove(i);
-            }
-        }
-    }
 
     public void initData() {
         healthRecords = new ArrayList<>();

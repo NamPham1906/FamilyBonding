@@ -73,9 +73,6 @@ public class RegisterFirstFragment extends Fragment implements AdapterView.OnIte
 
         String type = spinnerAdapter.getItem(i).type();
         newAccount = AccountFactory.createAccount(type);
-
-
-
     }
 
     @Override

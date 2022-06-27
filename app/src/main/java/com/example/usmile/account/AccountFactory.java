@@ -4,6 +4,7 @@ import com.example.usmile.account.models.Admin;
 import com.example.usmile.account.models.Clinic;
 import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
+import com.example.usmile.admin.AdminMainActivity;
 import com.example.usmile.doctor.DoctorMainActivity;
 import com.example.usmile.user.UserMainActivity;
 
@@ -42,7 +43,7 @@ public class AccountFactory {
             case DOCTORSTRING:
                 return DoctorMainActivity.class;
             case ADMINSTRING:
-                //return AdminMainActivity.class;
+                return AdminMainActivity.class;
             default:
                 return null;
         }

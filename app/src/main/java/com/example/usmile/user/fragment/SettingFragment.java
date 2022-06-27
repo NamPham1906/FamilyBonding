@@ -17,8 +17,10 @@ import android.widget.Toast;
 import com.example.usmile.R;
 import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Admin;
 import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
+import com.example.usmile.admin.fragment.SettingAdminAccountInfoFragment;
 import com.example.usmile.doctor.fragment.SettingDoctorAccountInfoFragment;
 import com.example.usmile.login.LoginActivity;
 import com.example.usmile.utilities.Constants;
@@ -83,12 +85,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 account = (User) bundle.getSerializable(AccountFactory.USERSTRING);
             } else if (type.equals(AccountFactory.DOCTORSTRING)) {
                 account = (Doctor) bundle.getSerializable(AccountFactory.DOCTORSTRING);
+            } else if (type.equals(AccountFactory.ADMINSTRING)) {
+                account = (Admin) bundle.getSerializable(AccountFactory.ADMINSTRING);
             }
         }
 
-        // original code
-        /*if (bundle != null)
-            user = (User) bundle.getSerializable(AccountFactory.USERSTRING);*/
     }
 
 
@@ -115,12 +116,13 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                     nextFragment = new SettingDoctorAccountInfoFragment();
                     nextFragment.setArguments(bundle);
                 }
+                else if (type.equals(AccountFactory.ADMINSTRING)) {
+                    bundle.putSerializable(AccountFactory.ADMINSTRING, account);
 
-                // original code
-                //bundle.putSerializable(AccountFactory.USERSTRING, user);
-
-                //nextFragment = new SettingAccountInfoFragment();
-                //nextFragment.setArguments(bundle);
+                    // nothing yet
+                    nextFragment = new SettingAdminAccountInfoFragment();
+                    nextFragment.setArguments(bundle);
+                }
 
                 break;
             case R.id.generalSettingTextView:

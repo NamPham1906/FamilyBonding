@@ -60,7 +60,6 @@ public class SettingAccountInfoFragment extends Fragment implements View.OnClick
 
     //ImageView avatarImageView;
     RoundedImageView avatarImageView;
-    EditText userNameEditText;
     EditText fullNameEditText;
     EditText dobEditText;
     EditText genderEditText;

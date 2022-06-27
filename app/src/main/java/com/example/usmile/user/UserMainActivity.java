@@ -107,10 +107,5 @@ public class UserMainActivity extends AppCompatActivity {
 
     private void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-
     }
-
-
-
-
 }

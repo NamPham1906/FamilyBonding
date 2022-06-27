@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/admin_action_tips"
+        android:title="@string/tips"
+        android:icon="@drawable/mess"/>
+
+    <item android:id="@+id/admin_check_clinic"
+        android:title="@string/clinic"
+        android:icon="@drawable/bag"/>
+
+    <item android:id="@+id/admin_check_doctor"
+        android:title="@string/doctor"
+        android:icon="@drawable/doctor_tool"/>
+
+    <item android:id="@+id/admin_check_patient"
+        android:title="@string/patient"
+        android:icon="@drawable/setting" />
+
+    <item android:id="@+id/admin_action_settings"
+        android:title="@string/settings"
+        android:icon="@drawable/settings"/>
+
+
+</menu>

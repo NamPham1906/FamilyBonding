@@ -90,9 +90,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         newAccount.setDOB(documentSnapshot.getString(Constants.KEY_ACCOUNT_DOB));
         newAccount.setGender(documentSnapshot.getString(Constants.KEY_ACCOUNT_GENDER));
         newAccount.setAccount(documentSnapshot.getString(Constants.KEY_ACCOUNT_ACCOUNT));
+
         if (documentSnapshot.get(Constants.KEY_ACCOUNT_TYPE).equals(AccountFactory.DOCTORSTRING)) {
             ((Doctor) newAccount).setWorkPlace( documentSnapshot.getString(Constants.KEY_ACCOUNT_WORKPLACE));
         }
+
         return newAccount;
     }
 
@@ -222,21 +224,3 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 }
 
-// ....
-                                           /* preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                                            preferenceManager.putString(Constants.KEY_ACCOUNT_ID, documentSnapshot.getId());
-
-                                            preferenceManager.putString(Constants.KEY_ACCOUNT_AVATAR, documentSnapshot.getString(Constants.KEY_ACCOUNT_AVATAR));
-                                            preferenceManager.putString(Constants.KEY_ACCOUNT_FULL_NAME, documentSnapshot.getString(Constants.KEY_ACCOUNT_FULL_NAME));
-                                            preferenceManager.putString(Constants.KEY_ACCOUNT_DOB, documentSnapshot.getString(Constants.KEY_ACCOUNT_DOB));
-                                            preferenceManager.putString(Constants.KEY_ACCOUNT_GENDER, documentSnapshot.getString(Constants.KEY_ACCOUNT_GENDER));
-
-                                            preferenceManager.putString(Constants.KEY_ACCOUNT_ACCOUNT, documentSnapshot.getString(Constants.KEY_ACCOUNT_ACCOUNT));
-                                            preferenceManager.putString(Constants.KEY_ACCOUNT_PASSWORD, documentSnapshot.getString(Constants.KEY_ACCOUNT_PASSWORD));
-                                            preferenceManager.putString(Constants.KEY_ACCOUNT_TYPE, documentSnapshot.getString(Constants.KEY_ACCOUNT_TYPE));
-
-                                            if (documentSnapshot.get(Constants.KEY_ACCOUNT_TYPE).equals(AccountFactory.DOCTORSTRING)) {
-                                                preferenceManager.putString(Constants.KEY_ACCOUNT_WORKPLACE, documentSnapshot.getString(Constants.KEY_ACCOUNT_WORKPLACE));
-                                            }
-                                            //if (documentSnapshot.getString())
-                                            // ....*/

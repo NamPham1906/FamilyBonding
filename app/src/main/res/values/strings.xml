@@ -38,6 +38,8 @@
     <string name="changePasswordText">Thay đổi mật khẩu</string>
     <string name="advices">Tư vấn</string>
     <string name="history">Lịch sử</string>
+    <string name="doctor">Bác sĩ</string>
+    <string name="patient">Bệnh nhân</string>
 
     <string-array name="gender">
         <item>Nam</item>

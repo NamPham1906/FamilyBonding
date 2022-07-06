@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.usmile.R;
 import com.example.usmile.account.Account;
 import com.example.usmile.account.AccountFactory;
+import com.example.usmile.account.models.Admin;
 import com.example.usmile.account.models.Doctor;
 import com.example.usmile.account.models.User;
 import com.example.usmile.doctor.fragment.SettingDoctorAccountInfoFragment;
@@ -91,6 +92,8 @@ public class SettingChangePasswordFragment extends Fragment implements View.OnCl
                 account = (User) bundle.getSerializable(AccountFactory.USERSTRING);
             } else if (type.equals(AccountFactory.DOCTORSTRING)) {
                 account = (Doctor) bundle.getSerializable(AccountFactory.DOCTORSTRING);
+            } else if (type.equals(AccountFactory.ADMINSTRING)) {
+                account = (Admin) bundle.getSerializable(AccountFactory.ADMINSTRING);
             }
 
         }

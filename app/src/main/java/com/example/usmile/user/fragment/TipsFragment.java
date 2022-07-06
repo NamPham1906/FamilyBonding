@@ -52,10 +52,6 @@ public class TipsFragment extends Fragment implements View.OnClickListener {
     List<Tips> news, tools, foods, latest;
 
 
-    String source = "";
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

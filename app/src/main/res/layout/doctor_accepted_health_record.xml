@@ -48,9 +48,8 @@
                     android:id="@+id/patientSendDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/senderAvatar"
+                    android:gravity="end"
                     android:layout_weight="1"
-                    android:text="Ngày 20/06/2022"
                     android:textColor="@color/primary_blue"
                     android:textSize="12sp"
                     android:textStyle="bold" />

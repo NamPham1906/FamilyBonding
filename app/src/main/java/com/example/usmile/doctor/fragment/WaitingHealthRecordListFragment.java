@@ -37,6 +37,7 @@ public class WaitingHealthRecordListFragment extends Fragment {
 
     RecyclerView waitingHealthRecordRecyclerView;
     List<HealthRecord> healthRecords;
+
     DoctorWaitingHealthRecordAdapter adapter;
 
     Doctor doctor;

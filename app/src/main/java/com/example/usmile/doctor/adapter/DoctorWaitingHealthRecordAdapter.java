@@ -56,6 +56,7 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
 
     private List<HealthRecord> healthRecords;
     private Context context;
+
     PreferenceManager preferenceManager;
     Doctor doctor;
 
@@ -84,6 +85,7 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
 
         context = parent.getContext();
 
+
         return new DoctorWaitingHealthRecordViewHolder(view);
     }
 
@@ -94,32 +96,14 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
 
         if (item == null)
             return;
-
-
         holder.senderMessage.setText(item.getDescription());
         holder.sendDate.setText(item.getSentDate());
-        userInfor(item);
-        try
-        {
-            String ava = preferenceManager.getString(Constants.KEY_GET_USER_AVATAR);
-            Bitmap bitmap = decodeImage(ava);
-            holder.senderAvatar.setImageBitmap(getRoundBitmap(bitmap));
-        }
-        catch (Exception e)
-        {
-            Log.e("ERR", e.getMessage());
-        }
-
-        holder.senderName.setText(preferenceManager.getString(Constants.KEY_GET_USER_NAME));
-
-        // from account id -> load user avatar and name from firestore
-//        holder.senderAvatar.setImageResource(R.drawable.example_avatar);
-//        holder.senderName.setText("fake name");
+        userInfor(holder, item);
 
 
     }
 
-    private void userInfor(HealthRecord hr) {
+    private void userInfor(@NonNull DoctorWaitingHealthRecordViewHolder holder, HealthRecord hr) {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference documentReference = db.collection(Constants.KEY_COLLECTION_ACCOUNT)
@@ -130,14 +114,22 @@ public class DoctorWaitingHealthRecordAdapter extends RecyclerView.Adapter<Docto
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     if (doc.exists()) {
-                        preferenceManager.putString(Constants.KEY_GET_USER_NAME,
-                                doc.getString(Constants.KEY_ACCOUNT_FULL_NAME));
-                        preferenceManager.putString(Constants.KEY_GET_USER_AVATAR,
-                                doc.getString(Constants.KEY_ACCOUNT_AVATAR));
+                        String userName = doc.getString(Constants.KEY_ACCOUNT_FULL_NAME);
+                        String userAva = doc.getString(Constants.KEY_ACCOUNT_AVATAR);
 //                        Log.d("AVA", preferenceManager.getString(Constants.KEY_GET_USER_AVATAR));
 //                        Log.d("NAME", preferenceManager.getString(Constants.KEY_GET_USER_NAME));
+                        try
+                        {
+                            Bitmap bitmap = decodeImage(userAva);
+                            holder.senderAvatar.setImageBitmap(getRoundBitmap(bitmap));
+                        }
+                        catch (Exception e)
+                        {
+                            Log.e("ERR", e.getMessage());
+                        }
 
-
+                        holder.senderName.setText(userName);
+                        notifyDataSetChanged();
                     } else {
                         Log.d("DEN-ID", "No such document");
                     }

@@ -15,7 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +43,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class SettingDoctorAccountInfoFragment extends Fragment implements View.OnClickListener {
@@ -63,6 +67,8 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
 
     Doctor doctor;
 
+    View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,7 +79,7 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        this.view = view;
         preferenceManager = new PreferenceManager(getContext());
 
         getBundle();
@@ -113,6 +119,11 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
         genderEditText = (EditText) view.findViewById(R.id.doctorGenderEditText);
         accountEditText = (EditText) view.findViewById(R.id.doctorAccountEditText);
         workPlaceEditText = (EditText) view.findViewById(R.id.workPlaceText);
+
+        dobEditText.addTextChangedListener(textWatcher);
+        fullNameEditText.addTextChangedListener(textWatcher);
+        genderEditText.addTextChangedListener(textWatcher);
+        accountEditText.addTextChangedListener(textWatcher);
     }
 
     private Bitmap decodeImage(String encodedImage) {
@@ -132,6 +143,12 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
         accountEditText.setText(doctor.getAccount());
 
         workPlaceEditText.setText(doctor.getWorkPlace());
+
+        fullNameEditText.addTextChangedListener(textWatcher);
+        dobEditText.addTextChangedListener(datetimeTextWatcher);
+        genderEditText.addTextChangedListener(textWatcher);
+        accountEditText.addTextChangedListener(textWatcher);
+        workPlaceEditText.addTextChangedListener(textWatcher);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -173,7 +190,155 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
 
     }
 
+    private void enableButton(View view){
+        confirmButton.setVisibility(view.VISIBLE);
+        cancelButton.setVisibility(view.VISIBLE);
+    }
+
+    private TextWatcher datetimeTextWatcher = new TextWatcher() {
+        boolean nullString = false;
+        private String current = "";
+        private String ddmmyyyy = "________";
+        private Calendar cal = Calendar.getInstance();
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            if(s.toString().equals("") || s.toString().equals(current))
+            {
+//                Log.d("224", "empty");
+                nullString = true;
+
+            }
+            else
+                nullString = false;
+        }
+
+        public void afterTextChanged(Editable s) {
+            if(!nullString)
+            {
+                enableButton(view);
+                Log.d("236", "enable button");
+            }
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (!s.toString().equals(current)) {
+                String clean = s.toString().replaceAll("[^\\d.]", "");
+                String cleanC = current.replaceAll("[^\\d.]", "");
+
+                int cl = clean.length();
+                int sel = cl;
+                for (int i = 2; i <= cl && i < 6; i += 2) {
+                    sel++;
+                }
+                //Fix for pressing delete next to a forward slash
+                if (clean.equals(cleanC)) sel--;
+
+                if (clean.length() < 8){
+                    clean = clean + ddmmyyyy.substring(clean.length());
+                }else{
+                    //This part makes sure that when we finish entering numbers
+                    //the date is correct, fixing it otherwise
+                    int day  = Integer.parseInt(clean.substring(0,2));
+                    int mon  = Integer.parseInt(clean.substring(2,4));
+                    int year = Integer.parseInt(clean.substring(4,8));
+
+                    if(mon > 12) mon = 12;
+                    cal.set(Calendar.MONTH, mon-1);
+
+                    int todayYear = Calendar.getInstance().get(Calendar.YEAR);
+                    year = (year<1900)?1900:(year>todayYear)?todayYear:year;
+                    cal.set(Calendar.YEAR, year);
+                    // ^ first set year for the line below to work correctly
+                    //with leap years - otherwise, date e.g. 29/02/2012
+                    //would be automatically corrected to 28/02/2012
+
+                    day = (day > cal.getActualMaximum(Calendar.DATE))? cal.getActualMaximum(Calendar.DATE):day;
+                    clean = String.format("%02d%02d%02d",day, mon, year);
+                }
+
+                clean = String.format("%s/%s/%s", clean.substring(0, 2),
+                        clean.substring(2, 4),
+                        clean.substring(4, 8));
+
+                sel = sel < 0 ? 0 : sel;
+                current = clean;
+                Log.d("duplicate?", String.valueOf(start) + " " + String.valueOf(before) +  " "  +  String.valueOf(count));
+                dobEditText.setText(current);
+                dobEditText.setSelection(sel < current.length() ? sel : current.length());
+
+            }
+        }
+
+
+
+
+    };
+
+    private TextWatcher textWatcher = new TextWatcher() {
+        boolean nullString = false;
+        public void afterTextChanged(Editable s) {
+            if(!nullString)
+                enableButton(view);
+        }
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            Log.d("560", s.toString());
+            if (s.toString().equals(""))
+            {
+                nullString = true;
+            }
+            else {
+                nullString = false;
+            }
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before,
+                                  int count) {
+
+        }
+    };
+
+    private boolean isFillEditText(EditText editText) {
+        String input = editText.getText().toString().trim();
+
+        if (input.isEmpty()) {
+            editText.setError("Không được để trống");
+            return false;
+        } else {
+            editText.setError(null);
+            return true;
+        }
+    }
+    private boolean isFillDoBEditText(EditText editText) {
+        String input = editText.getText().toString().trim();
+        input = input.replaceAll("[^\\d.]", "");
+        Log.d("316", input + " " + String.valueOf(input.length()));
+        if (input.length() < 8) {
+            editText.setError("Chưa đủ ngày/tháng/năm");
+            return false;
+        } else {
+            editText.setError(null);
+            return true;
+        }
+    }
+
+    private boolean isCompleted(){
+        if (!isFillEditText(fullNameEditText))
+            return false;
+        if (!isFillDoBEditText(dobEditText))
+            return false;
+        if (!isFillEditText(genderEditText))
+            return false;
+        if (!isFillEditText(accountEditText))
+            return false;
+        if (!isFillEditText(workPlaceEditText))
+            return false;
+        return true;
+    }
+
     private void updateInfo() {
+        if(!isCompleted())
+            return;
 
         String fullname = fullNameEditText.getText().toString();
         String dob = dobEditText.getText().toString();
@@ -254,6 +419,7 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
                             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                             avatarImageView.setImageBitmap(bitmap);
                             encodedImage = encodeImage(bitmap);
+                            enableButton(view);
 
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -269,7 +435,7 @@ public class SettingDoctorAccountInfoFragment extends Fragment implements View.O
 
         Bitmap previewBitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        previewBitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+        previewBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] bytes = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }

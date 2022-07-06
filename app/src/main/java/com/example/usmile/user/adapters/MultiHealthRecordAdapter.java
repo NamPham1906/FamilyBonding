@@ -29,6 +29,7 @@ import com.example.usmile.user.UserMainActivity;
 import com.example.usmile.user.fragment.DetailAcceptedHealthRecordFragment;
 import com.example.usmile.user.fragment.DetailWaitingHealthRecordFragment;
 import com.example.usmile.user.fragment.HealthRecordFragment;
+import com.example.usmile.user.fragment.ShowImagesFragment;
 import com.example.usmile.user.models.HealthRecord;
 import com.example.usmile.utilities.Constants;
 import com.example.usmile.utilities.PreferenceManager;
@@ -124,6 +125,11 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
             WaitingHealthRecordViewHolder waitingHealthRecordViewHolder = (WaitingHealthRecordViewHolder) holder;
 
             waitingHealthRecordViewHolder.sentDateTextView.setText(item.getSentDate());
+            String subStr = item.getDescription();
+            if(subStr.length() > 40)
+                subStr = subStr.substring(0,39) + " ...";
+            waitingHealthRecordViewHolder.descriptionText.setText(subStr);
+
         }
 
     }
@@ -218,6 +224,9 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
 
                     break;
                 case R.id.checkPicturesButton:
+                    preferenceManager.putString(Constants.KEY_HEALTH_RECORD_ID, item.getId());
+                    Fragment showImg = new ShowImagesFragment();
+                    openNewFragment(view, showImg);
                     break;
             }
         }
@@ -234,6 +243,7 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
 
         TextView sentDateTextView;
         TextView editButton;
+        TextView descriptionText;
         TextView cancelButton;
         Context context;
 
@@ -252,6 +262,7 @@ public class MultiHealthRecordAdapter extends RecyclerView.Adapter<RecyclerView.
             sentDateTextView = (TextView) itemView.findViewById(R.id.sentDateTextView);
             editButton = (TextView) itemView.findViewById(R.id.editButton);
             cancelButton = (TextView) itemView.findViewById(R.id.cancelButton);
+            descriptionText = (TextView) itemView.findViewById(R.id.descriptionText);
 
             // click listener
             editButton.setOnClickListener(this);
